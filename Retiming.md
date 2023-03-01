@@ -42,3 +42,23 @@
 1. Consider a biquad IIR filter, try to apply pipeling technique and retiming technique onto it to reduce the critical paths.
 2. We can actually move registers into multiplications after analysis.
 3. We can apply pipeling technique and retiming technique together s.t. we can reduce the critical path.
+
+# Cutset retiming
+1. We try to draw the cutset boundary, then the input register should be equal to the output registers before and after retiming.
+2. Retiming cutsets used drawn to find where the registers we should insert after retiming.
+3. Combining retiming and pipelining techniques, circuit architecture critical path can be reduced.
+4. Retiming does not change number of delays in a path that used to be.
+5. However, path delays get changed.
+
+# Interleaving retiming
+![](pictures/biquad_filter_retiming_example.png)
+Consider 3-way interleaving
+1. Now we want to process 3 time series with the same datapath at the same time period.
+2. Multiple cutsets can be drawn as long as it obeys the input output boundary rule.
+3. Retiming can greatly reduce critical path.
+4. Note sample period is the time for system to finish process 1 sample, thus $x_0,x_1$ and so on thus if it is interleaved, the sample period increases by a factor of N-way interleaving factor N.
+5. Usually pipeline arithmetic units are implemented for DSP  algorithm to allow dc or retiming technique of the circuit to be used.
+6. Redo the 3-way interleaving biquad filter example to achieve a clock period of $5/6$
+7. When solving problems, multiple delays within a delay block can be seperated to further utilize the techniques.
+# Note whenever you introduce pipelining cutset
+1. If you are sampling the sequence in an odd even manner, after inserting the pipeline, original sample even becomes odd, odd becomes even. This must be realised and noticed!
