@@ -62,3 +62,17 @@ Consider 3-way interleaving
 7. When solving problems, multiple delays within a delay block can be seperated to further utilize the techniques.
 # Note whenever you introduce pipelining cutset
 1. If you are sampling the sequence in an odd even manner, after inserting the pipeline, original sample even becomes odd, odd becomes even. This must be realised and noticed!
+
+# Tips when doing retiming
+1. First spot the critical path, then imagine where should we add the delay.
+2. Draw the possible delays onto the graph.
+3. We can actually simply expand the delay out onto a loop, the result would still be valid.
+4. Redistribute the delays onto the feedback loop within a circuit is a valid operation.
+5. Then consider the compound loop, the delays must still stay the same before and after the retiming. That is the sum of the delays within each subloops MUST STAY THE SAME. Before and after retiming!
+6. Note if we were to retime the circuit by hand, every loop bound must remains the same before and after retiming.
+7. Usually the retiming problem is solved by program, however, pipelining have to be inserted by human hands.
+8. Node conservation and cutset conservation of input output registers must be conserved!
+9. The arithmetic units can be selected in a way that allows pipelining.
+10. Dummy delays can be introduce at the input output to help analyze the system.
+11. So when designing system, add the correct number of delays to the circuit then allows the synthesis tool to perform retiming on the system to possibly yield the best results.
+12. Associatity properties can be exploited combine with retiming cutset, an optimized circuit can be derived.
