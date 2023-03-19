@@ -101,14 +101,18 @@ qn_filtered_img = qn_LPF(s1_hatn_);
 
 s0_hatn = pn_filtered_img + qn_filtered_img;
 
+s0_hatn_ = ceil(s0_hatn);
+s0_hatn_(s0_hatn_ > 255) = 255;
+s0_hatn_(s0_hatn_ < -255) = -255;
+
 figure(5);
-imshow(s0_hatn, []);
+imshow(s0_hatn_, []);
 title('s0 hatn');
 %================================================================
 %  PSNR
 %================================================================
 disp("PSNR:");
-[psnr,difference] = PSNR(img, s0_hatn);
+[psnr, difference] = PSNR(img, s0_hatn_);
 disp(psnr);
 
 %================================================================
@@ -216,14 +220,16 @@ function upSampledimg = upSampler(img, stride, n)
     partition = 2 ^ n;
     upSampledimg = zeros(h);
 
+    % Replicated the the second row to first row
     upSampledimg(2:stride:w / (partition / 2), 2:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
+    upSampledimg(1:stride:w / (partition / 2), 1:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
 end
 
-function [psnr,difference] = PSNR(img, filtered_img)
+function [psnr, difference] = PSNR(img, filtered_img)
     [h, w] = size(img);
     MAXI = 255;
-    difference = (img - filtered_img)^2;
-    MSE = sum(difference, "all")/(h^2);
+    difference = (img - filtered_img) .^ 2;
+    MSE = sum(difference, "all") / (h * w);
 
     psnr = 10 * log10(MAXI ^ 2 / MSE);
 end
