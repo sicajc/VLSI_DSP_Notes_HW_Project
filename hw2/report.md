@@ -3,13 +3,15 @@
 ### <font face = "Times New Roman"><p style="text-align: center;">Shun-Linag Yeh, NCHU Lab612</p></font>
 ### <font face = "Times New Roman"><p style="text-align: center;">3/19/2023</p></font>
 
+<font face = "Times New Roman">
+
 # INDEX
-1. [Adaptive FIR Low pass filter](#adaptive-fir-low-pass-filter)
-2. [Discrete Wavelet transform](#discrete-wavelet-transform)
-3. [References](#references)
+1. [Adaptive FIR Low pass filter](#i-adaptive-fir-low-pass-filter)
+2. [Discrete Wavelet transform](#ii-discrete-wavelet-filter-design)
+3. [References](#iii-references)
 
 
-# Adaptive FIR Low pass filter
+# I. Adaptive FIR Low pass filter
 ## Problem
 <p align="center">
   <img src="./img/problem_1.jpg" width="600" heigh ="400">
@@ -22,6 +24,8 @@
 <p align="center">
   <img src="./img/adaptive_filter_structure.jpg" width="400" heigh ="400">
 </p>
+
+
 
 1. x(n) is the input signal, wn(z) is the adaptive filter block with coefficients of wn.
 2. d_hat(n) is the generated system response and d(n) is the desired signal.
@@ -120,7 +124,7 @@
 
 - The response is indeed a Low-Pass filter response.
 
-## Adaptive Filter Response n=3000, mu = 0.0001, samepleSteps = 25 and RMS over time
+## Adaptive Filter Response n=6000, mu = 0.0001, samepleSteps = 100 and RMS over time
 <p align="center">
   <img src="./img/adaptive_filter_response_smaller_mu.jpg" width="400" heigh ="400">
 </p>
@@ -140,7 +144,7 @@
 - Notice the changing of the RMS value responses more drmatically due to smaller step difference. Also it takes longer and more sample points for it to converge.
 
 
-### RMS with large sample size n = 10000
+### RMS with large sample size n = 20000
 <p align="center">
   <img src="./img/rms_nLarge_result.jpg" width="400" heigh ="400">
 </p>
@@ -156,7 +160,7 @@
 
 <div style="page-break-after: always;"></div>
 
-# Discrete Wavelet transform
+# II. Discrete Wavelet Filter Design
 ## Problem
 
 <p align="center">
@@ -341,7 +345,7 @@
 
 ### PSNR
 <p align="center">
-  <img src="./img/filtered_result/psnr_result.jpg" width="200" heigh ="200">
+  <img src="./img/filtered_result/psnr_result.jpg" width="500" heigh ="500">
 </p>
 
 - Note the PSNR is terrible, yet we can still see the image being briefly restored, I suppose more filtering should be performed on the image to fully restore the whole image.
@@ -352,7 +356,7 @@
 
 <div style="page-break-after: always;"></div>
 
-# References
+# III. References
 
 [1] [Advanced Digital Signal Processing, Adaptive Filters by Prof.Vaibhav Pandit](https://www.youtube.com/watch?v=088g4IB9blI)
 
@@ -365,3 +369,5 @@
 [5] [Easy Introduction to Wavelets, by Simon Xu](https://www.youtube.com/watch?v=ZnmvUCtUAEE)
 
 [6] [VLSI Digital Signal processing systems Design and Implementation, p25~28 by Parhi]()
+
+</font>

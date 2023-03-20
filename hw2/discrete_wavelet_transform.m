@@ -204,9 +204,9 @@ function yn = filterSystem(xn, wn, N)
     L = L(2);
 
     %Symmetric extension
-    xn = [xn(2:L), xn, xn(N - L:N - 1)];
+    xn = [xn(2:L/2), xn, xn(N - L/2:N - 1)];
 
-    for n = L:N + L - 1
+    for n = L:N + L/2 - 1
         x = xn(n:-1:n - L + 1);
         yn(n - L + 1) = wn * x';
     end
@@ -245,17 +245,6 @@ function upSampledimg = upSampler(img, stride, n, odd)
         upSampledimg(1:stride:w / (partition / 2), 1:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
         upSampledimg(2:stride:w / (partition / 2), 1:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
     end
-
-    % Replication
-    % upSampledimg(2:stride:w / (partition / 2), 2:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
-    % upSampledimg(1:stride:w / (partition / 2), 1:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
-
-    % Closest neighboring algorithm
-    % upSampledimg(2:stride:w / (partition / 2), 2:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
-    % upSampledimg(1:stride:w / (partition / 2), 1:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
-    % upSampledimg(1:stride:w / (partition / 2), 2:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
-    % upSampledimg(2:stride:w / (partition / 2), 1:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
-
 end
 
 function [psnr, difference] = PSNR(img, filtered_img)

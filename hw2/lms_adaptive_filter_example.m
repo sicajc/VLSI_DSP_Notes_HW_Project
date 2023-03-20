@@ -1,24 +1,24 @@
 clear all;
 
 % Note sequence starting from 1~60
-Sample_size = 3000;
+Sample_size = 100;
 n = 1:Sample_size;
 L = 15;
-mu = 0.0001;
+mu = 0.01;
 
 %Input signal xn(n)
-xn = sin(2 * pi * n / 12) + cos(2 * pi * n / 12);
-dn = sin(2 * pi * n / 12);
+xn = sin(2 * pi * (n / 12)) + cos(2 * pi * (n / 4));
+dn = sin(2 * pi * (n / 12));
 
 %plot of original signal for 50 equally sampled value
 figure(1);
-sampleSteps = 25;
-coefficient_steps = 50;
+sampleSteps = 1;
+coefficient_steps = 1;
 coefficient_spaced = 1:coefficient_steps:Sample_size;
 n_spaced = 1:sampleSteps:Sample_size;
 subplot(2, 2, 1);
 stem(xn(n_spaced));
-title('sin(2 * pi * n / 12) + cos(2 * pi * n / 12)'); xlabel('n*sampleSteps'); ylabel('Amplitude');
+title('sin(2 * pi * n / 12) + cos(2 * pi * n / 4)'); xlabel('n*sampleSteps'); ylabel('Amplitude');
 
 subplot(2, 2, 2);
 stem(dn(n_spaced));
@@ -38,7 +38,12 @@ plot(rn(n_spaced));
 title('RMS in time'); xlabel('n*sampleSteps'); ylabel('Amplitude');
 
 disp("RMS final value");
-disp(rn(steps));
+% Since it might not converge, if the value converges, the value is stored in rn(steps), otherwise rn(steps-1)
+if Sample_size > 10000
+    disp(rn(steps-1));
+else
+    disp(rn(steps));
+end
 
 disp("Total Steps needed to reach 10% of RMS");
 disp(steps);
@@ -65,11 +70,12 @@ function [wn_in_time, rn, wn, dn_hat, en, steps] = lms(xn, dn, mu, L)
     dn_hat = zeros(1, N); % Initialize outputs
     rn = zeros(1, N);
     en = dn - dn_hat; % Error vectors, set as the difference of two signals
-    en_initial = en(N - 16:N); % Latest 16 prediction error
+    disp(en);
+    en_initial = en(1:16); % Latest 16 prediction error
     steps = 1; %Steps needed to reach the optimal value
     wn_in_time = zeros(L, N);
 
-    desired_rn = RMS(en_initial, L) * 0.1;
+    desired_rn = 0.1/sqrt(2);
     disp("Desired RMS value");
     disp(desired_rn);
 
@@ -80,15 +86,15 @@ function [wn_in_time, rn, wn, dn_hat, en, steps] = lms(xn, dn, mu, L)
         x1 = xn(n:-1:n - L + 1);
         %Convolution
         dn_hat(n) = wn * x1';
-        %Error vector
-        en(n) = dn(n) - dn_hat(n);
+        %Error vector, due to the first 16 differences 1~16 is occ
+        en(n+2) = dn(n) - dn_hat(n);
         %LMS algorithm
-        wn = wn + mu * en(n) * x1;
+        wn = wn + mu * en(n+2) * x1;
 
         wn_in_time(:, steps) = wn;
 
         % RMS calculation
-        en_latest = en(n:-1:n - L + 1); % The latest 16 errors of error vector.
+        en_latest = en(n+1:-1:n - L + 1); % The latest 16 errors of error vector.
         % disp("Latest 16 errors");
         % disp(en_latest);
         rn(steps) = RMS(en_latest, L);
@@ -107,9 +113,6 @@ function r = RMS(en, L)
     N = length(en); %Length of input signal
     sum = 0;
 
-    for n = 1:N
-        sum = sum + (en(n) ^ 2);
-    end
+    r = sqrt(mean(en.^2));
 
-    r = sqrt(sum / L);
 end
