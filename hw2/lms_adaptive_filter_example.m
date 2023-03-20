@@ -6,14 +6,9 @@ n = 1:Sample_size;
 L = 15;
 mu = 0.0001;
 
-n_s = 1:100;
-
 %Input signal xn(n)
 xn = sin(2 * pi * n / 12) + cos(2 * pi * n / 12);
 dn = sin(2 * pi * n / 12);
-
-xn_s = sin(2 * pi * n_s / 12) + cos(2 * pi * n_s / 12);
-dn_s = sin(2 * pi * n_s / 12);
 
 %plot of original signal for 50 equally sampled value
 figure(1);
@@ -45,12 +40,6 @@ title('RMS in time'); xlabel('n*sampleSteps'); ylabel('Amplitude');
 disp("RMS final value");
 disp(rn(steps));
 
-% Plot of info
-% disp("Error vector");
-% disp(en);
-% disp("Coefficient vector");
-% disp(wn);
-
 disp("Total Steps needed to reach 10% of RMS");
 disp(steps);
 % Plot of Coefficients v.s. steps
@@ -66,7 +55,7 @@ wn_padded(1:L) = wn;
 
 figure(3);
 
-Y = fft(wn, N);
+Y = fft(wn_padded, N);
 stem(Y); % Note must use stem.
 
 function [wn_in_time, rn, wn, dn_hat, en, steps] = lms(xn, dn, mu, L)

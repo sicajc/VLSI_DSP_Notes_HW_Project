@@ -22,98 +22,111 @@ title('Original image');
 gn_filtered_img = gn_HPF(img);
 w1n = downSampler(gn_filtered_img, stride, 0);
 
-figure(2);
-subplot(3, 2, 1);
-imshow(w1n, []);
-title('w1n');
-
 hn_filtered_img = hn_LPF(img);
 s1n = downSampler(hn_filtered_img, stride, 1);
-
-subplot(3, 2, 2);
-imshow(s1n, []);
-title('s1n');
 
 % Octave 2
 gn_filtered_img = gn_HPF(s1n);
 w2n = downSampler(gn_filtered_img, stride, 0);
 
-subplot(3, 2, 3);
-imshow(w2n, []);
-title('w2n');
-
 hn_filtered_img = hn_LPF(s1n);
 s2n = downSampler(hn_filtered_img, stride, 1);
-
-subplot(3, 2, 4);
-imshow(s2n, []);
-title('s2n');
 
 % Octave 3
 gn_filtered_img = gn_HPF(s2n);
 w3n = downSampler(gn_filtered_img, stride, 0);
 
-subplot(3, 2, 5);
-imshow(w3n, []);
-title('w3n');
-
 hn_filtered_img = hn_LPF(s2n);
 s3n = downSampler(hn_filtered_img, stride, 1);
-
-subplot(3, 2, 6);
-imshow(s3n, []);
-title('s3n');
-
-figure(3);
-imshow(s3n, []);
-title('s3n');
-figure(4);
-imshow(w3n, []);
-title('w3n');
-hold on;
 %================================================================
 %  IDWT
 %================================================================
 % Octave 1
-w3n_ = upSampler(w3n, stride, 3);
+w3n_ = upSampler(w3n, stride, 3, 0);
 pn_filtered_img = pn_HPF(w3n_);
 
-s3n_ = upSampler(s3n, stride, 3);
+s3n_ = upSampler(s3n, stride, 3, 1);
 qn_filtered_img = qn_LPF(s3n_);
 
 s2_hatn = pn_filtered_img + qn_filtered_img;
 
 % Octave 2
-w2n_ = upSampler(w2n, stride, 2);
+w2n_ = upSampler(w2n, stride, 2, 0);
 pn_filtered_img = pn_HPF(w2n_);
 
-s2_hatn_ = upSampler(s2_hatn, stride, 2);
+s2_hatn_ = upSampler(s2_hatn, stride, 2, 1);
 qn_filtered_img = qn_LPF(s2_hatn_);
 
 s1_hatn = pn_filtered_img + qn_filtered_img;
 
 % Octave 3
-w1n_ = upSampler(w1n, stride, 1);
+w1n_ = upSampler(w1n, stride, 1, 0);
 pn_filtered_img = pn_HPF(w1n_);
 
-s1_hatn_ = upSampler(s1_hatn, stride, 1);
+s1_hatn_ = upSampler(s1_hatn, stride, 1, 1);
 qn_filtered_img = qn_LPF(s1_hatn_);
 
 s0_hatn = pn_filtered_img + qn_filtered_img;
 
+% Quantization
 s0_hatn_ = ceil(s0_hatn);
 s0_hatn_(s0_hatn_ > 255) = 255;
 s0_hatn_(s0_hatn_ < -255) = -255;
 
-figure(5);
+% Replication
+% s0_hatn_(1:stride:w, 1:h) = s0_hatn_(2:stride:w, 1:h);
+
+%================================================================
+%  Plots
+%================================================================
+%=======================================
+%  DWT
+%=======================================
+%===================
+%  HPF
+%===================
+figure(2);
+title('High pass filtered image');
+imshow(w1n, []);
+title('w1n');
+
+figure(3);
+imshow(w2n, []);
+title('w2n');
+
+figure(6);
+imshow(w3n, []);
+title('w3n');
+
+%===================
+%  LPF
+%===================
+figure(7);
+imshow(s1n, []);
+title('s1n');
+
+figure(6);
+imshow(s2n, []);
+title('s2n');
+
+figure(7);
+imshow(s3n, []);
+title('s3n');
+
+%=======================================
+%  IDWT
+%=======================================
+
+figure(8);
 imshow(s0_hatn_, []);
 title('s0 hatn');
+
 %================================================================
 %  PSNR
 %================================================================
 disp("PSNR:");
 [psnr, difference] = PSNR(img, s0_hatn_);
-disp(psnr);
+fprintf('%.2f db\n', psnr);
 
 %================================================================
 %  FUNCTIONS
@@ -202,6 +215,7 @@ end
 
 function downSampledimg = downSampler(img, stride, odd)
     [h, w] = size(img);
+    % downSampledimg = img;
     downSampledimg = zeros(h);
 
     if odd == 0
@@ -214,15 +228,34 @@ function downSampledimg = downSampler(img, stride, odd)
 
 end
 
-function upSampledimg = upSampler(img, stride, n)
+function upSampledimg = upSampler(img, stride, n, odd)
+    % Interpolation algorithm should be adopted to further increase resolution after upSampling
     % n means nth octave
     [h, w] = size(img);
     partition = 2 ^ n;
+    % upSampledimg   = img;
     upSampledimg = zeros(h);
 
-    % Replicated the the second row to first row
-    upSampledimg(2:stride:w / (partition / 2), 2:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
-    upSampledimg(1:stride:w / (partition / 2), 1:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
+    if odd == 0
+        % even for HPF
+        upSampledimg(1:stride:w / (partition / 2), 2:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
+        upSampledimg(2:stride:w / (partition / 2), 2:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
+    else
+        % odd for LPF
+        upSampledimg(1:stride:w / (partition / 2), 1:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
+        upSampledimg(2:stride:w / (partition / 2), 1:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
+    end
+
+    % Replication
+    % upSampledimg(2:stride:w / (partition / 2), 2:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
+    % upSampledimg(1:stride:w / (partition / 2), 1:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
+
+    % Closest neighboring algorithm
+    % upSampledimg(2:stride:w / (partition / 2), 2:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
+    % upSampledimg(1:stride:w / (partition / 2), 1:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
+    % upSampledimg(1:stride:w / (partition / 2), 2:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
+    % upSampledimg(2:stride:w / (partition / 2), 1:stride:h / (partition / 2)) = img(1:w / partition, 1:h / partition);
+
 end
 
 function [psnr, difference] = PSNR(img, filtered_img)

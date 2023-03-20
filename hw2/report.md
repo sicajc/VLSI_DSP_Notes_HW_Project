@@ -1,7 +1,7 @@
-# <strong><font face = "Times New Roman"><p style="text-align: center;">HW2 LMS Filter and DCT Filter design</p></font></strong>
+# <strong><font face = "Times New Roman"><p style="text-align: center;">HW2 LMS Filter and DWT Filter design</p></font></strong>
 ## <font face = "Times New Roman"><p style="text-align: center;">VLSI DSP HW2</p></font>
 ### <font face = "Times New Roman"><p style="text-align: center;">Shun-Linag Yeh, NCHU Lab612</p></font>
-### <font face = "Times New Roman"><p style="text-align: center;">3/18 2023</p></font>
+### <font face = "Times New Roman"><p style="text-align: center;">3/19/2023</p></font>
 
 # INDEX
 1. [Adaptive FIR Low pass filter](#adaptive-fir-low-pass-filter)
@@ -185,6 +185,7 @@
   <img src="./img/problem2_example.jpg" width="300" heigh ="300">
 </p>
 
+<div style="page-break-after: always;"></div>
 
 # Derivation steps
 ## Wavelet transform
@@ -204,6 +205,7 @@
 - Wavelet is used to tackle with problem of time and frequency resolution since you cannot have both great time resolution and frequency resolution at the same time. Wavelet is the balance between time and frequency resolution.
 - It is extensively used for compressing images.
 
+<div style="page-break-after: always;"></div>
 
 ## 3-level DWT transform
 
@@ -211,12 +213,16 @@
   <img src="./img/three_level_DWT.jpg" width="300" heigh ="250">
 </p>
 
+- The 3 level DWT structure has 3 octaves, where after passing each octaves the image becomes 2 times smaller than the original image due to down-Sampler.
 
+- When doing downsampling, low pass filter sample the odd number output data, while high pass filters keep the even number output data.
 ## 3-level IDWT transform
 
 <p align="center">
   <img src="./img/three_level_IDWT.jpg" width="300" heigh ="250">
 </p>
+
+- The 3 level IDWT structure has 3 octaves also, where after passing each octaves the image becomes 2 times larger than the original image due to up-Sampler. During the upSampling process, action should be taken to combat the loss of information when doing up Sampling.
 
 
 ## Symmetric extension scheme
@@ -225,57 +231,137 @@
   <img src="./img/symmetric_extension.jpg" width="300" heigh ="250">
 </p>
 
+- Due to the boundary condition when doing filtering, one must extend the original signal length s.t. the boundary would not get convolved into 0 values.
 
 ## PSNR(Peak signal to noise ratio) and MSE(Mean square error)
 
 <p align="center">
-  <img src="./img/PSNR_MSE.jpg" width="300" heigh ="250">
+  <img src="./img/PSNR_MSE.jpg" width="200" heigh ="200">
 </p>
 
+- Used to check whether the reconstructed image is close to the original image or not.
 
 <div style="page-break-after: always;"></div>
 
-## QR Iterative Algorithm
-![](img/qr_algorithm.jpg)
+# Code
 
-## Code
+### FIR Filter(Symmetric extended)
+<p align="center">
+  <img src="./img/problem2_filters_with_symmetric_extension.png" width="400" heigh ="300">
+</p>
+
+### g(n) High pass filter and h(n) low pass filter
+<p align="center">
+  <img src="./img/problem2_filters_gn_hn.png" width="400" heigh ="300">
+</p>
+
+<div style="page-break-after: always;"></div>
+
+### p(n) High pass filter and q(n) low pass filter
+<p align="center">
+  <img src="./img/problem2_filters_qn_pn.png" width="400" heigh ="300">
+</p>
+
+
+### Down Sampler & UpSampler
+<p align="center">
+  <img src="./img/problem2_down_sampler.png" width="400" heigh ="300">
+</p>
+
+<p align="center">
+  <img src="./img/problem2_upSampler.png" width="400" heigh ="300">
+</p>
+
+<div style="page-break-after: always;"></div>
+
+### PSNR
+<p align="center">
+  <img src="./img/problem2_PSNR.png" width="400" heigh ="300">
+</p>
+
+
 ### Main driver
 <p align="center">
-  <img src="./img/hw1_2_main.png" width="400" heigh ="300">
+  <img src="./img/main_driver_rd_image.png" width="300" heigh ="300">
+</p>
+
+<p align="center">
+  <img src="./img/problem2_main_driver_dwt.png" width="300" heigh ="300">
+</p>
+
+
+<p align="center">
+  <img src="./img/problem2_main_driver_idwt.png" width="300" heigh ="300">
+</p>
+
+<p align="center">
+  <img src="./img/problem2_main_driver_plots.png" width="300" heigh ="300">
+</p>
+
+<p align="center">
+  <img src="./img/problem2_main_driver_plotsPSNR.png" width="300" heigh ="300">
+</p>
+
+
+<div style="page-break-after: always;"></div>
+
+# Result
+### DWT w1n,w2n,w3n
+<p align="center">
+  <img src="./img/filtered_result/w1n.jpg" width="400" heigh ="300">
+</p>
+
+<p align="center">
+  <img src="./img/filtered_result/w2n.jpg" width="400" heigh ="300">
+</p>
+
+<p align="center">
+  <img src="./img/filtered_result/w3n.jpg" width="400" heigh ="300">
+</p>
+
+### DWT s1n,s2n,s3n
+<p align="center">
+  <img src="./img/filtered_result/s1n.jpg" width="400" heigh ="300">
+</p>
+
+<p align="center">
+  <img src="./img/filtered_result/s2n.jpg" width="400" heigh ="300">
+</p>
+
+<p align="center">
+  <img src="./img/filtered_result/s3n.jpg" width="400" heigh ="300">
 </p>
 
 <div style="page-break-after: always;"></div>
 
-### Tridiagonalization and QR iterative
-
+### s0 hatn Restored image
 <p align="center">
-  <img src="./img/tridiagonalized_and_QR.png" width="400" heigh ="300">
+  <img src="./img/filtered_result/s0_hatn.jpg" width="400" heigh ="300">
 </p>
 
-### Givens Rotation
+### PSNR
 <p align="center">
-  <img src="./img/Givens_rotation.png" width="400" heigh ="300">
+  <img src="./img/filtered_result/psnr_result.jpg" width="200" heigh ="200">
 </p>
 
-
-<div style="page-break-after: always;"></div>
-
-## Result
-### Tridiagonalized matrix
-![](./img/tridiagonalized.jpg)
-
-### Eigenvalue matrix after eigen-decomposition
-![](./img/qr_after_eigenDecomposition.jpg)
-
-### Eigenvalue decompose using matlab
-![](./img/eigen_decompose_using_matlab.jpg)
+- Note the PSNR is terrible, yet we can still see the image being briefly restored, I suppose more filtering should be performed on the image to fully restore the whole image.
 
 ### Note
-1. The result of the Eigen-decomposition differs due to the ordering of the orthnormal basis and the ordering of eigenvectors when calculating the QR matrcies.
-2. The eigenvalues are all the same but in different orderings.
+1. The result of the Wavelet transform can briefly restore the image, but I am not able to fully restore the whole resolution of the image. Perhaps some action should be taken to combat the loss of data during the upSampling process.
+2. PSNR rate needs to be higher than 50db to achieve the Lossless filtering, I suppose the problem occurs during the upSampling process, where better algorithm should be adopted s.t. the image can restore its resolution.
 
 <div style="page-break-after: always;"></div>
 
-# Reference
+# References
 
-[1] [University of South California, Section 4.2.1: Givens Rotations, Math610 Jim Lambers](https://www.math.usm.edu/lambers/mat610/class0208.pdf)
+[1] [Advanced Digital Signal Processing, Adaptive Filters by Prof.Vaibhav Pandit](https://www.youtube.com/watch?v=088g4IB9blI)
+
+[2] [Advanced Digital Signal Processing, LMS Algorithm by Prof.Vaibhav Pandit](https://www.youtube.com/watch?v=kXJ_WQlweiI&list=PLm_MSClsnwm8tzpHKvWlCdEeBba9yVsa_&index=139&t=369s)
+
+[3] [MIT RES.6-008 Digital Signal Processing,Lec 17, 1975 by Alan Oppenheim](https://www.youtube.com/watch?v=oJv4dsUID0Q&t=841s)
+
+[4] [EE123 Digital Signal Processing, SP'16 L12 - Discrete Wavelet Transform](https://www.youtube.com/watch?v=i0rPaAXjJoI&t=2730s)
+
+[5] [Easy Introduction to Wavelets, by Simon Xu](https://www.youtube.com/watch?v=ZnmvUCtUAEE)
+
+[6] [VLSI Digital Signal processing systems Design and Implementation, p25~28 by Parhi]()
