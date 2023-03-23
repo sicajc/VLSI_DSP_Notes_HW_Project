@@ -1,17 +1,17 @@
-clear;
+clear all;
 clc
 
 %================================================================
 %  RD image
 %================================================================
-img = imread('image.bmp');
-img = double(img);
+img = double(imread('image.bmp'));
+% img = mat2gray(img)
 [h, w] = size(img);
 n = 1;
 stride = 2;
 
 figure(1);
-imshow(img, [-255 255]);
+imshow(img, []);
 title('Original image');
 
 %================================================================
@@ -21,7 +21,7 @@ title('Original image');
 octave1 = dwt_octave(img, stride, 1);
 
 figure(2);
-imshow(octave1, [-255 255]);
+imshow(octave1, []);
 title('Octave1');
 
 % Octave 2
@@ -29,7 +29,7 @@ octave2 = octave1;
 octave2 = dwt_octave(octave1, stride, 2);
 
 figure(3);
-imshow(octave2, [-255 255]);
+imshow(octave2, []);
 title('Octave2');
 
 % Octave 3
@@ -40,7 +40,7 @@ octave3 = dwt_octave(octave2, stride, 3);
 %  PLOTS
 %===========
 figure(4);
-imshow(octave3, [-255 255]);
+imshow(octave3, []);
 title('DWT result');
 
 %# make sure the image doesn't disappear if we plot something else
@@ -75,7 +75,7 @@ plot([p9(2), p10(2)], [p9(1), p10(1)], [p11(2), p12(2)], [p11(1), p12(1)], 'Colo
 %================================================================
 %  IDWT
 %================================================================
-zero_padded = 1;
+zero_padded = 0;
 octave3_ = zeros(h);
 
 if zero_padded == 1
@@ -90,20 +90,21 @@ ioctave2 = idwt_octave(ioctave3, stride, 2);
 
 ioctave1 = idwt_octave(ioctave2, stride, 1);
 
-restored_image = Quantization(ioctave1);
+restored_image = ioctave1;
+
 figure(7);
-imshow(restored_image, [-255 255]);
+imshow(restored_image, []);
 title('Restored Image');
 
 %Convert computing result matrix to grayscale image
-img = single(mat2gray(img));
-restored_image_ = single(mat2gray(ioctave1));
+% img = single(mat2gray(img));
+% restored_image_ = single(mat2gray(ioctave1));
 
 %================================================================
 %  PSNR
 %================================================================
 disp("PSNR:");
-[psnr, difference] = PSNR(img, restored_image_);
+[psnr, difference] = PSNR(img, restored_image);
 fprintf('%.2f db\n', psnr);
 
 %================================================================
@@ -120,14 +121,6 @@ function filtered_img = dwt_octave(raw_img, stride, n)
 
     L1 = hn_LPF(raw_img, 1);
     L1_ = downSampler(L1, stride, 1, n, 1);
-
-    % figure(5);
-    % imshow(H1_, [-255 255]);
-    % title('H1_');
-
-    % figure(5);
-    % imshow(L1_, [-255 255]);
-    % title('L1_');
 
     % Vertical!, i have problem here! The high pass components leads to some errors.
     HH = gn_HPF(H1_, 0);
@@ -167,53 +160,33 @@ function reconstructed_img = idwt_octave(compressed_img, stride, n)
 
     % Vertical!
     LL = upSampler(LL_, stride, n, 1, 0);
-    LL(1:h / (partition / 2), 1:w / (partition / 2)) = pn_LPF(LL(1:h / (partition / 2), 1:w / (partition / 2)), 0);
+    LL(1:h / (partition / 2), 1:w / (partition / 2)) = qn_HPF(LL(1:h / (partition / 2), 1:w / (partition / 2)), 0);
 
     LH = upSampler(LH_, stride, n, 0, 0);
-    LH(1:h / (partition / 2), 1:w / (partition / 2)) = qn_HPF(LH(1:h / (partition / 2), 1:w / (partition / 2)), 0);
+    LH(1:h / (partition / 2), 1:w / (partition / 2)) = pn_LPF(LH(1:h / (partition / 2), 1:w / (partition / 2)), 0);
 
     s0 = LL + LH;
 
     HL = upSampler(HL_, stride, n, 1, 0);
-    HL(1:h / (partition / 2), 1:w / (partition / 2)) = pn_LPF(HL(1:h / (partition / 2), 1:w / (partition / 2)), 0);
+    HL(1:h / (partition / 2), 1:w / (partition / 2)) = qn_HPF(HL(1:h / (partition / 2), 1:w / (partition / 2)), 0);
 
     HH = upSampler(HH_, stride, n, 0, 0);
-    HH(1:h / (partition / 2), 1:w / (partition / 2)) = qn_HPF(HH(1:h / (partition / 2), 1:w / (partition / 2)), 0);
+    HH(1:h / (partition / 2), 1:w / (partition / 2)) = pn_LPF(HH(1:h / (partition / 2), 1:w / (partition / 2)), 0);
 
+    % Minor difference in boundary of 160 colunms and rows.
     s1 = HL + HH;
-
-    % figure(10);
-    % imshow(s0, [-255 255]);
-    % title('s0');
-
-    % figure(11);
-    % imshow(s1, [-255 255]);
-    % title('s1');
 
     % Horizontal!
     s0_ = upSampler(s0, stride, n, 1, 1);
-    s0_(1:h / (partition / 2), 1:w / (partition / 2)) = pn_LPF(s0_(1:h / (partition / 2), 1:w / (partition / 2)), 1);
+    s0_(1:h / (partition / 2), 1:w / (partition / 2)) = qn_HPF(s0_(1:h / (partition / 2), 1:w / (partition / 2)), 1);
 
     s1_ = upSampler(s1, stride, n, 0, 1);
-    s1_(1:h / (partition / 2), 1:w / (partition / 2)) = qn_HPF(s1_(1:h / (partition / 2), 1:w / (partition / 2)), 1);
+    s1_(1:h / (partition / 2), 1:w / (partition / 2)) = pn_LPF(s1_(1:h / (partition / 2), 1:w / (partition / 2)), 1);
 
     s_temp = s0_ + s1_;
 
-    % figure(12);
-    % subplot(1,2,1)
-    % imshow(s_temp, [-255 255]);
-    % title('s temp');
 
     reconstructed_img(1:h / (partition / 2), 1:w / (partition / 2)) = s_temp;
-
-    % figure(13);
-    % subplot(1,2,1)
-    % imshow(compressed_img, [-255 255]);
-    % title('Compressed img');
-
-    % subplot(2,2,2)
-    % imshow(reconstructed_img, [-255 255]);
-    % title('reconstructed img');
 
 end
 
@@ -274,9 +247,8 @@ function filtered_img = hn_LPF(raw_img, horizontal)
 end
 
 function filtered_img = qn_HPF(raw_img, horizontal)
-    wn = [0.064538882629 -0.040689417609 -0.418092273222 ...
-              0.788485616406 ...
-              -0.418092273222 -0.040689417609 0.064538882629];
+    wn = [-0.064538882629 -0.040689417609 0.418092273222 0.788485616406 ...
+              0.418092273222 -0.040689417609 -0.064538882629];
 
     [h, w] = size(raw_img);
     filtered_img = raw_img;
@@ -302,9 +274,9 @@ function filtered_img = qn_HPF(raw_img, horizontal)
 end
 
 function filtered_img = pn_LPF(raw_img, horizontal)
-    wn = [-0.037828455507 0.023849465020 0.110624404418 -0.377402855613 ...
-              -0.852698679009 ...
-              -0.377402855613 0.110624404418 0.023849465020 -0.037828455507];
+    wn = [-0.037828455507 -0.023849465020 0.110624404418 0.377402855613 ...
+              -0.852698679009 0.377402855613 0.110624404418 -0.023849465020 ...
+              -0.037828455507];
 
     [h, w] = size(raw_img);
     filtered_img = raw_img;
@@ -329,20 +301,18 @@ function filtered_img = pn_LPF(raw_img, horizontal)
 
 end
 
-function yn = filterSystem(xn, wn, N)
-    % N signals
-    % xn is the input signals
-    % wn is the coefficient vector of filterSystem
-    yn = zeros(1, N);
-    L = size(wn);
-    L = L(2);
+%% Filter
+function y = filterSystem(xn, wn, N)
+    % x: inputs, w: weights
 
-    %Symmetric extension
-    xn = [flip(xn(2:(L - 1) / 2)), xn, flip(xn(N - ((L - 1) / 2):N - 1))];
+    M = size(wn, 2);
+    L = fix(M / 2); % extend size // 2
+    y = zeros(1, N); % result
+    % sym. extend
+    x = [flip(xn(2:L + 1)), xn, flip(xn(N - L:N - 1))];
 
-    for n = L:N + ((L - 1) / 2) * 2 - 1
-        x = xn(n:-1:n - L + 1);
-        yn(n - L + 1) = wn * x';
+    for i = 1:N
+        y(i) = dot(wn, x(1, i:i + M - 1));
     end
 
 end
@@ -387,7 +357,6 @@ function upSampledimg = upSampler(img, stride, n, odd, horizontal)
 
     if horizontal == 1
         upSampledimg = zeros(h);
-
         if odd == 0
             %even for HPF
             upSampledimg(1:h, 2:stride:w) = img(1:h, 1:w / 2);
