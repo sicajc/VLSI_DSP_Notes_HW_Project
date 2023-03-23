@@ -91,20 +91,19 @@ ioctave2 = idwt_octave(ioctave3, stride, 2);
 ioctave1 = idwt_octave(ioctave2, stride, 1);
 
 restored_image = Quantization(ioctave1);
-
 figure(7);
 imshow(restored_image, [-255 255]);
 title('Restored Image');
 
 %Convert computing result matrix to grayscale image
 img = single(mat2gray(img));
-restored_image = single(mat2gray(ioctave1));
+restored_image_ = single(mat2gray(ioctave1));
 
 %================================================================
 %  PSNR
 %================================================================
 disp("PSNR:");
-[psnr, difference] = PSNR(img, restored_image);
+[psnr, difference] = PSNR(img, restored_image_);
 fprintf('%.2f db\n', psnr);
 
 %================================================================
@@ -339,9 +338,9 @@ function yn = filterSystem(xn, wn, N)
     L = L(2);
 
     %Symmetric extension
-    xn = [flip(xn(2:(L / 2 + 1))), xn, flip(xn(N - ((L / 2) + 1):N - 1))];
+    xn = [flip(xn(2:(L - 1) / 2)), xn, flip(xn(N - ((L - 1) / 2):N - 1))];
 
-    for n = L:N + ((L / 2) + 1) + 2
+    for n = L:N + ((L - 1) / 2) * 2 - 1
         x = xn(n:-1:n - L + 1);
         yn(n - L + 1) = wn * x';
     end
