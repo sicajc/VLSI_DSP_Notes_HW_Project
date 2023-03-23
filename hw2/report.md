@@ -353,7 +353,7 @@
 
 ### PSNR
 <p align="center">
-  <img src="./img/filtered_result/psnr_not_zero_padded.jpg" width="600" heigh ="500">
+  <img src="./img/filtered_result/psnr_result.jpg" width="600" heigh ="500">
 </p>
 
 
@@ -367,15 +367,14 @@
 
 ### PSNR
 <p align="center">
-  <img src="./img/filtered_result/psnr_result.jpg" width="600" heigh ="300">
+  <img src="./img/filtered_result/psnr_not_zero_padded.jpg" width="600" heigh ="300">
 </p>
 
 - Note the image after setting LL,LH,HL,HH to zero is as expected lower than using the high frequency data of the LL,LH,HL,HH subbands.
 
 ### Note
-1. The result I restored is still quite foggy, perhaps interpolation can be ultilized to further restore the whole image.
-2. PSNR rate needs to be higher than 50db to achieve the Lossless filtering. Here it is over 50 db thus being Lossless.
-
+1. The DWT with the subbands attached can yields amazing restoration results.
+2. High frequency components are important for image reconstruction.
 <div style="page-break-after: always;"></div>
 
 # III. References

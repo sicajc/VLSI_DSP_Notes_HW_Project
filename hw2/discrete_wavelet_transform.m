@@ -75,7 +75,7 @@ plot([p9(2), p10(2)], [p9(1), p10(1)], [p11(2), p12(2)], [p11(1), p12(1)], 'Colo
 %================================================================
 %  IDWT
 %================================================================
-zero_padded = 0;
+zero_padded = 1;
 octave3_ = zeros(h);
 
 if zero_padded == 1
@@ -116,25 +116,25 @@ function filtered_img = dwt_octave(raw_img, stride, n)
     partition = 2 ^ n;
 
     % Horizontal
-    H1 = gn_HPF(raw_img, 1);
+    H1 = gn_HPF(raw_img(1:h / (partition / 2), 1:w / (partition / 2)), 1);
     H1_ = downSampler(H1, stride, 0, n, 1);
 
-    L1 = hn_LPF(raw_img, 1);
+    L1 = hn_LPF(raw_img(1:h / (partition / 2), 1:w / (partition / 2)), 1);
     L1_ = downSampler(L1, stride, 1, n, 1);
 
     % Vertical!, i have problem here! The high pass components leads to some errors.
-    HH = gn_HPF(H1_, 0);
+    HH = gn_HPF(H1_(1:h / (partition / 2), 1:w / partition), 0);
     HH_ = downSampler(HH, stride, 0, n, 0);
 
-    HL = hn_LPF(H1_, 0);
+    HL = hn_LPF(H1_(1:h / (partition / 2), 1:w / partition), 0);
     HL_ = downSampler(HL, stride, 1, n, 0);
 
-    LH = gn_HPF(L1_, 0);
+    LH = gn_HPF(L1_(1:h / (partition / 2), 1:w / partition), 0);
     LH_ = downSampler(LH, stride, 0, n, 0);
 
-    LL = hn_LPF(L1_, 0);
+    LL = hn_LPF(L1_(1:h / (partition / 2), 1:w / partition), 0);
     LL_ = downSampler(LL, stride, 1, n, 0);
-
+    % Trace till here, problems happens with LL_
     % Recombination
     filtered_img(1:h / partition, 1:w / partition) = LL_(1:h / partition, 1:w / partition);
 
@@ -160,33 +160,107 @@ function reconstructed_img = idwt_octave(compressed_img, stride, n)
 
     % Vertical!
     LL = upSampler(LL_, stride, n, 1, 0);
-    LL(1:h / (partition / 2), 1:w / (partition / 2)) = qn_HPF(LL(1:h / (partition / 2), 1:w / (partition / 2)), 0);
+    LL_test = LL(1:h / (partition / 2), 1:w / partition);
+    LL(1:h / (partition / 2), 1:w / (partition)) = qn_LPF(LL_test, 0);
 
+    % LH is wrong~ for the last 3 columns.
     LH = upSampler(LH_, stride, n, 0, 0);
-    LH(1:h / (partition / 2), 1:w / (partition / 2)) = pn_LPF(LH(1:h / (partition / 2), 1:w / (partition / 2)), 0);
+    LH(1:h / (partition / 2), 1:w / (partition)) = pn_HPF(LH(1:h / (partition / 2), 1:w / partition), 0);
 
     s0 = LL + LH;
 
     HL = upSampler(HL_, stride, n, 1, 0);
-    HL(1:h / (partition / 2), 1:w / (partition / 2)) = qn_HPF(HL(1:h / (partition / 2), 1:w / (partition / 2)), 0);
+    HL(1:h / (partition / 2), 1:w / (partition)) = qn_LPF(HL(1:h / (partition / 2), 1:w / partition), 0);
 
     HH = upSampler(HH_, stride, n, 0, 0);
-    HH(1:h / (partition / 2), 1:w / (partition / 2)) = pn_LPF(HH(1:h / (partition / 2), 1:w / (partition / 2)), 0);
+    HH(1:h / (partition / 2), 1:w / (partition)) = pn_HPF(HH(1:h / (partition / 2), 1:w / partition), 0);
 
     % Minor difference in boundary of 160 colunms and rows.
     s1 = HL + HH;
 
+    % disp("Size of s0");
+    % disp(size(s0));
+    % disp("Size of s1");
+    % disp(size(s1));
+
     % Horizontal!
     s0_ = upSampler(s0, stride, n, 1, 1);
-    s0_(1:h / (partition / 2), 1:w / (partition / 2)) = qn_HPF(s0_(1:h / (partition / 2), 1:w / (partition / 2)), 1);
+    disp("Size of s0_");
+    disp(size(s0_));
+    s0_ = qn_LPF(s0_, 1);
 
     s1_ = upSampler(s1, stride, n, 0, 1);
-    s1_(1:h / (partition / 2), 1:w / (partition / 2)) = pn_LPF(s1_(1:h / (partition / 2), 1:w / (partition / 2)), 1);
+    disp("Size of s1_");
+    disp(size(s1_));
+    s1_ = pn_HPF(s1_, 1);
 
     s_temp = s0_ + s1_;
 
-
     reconstructed_img(1:h / (partition / 2), 1:w / (partition / 2)) = s_temp;
+
+end
+
+function downSampledimg = downSampler(img, stride, odd, n, horizontal)
+    [h, w] = size(img);
+    partition = 2 ^ n;
+    % downSampledimg = img;
+    downSampledimg = zeros(h);
+
+    if horizontal == 1
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 2:stride:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 1:stride:w);
+        end
+
+    else
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h / 2, 1:w) = img(2:stride:h, 1:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h / 2, 1:w) = img(1:stride:h, 1:w);
+        end
+
+    end
+
+end
+
+function upSampledimg = upSampler(img, stride, n, odd, horizontal)
+    % Interpolation algorithm should be adopted to further increase resolution after upSampling
+    % n means nth dwt_octave
+    [h, w] = size(img);
+    partition = 2 ^ n;
+    new_h = 2 * h;
+    new_w = 2 * w;
+
+    if horizontal == 1
+        upSampledimg = zeros(h);
+
+        if odd == 0
+            %even for HPF
+            upSampledimg(1:h, 2:stride:w) = img(1:h, 1:w / 2);
+        else
+            %odd for LPF
+            upSampledimg(1:h, 1:stride:w) = img(1:h, 1:w / 2);
+        end
+
+    else
+        upSampledimg = zeros(2 * h);
+        % Vertical
+        if odd == 0
+            %even for HPF
+            upSampledimg(2:stride:new_h, 1:new_w / 2) = img(1:h, 1:w);
+        else
+            %odd for LPF
+            upSampledimg(1:stride:new_h, 1:new_w / 2) = img(1:h, 1:w);
+        end
+
+    end
 
 end
 
@@ -246,7 +320,7 @@ function filtered_img = hn_LPF(raw_img, horizontal)
 
 end
 
-function filtered_img = qn_HPF(raw_img, horizontal)
+function filtered_img = qn_LPF(raw_img, horizontal)
     wn = [-0.064538882629 -0.040689417609 0.418092273222 0.788485616406 ...
               0.418092273222 -0.040689417609 -0.064538882629];
 
@@ -273,7 +347,7 @@ function filtered_img = qn_HPF(raw_img, horizontal)
 
 end
 
-function filtered_img = pn_LPF(raw_img, horizontal)
+function filtered_img = pn_HPF(raw_img, horizontal)
     wn = [-0.037828455507 -0.023849465020 0.110624404418 0.377402855613 ...
               -0.852698679009 0.377402855613 0.110624404418 -0.023849465020 ...
               -0.037828455507];
@@ -301,81 +375,17 @@ function filtered_img = pn_LPF(raw_img, horizontal)
 
 end
 
-%% Filter
-function y = filterSystem(xn, wn, N)
-    % x: inputs, w: weights
-
+% Filter
+function yn = filterSystem(xn, wn, N)
+    N = length(xn);
     M = size(wn, 2);
     L = fix(M / 2); % extend size // 2
-    y = zeros(1, N); % result
-    % sym. extend
-    x = [flip(xn(2:L + 1)), xn, flip(xn(N - L:N - 1))];
+    yn = zeros(1, N); % result
+
+    x = [flip(xn(2:L + 1)), xn, flip(xn(N - L:N - 1))]; % Symmetric extension!
 
     for i = 1:N
-        y(i) = dot(wn, x(1, i:i + M - 1));
-    end
-
-end
-
-function downSampledimg = downSampler(img, stride, odd, n, horizontal)
-    [h, w] = size(img);
-    partition = 2 ^ n;
-    % downSampledimg = img;
-    downSampledimg = zeros(h);
-
-    if horizontal == 1
-
-        if odd == 0
-            %even for HPF
-            downSampledimg(1:h, 1:w / partition) = img(1:h, 2:stride:w / (partition / 2));
-        else
-            %odd for LPF
-            downSampledimg(1:h, 1:w / partition) = img(1:h, 1:stride:w / (partition / 2));
-        end
-
-    else
-
-        if odd == 0
-            %even for HPF
-            downSampledimg(1:h / partition, 1:w) = img(2:stride:h / (partition / 2), 1:w);
-        else
-            %odd for LPF
-            downSampledimg(1:h / partition, 1:w) = img(1:stride:h / (partition / 2), 1:w);
-        end
-
-    end
-
-end
-
-function upSampledimg = upSampler(img, stride, n, odd, horizontal)
-    % Interpolation algorithm should be adopted to further increase resolution after upSampling
-    % n means nth dwt_octave
-    [h, w] = size(img);
-    partition = 2 ^ n;
-    new_h = 2 * h;
-    new_w = 2 * w;
-
-    if horizontal == 1
-        upSampledimg = zeros(h);
-        if odd == 0
-            %even for HPF
-            upSampledimg(1:h, 2:stride:w) = img(1:h, 1:w / 2);
-        else
-            %odd for LPF
-            upSampledimg(1:h, 1:stride:w) = img(1:h, 1:w / 2);
-        end
-
-    else
-        upSampledimg = zeros(2 * h);
-        % Vertical
-        if odd == 0
-            %even for HPF
-            upSampledimg(2:stride:new_h, 1:new_w / 2) = img(1:h, 1:w);
-        else
-            %odd for LPF
-            upSampledimg(1:stride:new_h, 1:new_w / 2) = img(1:h, 1:w);
-        end
-
+        yn(i) = dot(wn, x(1, i:i + M - 1));
     end
 
 end
