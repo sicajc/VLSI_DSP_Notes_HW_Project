@@ -211,16 +211,19 @@
 
 <div style="page-break-after: always;"></div>
 
-## 3-level DWT transform
+## 2D DWT transform octave
 
 <p align="center">
   <img src="./img/three_level_DWT.jpg" width="300" heigh ="250">
 </p>
 
+- Each octave generates LL,LH,HH,HL subbands. The figure only shows octave1, for three level octave, 3 octaves must be cascaded together.
+
 - The 3 level DWT structure has 3 octaves, where after passing each octaves the image becomes 2 times smaller than the original image due to down-Sampler.
 
+
 - When doing downsampling, low pass filter sample the odd number output data, while high pass filters keep the even number output data.
-## 3-level IDWT transform
+## 2D IDWT transform octave
 
 <p align="center">
   <img src="./img/three_level_IDWT.jpg" width="300" heigh ="250">
@@ -256,8 +259,9 @@
 
 ### g(n) High pass filter and h(n) low pass filter
 <p align="center">
-  <img src="./img/problem2_filters_gn_hn.png" width="400" heigh ="300">
+  <img src="./img/problem2_filters_gn_hn.png" width="300" heigh ="300">
 </p>
+
 
 <div style="page-break-after: always;"></div>
 
@@ -267,20 +271,39 @@
 </p>
 
 
-### Down Sampler & UpSampler
+### Down Sampler
 <p align="center">
-  <img src="./img/problem2_down_sampler.png" width="400" heigh ="300">
+  <img src="./img/problem2_down_sampler.png" width="300" heigh ="300">
 </p>
+
+<div style="page-break-after: always;"></div>
+
+### UpSampler
 
 <p align="center">
   <img src="./img/problem2_upSampler.png" width="400" heigh ="300">
 </p>
 
-<div style="page-break-after: always;"></div>
+
 
 ### PSNR
 <p align="center">
   <img src="./img/problem2_PSNR.png" width="400" heigh ="300">
+</p>
+
+
+
+### DWT octave
+<p align="center">
+  <img src="./img/problem2_dwt_octaves.png" width="400" heigh ="300">
+</p>
+
+<div style="page-break-after: always;"></div>
+
+### IDWT octave
+
+<p align="center">
+  <img src="./img/problem2_idwt_octaves.png" width="400" heigh ="300">
 </p>
 
 
@@ -310,49 +333,48 @@
 <div style="page-break-after: always;"></div>
 
 # Result
-### DWT w1n,w2n,w3n
-<p align="center">
-  <img src="./img/filtered_result/w1n.jpg" width="400" heigh ="300">
-</p>
+## Original image
 
 <p align="center">
-  <img src="./img/filtered_result/w2n.jpg" width="400" heigh ="300">
+  <img src="./img/filtered_result/original.jpg" width="300" heigh ="300">
 </p>
 
+## a) DWT result
 <p align="center">
-  <img src="./img/filtered_result/w3n.jpg" width="400" heigh ="300">
-</p>
-
-### DWT s1n,s2n,s3n
-<p align="center">
-  <img src="./img/filtered_result/s1n.jpg" width="400" heigh ="300">
-</p>
-
-<p align="center">
-  <img src="./img/filtered_result/s2n.jpg" width="400" heigh ="300">
-</p>
-
-<p align="center">
-  <img src="./img/filtered_result/s3n.jpg" width="400" heigh ="300">
+  <img src="./img/filtered_result/dwt_Result.jpg" width="300" heigh ="300">
 </p>
 
 <div style="page-break-after: always;"></div>
 
-### s0 hatn Restored image
+##  Holds LH,HH,HL Restored image
 <p align="center">
-  <img src="./img/filtered_result/s0_hatn.jpg" width="400" heigh ="300">
+  <img src="./img/filtered_result/s0_hatn.jpg" width="300" heigh ="300">
 </p>
 
 ### PSNR
 <p align="center">
-  <img src="./img/filtered_result/psnr_result.jpg" width="500" heigh ="500">
+  <img src="./img/filtered_result/psnr_not_zero_padded.jpg" width="600" heigh ="500">
 </p>
 
-- Note the PSNR is terrible, yet we can still see the image being briefly restored, I suppose more filtering should be performed on the image to fully restore the whole image.
+
+## b) Sets LH,HH,HL all to 0
+### Restored image
+<p align="center">
+  <img src="./img/filtered_result/s0_hatn.jpg" width="300" heigh ="300">
+</p>
+
+<div style="page-break-after: always;"></div>
+
+### PSNR
+<p align="center">
+  <img src="./img/filtered_result/psnr_result.jpg" width="600" heigh ="300">
+</p>
+
+- Note the image after setting LL,LH,HL,HH to zero is as expected lower than using the high frequency data of the LL,LH,HL,HH subbands.
 
 ### Note
-1. The result of the Wavelet transform can briefly restore the image, but I am not able to fully restore the whole resolution of the image. Perhaps some action should be taken to combat the loss of data during the upSampling process.
-2. PSNR rate needs to be higher than 50db to achieve the Lossless filtering, I suppose the problem occurs during the upSampling process, where better algorithm should be adopted s.t. the image can restore its resolution.
+1. The result I restored is still quite foggy, perhaps interpolation can be ultilized to further restore the whole image.
+2. PSNR rate needs to be higher than 50db to achieve the Lossless filtering. Here it is over 50 db thus being Lossless.
 
 <div style="page-break-after: always;"></div>
 
@@ -370,4 +392,4 @@
 
 [6] [VLSI Digital Signal processing systems Design and Implementation, p25~28 by Parhi]()
 
-</font>
+[7] [Image Denoising Based on Improved Wavelet Threshold Function for Wireless Camera Networks and Transmissions,Sep 2015, Reserach Gate,Xiaoyu Wang Xiaoxu Ou Bo-Wei Chen Mucheol Kim](https://www.researchgate.net/figure/The-inverse-discrete-wavelet-transform-Here-h-i-i14-i-i-h-i-i14-i-i-h-i_fig7_283882847)
