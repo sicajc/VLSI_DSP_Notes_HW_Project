@@ -325,6 +325,7 @@
   <img src="./img/problem2_main_driver_plots.png" width="300" heigh ="300">
 </p>
 
+
 <p align="center">
   <img src="./img/problem2_main_driver_plotsPSNR.png" width="300" heigh ="300">
 </p>

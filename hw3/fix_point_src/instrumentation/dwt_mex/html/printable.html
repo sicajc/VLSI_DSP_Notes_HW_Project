@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+<h1>Instrumentation Results for dwt_mex</h1>
+<h2>Summary</h2>
+<p>To re-create this report:</p>
+<pre>  showInstrumentationResults dwt_mex</pre>
+
+<p>MEX-function name:</p>
+<pre>dwt_mex</pre>
+<p>Timestamp:</p>
+<pre>Fri Apr  7 12:06:36 2023</pre>
+<p>To open this report from the MATLAB command line:</p>
+<pre> web('-browser','C:\Users\User\Desktop\VLSI_DSP_Notes_HW_Project\hw3\fix_point_src\instrumentation\dwt_mex\html\printable.html')</pre>
+
+
+<h2>Function dwt </h2>
+
+<pre>
+function filtered_img = dwt(raw_img, stride, T)
+
+    % Octave 1
+    octave1 = octave(raw_img, stride, 1,T);
+
+    % Octave 2
+    octave2 = octave(octave1, stride, 2,T);
+
+    % Octave 3
+    filtered_img = octave(octave2, stride, 3,T);
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for dwt</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>filtered_img</code></td><td><code>Output</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>96</code></td><td><code>No</code></td><td><code>-466.4443359375</code></td><td><code>1956.734375</code></td></tr>
+<tr><td><code>octave1</code></td><td><code>Local</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>25</code></td><td><code>No</code></td><td><code>-221.99609375</code></td><td><code>504.2392578125</code></td></tr>
+<tr><td><code>octave2</code></td><td><code>Local</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>49</code></td><td><code>No</code></td><td><code>-294.3291015625</code></td><td><code>986.5927734375</code></td></tr>
+<tr><td><code>raw_img</code></td><td><code>Input</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>13</code></td><td><code><b>Yes</b></code></td><td><code>7</code></td><td><code>250</code></td></tr>
+<tr><td><code>stride</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+</table>
+
+<h2>Function filterSystem&gt;1 </h2>
+
+<pre>
+function yn = filterSystem(xn, wn, N, T, dwt_mode)
+    N = length(xn);
+    M = size(wn, 2);
+    L = fix(M / 2); % extend size // 2
+
+    if dwt_mode == 1
+        yn = zeros(1, N); % result
+        yn = cast(yn, 'like', T.filter_coef);
+    else
+        yn = zeros(1, N); % result
+    end
+
+    x = [flip(xn(2:L + 1)), xn, flip(xn(N - L:N - 1))]; % Symmetric extension!
+
+    for i = 1:N
+        yn(i) = wn * x(1, i:i + M - 1)';
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for filterSystem&gt;1</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>L</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>3</code></td><td><code>3</code></td></tr>
+<tr><td><code>M</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>7</code></td><td><code>7</code></td></tr>
+<tr><td><code>N</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+<tr><td><code>dwt_mode</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>512</code></td></tr>
+<tr><td><code>wn</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;7</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>-0.7880859375</code></td><td><code>0.41796875</code></td></tr>
+<tr><td><code>x</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;518</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>18</code></td><td><code>No</code></td><td><code>-159.810546875</code></td><td><code>359.845703125</code></td></tr>
+<tr><td><code>xn</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>18</code></td><td><code>No</code></td><td><code>-159.810546875</code></td><td><code>359.845703125</code></td></tr>
+<tr><td><code>yn&gt;1</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>11</code></td><td><code>No</code></td><td><code>-191.6845703125</code></td><td><code>207.1123046875</code></td></tr>
+<tr><td><code>yn&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;512</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+</table>
+
+<h2>Function gn_HPF&gt;1 </h2>
+
+<pre>
+function filtered_img = gn_HPF(raw_img, horizontal, T)
+    wn = [-0.064538882629 0.040689417609 0.418092273222 ...
+              -0.788485616406 ...
+              0.418092273222 0.040689417609 -0.064538882629];
+
+    wn = cast(wn, 'like', T.filter_coef);
+    dwt_mode = 1;
+
+    [h, w] = size(raw_img);
+    filtered_img = cast(raw_img, 'like', T.filter_coef);
+
+    if horizontal == 1
+        %Horizontal filtering
+        for i = 1:h
+            row_img = cast(raw_img(i, :), 'like', T.filter_coef);
+            filtered_row = filterSystem(row_img, wn, w, T,dwt_mode);
+            filtered_img(i, :) = filtered_row;
+        end
+
+    else
+        % Vertical filtering
+        for i = 1:w
+            col_img = cast(raw_img(:, i), 'like', T.filter_coef);
+            filtered_col = filterSystem(col_img', wn, h, T,dwt_mode);
+            filtered_img(:, i) = filtered_col;
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for gn_HPF&gt;1</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>dwt_mode</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>filtered_img</code></td><td><code>Output</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>13</code></td><td><code>No</code></td><td><code>-159.810546875</code></td><td><code>250</code></td></tr>
+<tr><td><code>filtered_row</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>9</code></td><td><code>No</code></td><td><code>-159.810546875</code></td><td><code>175.146484375</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>512</code></td></tr>
+<tr><td><code>raw_img</code></td><td><code>Input</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>13</code></td><td><code><b>Yes</b></code></td><td><code>7</code></td><td><code>250</code></td></tr>
+<tr><td><code>row_img</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>13</code></td><td><code><b>Yes</b></code></td><td><code>7</code></td><td><code>250</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+<tr><td><code>wn&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;7</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>-0.7880859375</code></td><td><code>0.41796875</code></td></tr>
+<tr><td><code>wn&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;7</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>No</code></td><td><code>-0.788485616406</code></td><td><code>0.418092273222</code></td></tr>
+</table>
+
+<h2>Function downSampler&gt;1 </h2>
+
+<pre>
+function downSampledimg = downSampler(img, stride, odd, n, horizontal,T)
+    [h, w] = size(img);
+    partition = 2 ^ n;
+    downSampledimg = cast(zeros(h),'like',T.filter_coef);
+
+    if horizontal == 1
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 2:stride:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 1:stride:w);
+        end
+
+    else
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h / 2, 1:w) = img(2:stride:h, 1:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h / 2, 1:w) = img(1:stride:h, 1:w);
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for downSampler&gt;1</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>downSampledimg</code></td><td><code>Output</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>9</code></td><td><code>No</code></td><td><code>-159.810546875</code></td><td><code>175.146484375</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>img</code></td><td><code>Input</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>9</code></td><td><code>No</code></td><td><code>-159.810546875</code></td><td><code>175.146484375</code></td></tr>
+<tr><td><code>n</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>odd</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>partition</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>stride</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+</table>
+
+<h2>Function filterSystem&gt;2 </h2>
+
+<pre>
+function yn = filterSystem(xn, wn, N, T, dwt_mode)
+    N = length(xn);
+    M = size(wn, 2);
+    L = fix(M / 2); % extend size // 2
+
+    if dwt_mode == 1
+        yn = zeros(1, N); % result
+        yn = cast(yn, 'like', T.filter_coef);
+    else
+        yn = zeros(1, N); % result
+    end
+
+    x = [flip(xn(2:L + 1)), xn, flip(xn(N - L:N - 1))]; % Symmetric extension!
+
+    for i = 1:N
+        yn(i) = wn * x(1, i:i + M - 1)';
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for filterSystem&gt;2</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>L</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>4</code></td><td><code>4</code></td></tr>
+<tr><td><code>M</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>9</code></td><td><code>9</code></td></tr>
+<tr><td><code>N</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+<tr><td><code>dwt_mode</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>512</code></td></tr>
+<tr><td><code>wn</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;9</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>-0.1103515625</code></td><td><code>0.8525390625</code></td></tr>
+<tr><td><code>x</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;520</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>18</code></td><td><code>No</code></td><td><code>-159.810546875</code></td><td><code>359.845703125</code></td></tr>
+<tr><td><code>xn</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>18</code></td><td><code>No</code></td><td><code>-159.810546875</code></td><td><code>359.845703125</code></td></tr>
+<tr><td><code>yn&gt;1</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>25</code></td><td><code>No</code></td><td><code>-221.99609375</code></td><td><code>504.2392578125</code></td></tr>
+<tr><td><code>yn&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;512</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+</table>
+
+<h2>Function hn_LPF&gt;1 </h2>
+
+<pre>
+function filtered_img = hn_LPF(raw_img, horizontal, T)
+    wn = [0.037828455507 -0.023849465020 -0.110624404418 0.377402855613 ...
+              0.852698679009 ...
+              0.377402855613 -0.110624404418 -0.023849465020 0.037828455507];
+
+    wn = cast(wn, 'like', T.filter_coef);
+
+    dwt_mode = 1;
+
+    [h, w] = size(raw_img);
+    %Outputs
+    filtered_img = cast(raw_img, 'like', T.lv1_output);
+
+    if horizontal == 1
+        %Horizontal filtering
+        for i = 1:h
+            row_img = raw_img(i, :);
+
+            % row_img = cast(raw_img(i, :), 'like', T.filter_coef);
+            filtered_row = filterSystem(row_img, wn, w, T,dwt_mode);
+            filtered_img(i, :) = filtered_row;
+        end
+
+    else
+        % Vertical filtering
+        for i = 1:w
+            col_img = raw_img(:, i);
+
+            % col_img = cast(raw_img(:, i), 'like', T.filter_coef);
+            filtered_col = filterSystem(col_img', wn, h, T,dwt_mode);
+            filtered_img(:, i) = filtered_col;
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for hn_LPF&gt;1</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>dwt_mode</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>filtered_img</code></td><td><code>Output</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>18</code></td><td><code>No</code></td><td><code>7</code></td><td><code>365.9970703125</code></td></tr>
+<tr><td><code>filtered_row</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>18</code></td><td><code>No</code></td><td><code>8.5322265625</code></td><td><code>365.9970703125</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>512</code></td></tr>
+<tr><td><code>raw_img</code></td><td><code>Input</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>13</code></td><td><code><b>Yes</b></code></td><td><code>7</code></td><td><code>250</code></td></tr>
+<tr><td><code>row_img</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>13</code></td><td><code><b>Yes</b></code></td><td><code>7</code></td><td><code>250</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+<tr><td><code>wn&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;9</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>-0.1103515625</code></td><td><code>0.8525390625</code></td></tr>
+<tr><td><code>wn&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;9</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>No</code></td><td><code>-0.110624404418</code></td><td><code>0.852698679009</code></td></tr>
+</table>
+
+<h2>Function downSampler&gt;2 </h2>
+
+<pre>
+function downSampledimg = downSampler(img, stride, odd, n, horizontal,T)
+    [h, w] = size(img);
+    partition = 2 ^ n;
+    downSampledimg = cast(zeros(h),'like',T.filter_coef);
+
+    if horizontal == 1
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 2:stride:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 1:stride:w);
+        end
+
+    else
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h / 2, 1:w) = img(2:stride:h, 1:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h / 2, 1:w) = img(1:stride:h, 1:w);
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for downSampler&gt;2</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>downSampledimg</code></td><td><code>Output</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>18</code></td><td><code>No</code></td><td><code>0</code></td><td><code>359.845703125</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>img</code></td><td><code>Input</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>18</code></td><td><code>No</code></td><td><code>8.5322265625</code></td><td><code>365.9970703125</code></td></tr>
+<tr><td><code>n</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>odd</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>partition</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>stride</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+</table>
+
+<h2>Function gn_HPF&gt;2 </h2>
+
+<pre>
+function filtered_img = gn_HPF(raw_img, horizontal, T)
+    wn = [-0.064538882629 0.040689417609 0.418092273222 ...
+              -0.788485616406 ...
+              0.418092273222 0.040689417609 -0.064538882629];
+
+    wn = cast(wn, 'like', T.filter_coef);
+    dwt_mode = 1;
+
+    [h, w] = size(raw_img);
+    filtered_img = cast(raw_img, 'like', T.filter_coef);
+
+    if horizontal == 1
+        %Horizontal filtering
+        for i = 1:h
+            row_img = cast(raw_img(i, :), 'like', T.filter_coef);
+            filtered_row = filterSystem(row_img, wn, w, T,dwt_mode);
+            filtered_img(i, :) = filtered_row;
+        end
+
+    else
+        % Vertical filtering
+        for i = 1:w
+            col_img = cast(raw_img(:, i), 'like', T.filter_coef);
+            filtered_col = filterSystem(col_img', wn, h, T,dwt_mode);
+            filtered_img(:, i) = filtered_col;
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for gn_HPF&gt;2</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>col_img</code></td><td><code>Local</code></td><td><code>512&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>18</code></td><td><code>No</code></td><td><code>-159.810546875</code></td><td><code>359.845703125</code></td></tr>
+<tr><td><code>dwt_mode</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>filtered_col</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>11</code></td><td><code>No</code></td><td><code>-191.6845703125</code></td><td><code>207.1123046875</code></td></tr>
+<tr><td><code>filtered_img</code></td><td><code>Output</code></td><td><code>512&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>18</code></td><td><code>No</code></td><td><code>-191.6845703125</code></td><td><code>359.845703125</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>256</code></td></tr>
+<tr><td><code>raw_img</code></td><td><code>Input</code></td><td><code>512&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>18</code></td><td><code>No</code></td><td><code>-159.810546875</code></td><td><code>359.845703125</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>256</code></td><td><code>256</code></td></tr>
+<tr><td><code>wn&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;7</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>-0.7880859375</code></td><td><code>0.41796875</code></td></tr>
+<tr><td><code>wn&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;7</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>No</code></td><td><code>-0.788485616406</code></td><td><code>0.418092273222</code></td></tr>
+</table>
+
+<h2>Function downSampler&gt;3 </h2>
+
+<pre>
+function downSampledimg = downSampler(img, stride, odd, n, horizontal,T)
+    [h, w] = size(img);
+    partition = 2 ^ n;
+    downSampledimg = cast(zeros(h),'like',T.filter_coef);
+
+    if horizontal == 1
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 2:stride:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 1:stride:w);
+        end
+
+    else
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h / 2, 1:w) = img(2:stride:h, 1:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h / 2, 1:w) = img(1:stride:h, 1:w);
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for downSampler&gt;3</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>downSampledimg</code></td><td><code>Output</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>11</code></td><td><code>No</code></td><td><code>-191.6845703125</code></td><td><code>207.1123046875</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>img</code></td><td><code>Input</code></td><td><code>512&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>11</code></td><td><code>No</code></td><td><code>-191.6845703125</code></td><td><code>207.1123046875</code></td></tr>
+<tr><td><code>n</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>odd</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>partition</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>stride</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>256</code></td><td><code>256</code></td></tr>
+</table>
+
+<h2>Function hn_LPF&gt;2 </h2>
+
+<pre>
+function filtered_img = hn_LPF(raw_img, horizontal, T)
+    wn = [0.037828455507 -0.023849465020 -0.110624404418 0.377402855613 ...
+              0.852698679009 ...
+              0.377402855613 -0.110624404418 -0.023849465020 0.037828455507];
+
+    wn = cast(wn, 'like', T.filter_coef);
+
+    dwt_mode = 1;
+
+    [h, w] = size(raw_img);
+    %Outputs
+    filtered_img = cast(raw_img, 'like', T.lv1_output);
+
+    if horizontal == 1
+        %Horizontal filtering
+        for i = 1:h
+            row_img = raw_img(i, :);
+
+            % row_img = cast(raw_img(i, :), 'like', T.filter_coef);
+            filtered_row = filterSystem(row_img, wn, w, T,dwt_mode);
+            filtered_img(i, :) = filtered_row;
+        end
+
+    else
+        % Vertical filtering
+        for i = 1:w
+            col_img = raw_img(:, i);
+
+            % col_img = cast(raw_img(:, i), 'like', T.filter_coef);
+            filtered_col = filterSystem(col_img', wn, h, T,dwt_mode);
+            filtered_img(:, i) = filtered_col;
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for hn_LPF&gt;2</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>col_img</code></td><td><code>Local</code></td><td><code>512&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>18</code></td><td><code>No</code></td><td><code>-159.810546875</code></td><td><code>359.845703125</code></td></tr>
+<tr><td><code>dwt_mode</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>filtered_col</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>25</code></td><td><code>No</code></td><td><code>-221.99609375</code></td><td><code>504.2392578125</code></td></tr>
+<tr><td><code>filtered_img</code></td><td><code>Output</code></td><td><code>512&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>25</code></td><td><code>No</code></td><td><code>-221.99609375</code></td><td><code>504.2392578125</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>256</code></td></tr>
+<tr><td><code>raw_img</code></td><td><code>Input</code></td><td><code>512&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>18</code></td><td><code>No</code></td><td><code>-159.810546875</code></td><td><code>359.845703125</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>256</code></td><td><code>256</code></td></tr>
+<tr><td><code>wn&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;9</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>-0.1103515625</code></td><td><code>0.8525390625</code></td></tr>
+<tr><td><code>wn&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;9</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>No</code></td><td><code>-0.110624404418</code></td><td><code>0.852698679009</code></td></tr>
+</table>
+
+<h2>Function downSampler&gt;4 </h2>
+
+<pre>
+function downSampledimg = downSampler(img, stride, odd, n, horizontal,T)
+    [h, w] = size(img);
+    partition = 2 ^ n;
+    downSampledimg = cast(zeros(h),'like',T.filter_coef);
+
+    if horizontal == 1
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 2:stride:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 1:stride:w);
+        end
+
+    else
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h / 2, 1:w) = img(2:stride:h, 1:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h / 2, 1:w) = img(1:stride:h, 1:w);
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for downSampler&gt;4</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>downSampledimg</code></td><td><code>Output</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>25</code></td><td><code>No</code></td><td><code>-221.99609375</code></td><td><code>504.2392578125</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>img</code></td><td><code>Input</code></td><td><code>512&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>25</code></td><td><code>No</code></td><td><code>-221.99609375</code></td><td><code>504.2392578125</code></td></tr>
+<tr><td><code>n</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>odd</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>partition</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>stride</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>256</code></td><td><code>256</code></td></tr>
+</table>
+
+<h2>Function octave&gt;1 </h2>
+
+<pre>
+function filtered_img = octave(raw_img, stride, n,T)
+    [h, w] = size(raw_img);
+    filtered_img = cast(raw_img,'like',T.lv1_output);
+    partition = 2 ^ n;
+
+    % Horizontal
+    H1 = gn_HPF(raw_img(1:h / (partition / 2), 1:w / (partition / 2)), 1, T);
+    H1_ = downSampler(H1, stride, 0, n, 1,T);
+
+    % H1f = double(H1_);
+    % figure(7);
+    % imshow(H1f, []);
+    % title('H1_');
+
+    L1 = hn_LPF(raw_img(1:h / (partition / 2), 1:w / (partition / 2)), 1, T);
+    L1_ = downSampler(L1, stride, 1, n, 1,T);
+
+    % L1f = double(L1_);
+    % figure(7);
+    % imshow(L1f, []);
+    % title('L1_');
+
+    % Vertical!, i have problem here! The high pass components leads to some errors.
+    HH = gn_HPF(H1_(1:h / (partition / 2), 1:w / partition), 0, T);
+    HH_ = downSampler(HH, stride, 0, n, 0,T);
+
+    HL = hn_LPF(H1_(1:h / (partition / 2), 1:w / partition), 0, T);
+    HL_ = downSampler(HL, stride, 1, n, 0,T);
+
+    LH = gn_HPF(L1_(1:h / (partition / 2), 1:w / partition), 0, T);
+    LH_ = downSampler(LH, stride, 0, n, 0,T);
+
+    LL = hn_LPF(L1_(1:h / (partition / 2), 1:w / partition), 0, T);
+    LL_ = downSampler(LL, stride, 1, n, 0,T);
+    % Trace till here, problems happens with LL_
+    % Recombination
+    filtered_img(1:h / partition, 1:w / partition) = LL_(1:h / partition, 1:w / partition);
+
+    filtered_img(1:(h / partition), (w / partition) + 1:w / (partition / 2)) = HL_(1:h / partition, 1:w / partition);
+
+    filtered_img((h / partition) + 1:(h / (partition / 2)), 1:(w / partition)) = LH_(1:h / partition, 1:w / partition);
+    filtered_img((h / partition) + 1:(h / (partition / 2)), (w / partition) + 1:(w / (partition / 2))) = HH_(1:h / partition, 1:w / partition);
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for octave&gt;1</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>H1</code></td><td><code>Local</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>9</code></td><td><code>No</code></td><td><code>-159.810546875</code></td><td><code>175.146484375</code></td></tr>
+<tr><td><code>H1_</code></td><td><code>Local</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>9</code></td><td><code>No</code></td><td><code>-159.810546875</code></td><td><code>175.146484375</code></td></tr>
+<tr><td><code>HH</code></td><td><code>Local</code></td><td><code>512&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>11</code></td><td><code>No</code></td><td><code>-191.6845703125</code></td><td><code>207.1123046875</code></td></tr>
+<tr><td><code>HH_</code></td><td><code>Local</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>11</code></td><td><code>No</code></td><td><code>-191.6845703125</code></td><td><code>207.1123046875</code></td></tr>
+<tr><td><code>HL</code></td><td><code>Local</code></td><td><code>512&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>12</code></td><td><code>No</code></td><td><code>-221.99609375</code></td><td><code>238.8447265625</code></td></tr>
+<tr><td><code>HL_</code></td><td><code>Local</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>12</code></td><td><code>No</code></td><td><code>-221.99609375</code></td><td><code>238.8447265625</code></td></tr>
+<tr><td><code>L1</code></td><td><code>Local</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>18</code></td><td><code>No</code></td><td><code>8.5322265625</code></td><td><code>365.9970703125</code></td></tr>
+<tr><td><code>L1_</code></td><td><code>Local</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>18</code></td><td><code>No</code></td><td><code>0</code></td><td><code>359.845703125</code></td></tr>
+<tr><td><code>LH</code></td><td><code>Local</code></td><td><code>512&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>6</code></td><td><code>No</code></td><td><code>-112.0693359375</code></td><td><code>114.96484375</code></td></tr>
+<tr><td><code>LH_</code></td><td><code>Local</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>6</code></td><td><code>No</code></td><td><code>-112.0693359375</code></td><td><code>114.96484375</code></td></tr>
+<tr><td><code>LL</code></td><td><code>Local</code></td><td><code>512&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>25</code></td><td><code>No</code></td><td><code>10.8896484375</code></td><td><code>504.2392578125</code></td></tr>
+<tr><td><code>LL_</code></td><td><code>Local</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>25</code></td><td><code>No</code></td><td><code>0</code></td><td><code>504.2392578125</code></td></tr>
+<tr><td><code>filtered_img</code></td><td><code>Output</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>25</code></td><td><code>No</code></td><td><code>-221.99609375</code></td><td><code>504.2392578125</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+<tr><td><code>n</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>partition</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>raw_img</code></td><td><code>Input</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>13</code></td><td><code><b>Yes</b></code></td><td><code>7</code></td><td><code>250</code></td></tr>
+<tr><td><code>stride</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+</table>
+
+<h2>Function filterSystem&gt;3 </h2>
+
+<pre>
+function yn = filterSystem(xn, wn, N, T, dwt_mode)
+    N = length(xn);
+    M = size(wn, 2);
+    L = fix(M / 2); % extend size // 2
+
+    if dwt_mode == 1
+        yn = zeros(1, N); % result
+        yn = cast(yn, 'like', T.filter_coef);
+    else
+        yn = zeros(1, N); % result
+    end
+
+    x = [flip(xn(2:L + 1)), xn, flip(xn(N - L:N - 1))]; % Symmetric extension!
+
+    for i = 1:N
+        yn(i) = wn * x(1, i:i + M - 1)';
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for filterSystem&gt;3</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>L</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>3</code></td><td><code>3</code></td></tr>
+<tr><td><code>M</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>7</code></td><td><code>7</code></td></tr>
+<tr><td><code>N</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>256</code></td><td><code>256</code></td></tr>
+<tr><td><code>dwt_mode</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>256</code></td></tr>
+<tr><td><code>wn</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;7</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>-0.7880859375</code></td><td><code>0.41796875</code></td></tr>
+<tr><td><code>x</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;262</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>35</code></td><td><code>No</code></td><td><code>-216.27734375</code></td><td><code>703.5478515625</code></td></tr>
+<tr><td><code>xn</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>35</code></td><td><code>No</code></td><td><code>-216.27734375</code></td><td><code>703.5478515625</code></td></tr>
+<tr><td><code>yn&gt;1</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>14</code></td><td><code>No</code></td><td><code>-267.6357421875</code></td><td><code>246.2744140625</code></td></tr>
+<tr><td><code>yn&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;256</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+</table>
+
+<h2>Function gn_HPF&gt;3 </h2>
+
+<pre>
+function filtered_img = gn_HPF(raw_img, horizontal, T)
+    wn = [-0.064538882629 0.040689417609 0.418092273222 ...
+              -0.788485616406 ...
+              0.418092273222 0.040689417609 -0.064538882629];
+
+    wn = cast(wn, 'like', T.filter_coef);
+    dwt_mode = 1;
+
+    [h, w] = size(raw_img);
+    filtered_img = cast(raw_img, 'like', T.filter_coef);
+
+    if horizontal == 1
+        %Horizontal filtering
+        for i = 1:h
+            row_img = cast(raw_img(i, :), 'like', T.filter_coef);
+            filtered_row = filterSystem(row_img, wn, w, T,dwt_mode);
+            filtered_img(i, :) = filtered_row;
+        end
+
+    else
+        % Vertical filtering
+        for i = 1:w
+            col_img = cast(raw_img(:, i), 'like', T.filter_coef);
+            filtered_col = filterSystem(col_img', wn, h, T,dwt_mode);
+            filtered_img(:, i) = filtered_col;
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for gn_HPF&gt;3</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>dwt_mode</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>filtered_img</code></td><td><code>Output</code></td><td><code>256&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>25</code></td><td><code>No</code></td><td><code>-216.27734375</code></td><td><code>504.2392578125</code></td></tr>
+<tr><td><code>filtered_row</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>11</code></td><td><code>No</code></td><td><code>-216.27734375</code></td><td><code>212.59375</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>256</code></td><td><code>256</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>256</code></td></tr>
+<tr><td><code>raw_img</code></td><td><code>Input</code></td><td><code>256&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>25</code></td><td><code>No</code></td><td><code>15.25390625</code></td><td><code>504.2392578125</code></td></tr>
+<tr><td><code>row_img</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>25</code></td><td><code>No</code></td><td><code>15.25390625</code></td><td><code>504.2392578125</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>256</code></td><td><code>256</code></td></tr>
+<tr><td><code>wn&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;7</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>-0.7880859375</code></td><td><code>0.41796875</code></td></tr>
+<tr><td><code>wn&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;7</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>No</code></td><td><code>-0.788485616406</code></td><td><code>0.418092273222</code></td></tr>
+</table>
+
+<h2>Function downSampler&gt;5 </h2>
+
+<pre>
+function downSampledimg = downSampler(img, stride, odd, n, horizontal,T)
+    [h, w] = size(img);
+    partition = 2 ^ n;
+    downSampledimg = cast(zeros(h),'like',T.filter_coef);
+
+    if horizontal == 1
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 2:stride:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 1:stride:w);
+        end
+
+    else
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h / 2, 1:w) = img(2:stride:h, 1:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h / 2, 1:w) = img(1:stride:h, 1:w);
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for downSampler&gt;5</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>downSampledimg</code></td><td><code>Output</code></td><td><code>256&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>11</code></td><td><code>No</code></td><td><code>-216.27734375</code></td><td><code>201.55078125</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>256</code></td><td><code>256</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>img</code></td><td><code>Input</code></td><td><code>256&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>11</code></td><td><code>No</code></td><td><code>-216.27734375</code></td><td><code>212.59375</code></td></tr>
+<tr><td><code>n</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>odd</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>partition</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>4</code></td><td><code>4</code></td></tr>
+<tr><td><code>stride</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>256</code></td><td><code>256</code></td></tr>
+</table>
+
+<h2>Function filterSystem&gt;4 </h2>
+
+<pre>
+function yn = filterSystem(xn, wn, N, T, dwt_mode)
+    N = length(xn);
+    M = size(wn, 2);
+    L = fix(M / 2); % extend size // 2
+
+    if dwt_mode == 1
+        yn = zeros(1, N); % result
+        yn = cast(yn, 'like', T.filter_coef);
+    else
+        yn = zeros(1, N); % result
+    end
+
+    x = [flip(xn(2:L + 1)), xn, flip(xn(N - L:N - 1))]; % Symmetric extension!
+
+    for i = 1:N
+        yn(i) = wn * x(1, i:i + M - 1)';
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for filterSystem&gt;4</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>L</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>4</code></td><td><code>4</code></td></tr>
+<tr><td><code>M</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>9</code></td><td><code>9</code></td></tr>
+<tr><td><code>N</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>256</code></td><td><code>256</code></td></tr>
+<tr><td><code>dwt_mode</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>256</code></td></tr>
+<tr><td><code>wn</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;9</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>-0.1103515625</code></td><td><code>0.8525390625</code></td></tr>
+<tr><td><code>x</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;264</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>35</code></td><td><code>No</code></td><td><code>-216.27734375</code></td><td><code>703.5478515625</code></td></tr>
+<tr><td><code>xn</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>35</code></td><td><code>No</code></td><td><code>-216.27734375</code></td><td><code>703.5478515625</code></td></tr>
+<tr><td><code>yn&gt;1</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>49</code></td><td><code>No</code></td><td><code>-294.4345703125</code></td><td><code>1002.7109375</code></td></tr>
+<tr><td><code>yn&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;256</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+</table>
+
+<h2>Function hn_LPF&gt;3 </h2>
+
+<pre>
+function filtered_img = hn_LPF(raw_img, horizontal, T)
+    wn = [0.037828455507 -0.023849465020 -0.110624404418 0.377402855613 ...
+              0.852698679009 ...
+              0.377402855613 -0.110624404418 -0.023849465020 0.037828455507];
+
+    wn = cast(wn, 'like', T.filter_coef);
+
+    dwt_mode = 1;
+
+    [h, w] = size(raw_img);
+    %Outputs
+    filtered_img = cast(raw_img, 'like', T.lv1_output);
+
+    if horizontal == 1
+        %Horizontal filtering
+        for i = 1:h
+            row_img = raw_img(i, :);
+
+            % row_img = cast(raw_img(i, :), 'like', T.filter_coef);
+            filtered_row = filterSystem(row_img, wn, w, T,dwt_mode);
+            filtered_img(i, :) = filtered_row;
+        end
+
+    else
+        % Vertical filtering
+        for i = 1:w
+            col_img = raw_img(:, i);
+
+            % col_img = cast(raw_img(:, i), 'like', T.filter_coef);
+            filtered_col = filterSystem(col_img', wn, h, T,dwt_mode);
+            filtered_img(:, i) = filtered_col;
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for hn_LPF&gt;3</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>dwt_mode</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>filtered_img</code></td><td><code>Output</code></td><td><code>256&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>35</code></td><td><code>No</code></td><td><code>15.25390625</code></td><td><code>704.166015625</code></td></tr>
+<tr><td><code>filtered_row</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>35</code></td><td><code>No</code></td><td><code>30.427734375</code></td><td><code>704.166015625</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>256</code></td><td><code>256</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>256</code></td></tr>
+<tr><td><code>raw_img</code></td><td><code>Input</code></td><td><code>256&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>25</code></td><td><code>No</code></td><td><code>15.25390625</code></td><td><code>504.2392578125</code></td></tr>
+<tr><td><code>row_img</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>25</code></td><td><code>No</code></td><td><code>15.25390625</code></td><td><code>504.2392578125</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>256</code></td><td><code>256</code></td></tr>
+<tr><td><code>wn&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;9</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>-0.1103515625</code></td><td><code>0.8525390625</code></td></tr>
+<tr><td><code>wn&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;9</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>No</code></td><td><code>-0.110624404418</code></td><td><code>0.852698679009</code></td></tr>
+</table>
+
+<h2>Function downSampler&gt;6 </h2>
+
+<pre>
+function downSampledimg = downSampler(img, stride, odd, n, horizontal,T)
+    [h, w] = size(img);
+    partition = 2 ^ n;
+    downSampledimg = cast(zeros(h),'like',T.filter_coef);
+
+    if horizontal == 1
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 2:stride:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 1:stride:w);
+        end
+
+    else
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h / 2, 1:w) = img(2:stride:h, 1:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h / 2, 1:w) = img(1:stride:h, 1:w);
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for downSampler&gt;6</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>downSampledimg</code></td><td><code>Output</code></td><td><code>256&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>35</code></td><td><code>No</code></td><td><code>0</code></td><td><code>703.5478515625</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>256</code></td><td><code>256</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>img</code></td><td><code>Input</code></td><td><code>256&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>35</code></td><td><code>No</code></td><td><code>30.427734375</code></td><td><code>704.166015625</code></td></tr>
+<tr><td><code>n</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>odd</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>partition</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>4</code></td><td><code>4</code></td></tr>
+<tr><td><code>stride</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>256</code></td><td><code>256</code></td></tr>
+</table>
+
+<h2>Function gn_HPF&gt;4 </h2>
+
+<pre>
+function filtered_img = gn_HPF(raw_img, horizontal, T)
+    wn = [-0.064538882629 0.040689417609 0.418092273222 ...
+              -0.788485616406 ...
+              0.418092273222 0.040689417609 -0.064538882629];
+
+    wn = cast(wn, 'like', T.filter_coef);
+    dwt_mode = 1;
+
+    [h, w] = size(raw_img);
+    filtered_img = cast(raw_img, 'like', T.filter_coef);
+
+    if horizontal == 1
+        %Horizontal filtering
+        for i = 1:h
+            row_img = cast(raw_img(i, :), 'like', T.filter_coef);
+            filtered_row = filterSystem(row_img, wn, w, T,dwt_mode);
+            filtered_img(i, :) = filtered_row;
+        end
+
+    else
+        % Vertical filtering
+        for i = 1:w
+            col_img = cast(raw_img(:, i), 'like', T.filter_coef);
+            filtered_col = filterSystem(col_img', wn, h, T,dwt_mode);
+            filtered_img(:, i) = filtered_col;
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for gn_HPF&gt;4</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>col_img</code></td><td><code>Local</code></td><td><code>256&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>35</code></td><td><code>No</code></td><td><code>-216.27734375</code></td><td><code>703.5478515625</code></td></tr>
+<tr><td><code>dwt_mode</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>filtered_col</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>14</code></td><td><code>No</code></td><td><code>-267.6357421875</code></td><td><code>246.2744140625</code></td></tr>
+<tr><td><code>filtered_img</code></td><td><code>Output</code></td><td><code>256&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>35</code></td><td><code>No</code></td><td><code>-267.6357421875</code></td><td><code>703.5478515625</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>256</code></td><td><code>256</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>128</code></td></tr>
+<tr><td><code>raw_img</code></td><td><code>Input</code></td><td><code>256&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>35</code></td><td><code>No</code></td><td><code>-216.27734375</code></td><td><code>703.5478515625</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>128</code></td><td><code>128</code></td></tr>
+<tr><td><code>wn&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;7</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>-0.7880859375</code></td><td><code>0.41796875</code></td></tr>
+<tr><td><code>wn&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;7</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>No</code></td><td><code>-0.788485616406</code></td><td><code>0.418092273222</code></td></tr>
+</table>
+
+<h2>Function downSampler&gt;7 </h2>
+
+<pre>
+function downSampledimg = downSampler(img, stride, odd, n, horizontal,T)
+    [h, w] = size(img);
+    partition = 2 ^ n;
+    downSampledimg = cast(zeros(h),'like',T.filter_coef);
+
+    if horizontal == 1
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 2:stride:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 1:stride:w);
+        end
+
+    else
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h / 2, 1:w) = img(2:stride:h, 1:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h / 2, 1:w) = img(1:stride:h, 1:w);
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for downSampler&gt;7</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>downSampledimg</code></td><td><code>Output</code></td><td><code>256&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>12</code></td><td><code>No</code></td><td><code>-230.84375</code></td><td><code>224.23046875</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>256</code></td><td><code>256</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>img</code></td><td><code>Input</code></td><td><code>256&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>14</code></td><td><code>No</code></td><td><code>-267.6357421875</code></td><td><code>246.2744140625</code></td></tr>
+<tr><td><code>n</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>odd</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>partition</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>4</code></td><td><code>4</code></td></tr>
+<tr><td><code>stride</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>128</code></td><td><code>128</code></td></tr>
+</table>
+
+<h2>Function hn_LPF&gt;4 </h2>
+
+<pre>
+function filtered_img = hn_LPF(raw_img, horizontal, T)
+    wn = [0.037828455507 -0.023849465020 -0.110624404418 0.377402855613 ...
+              0.852698679009 ...
+              0.377402855613 -0.110624404418 -0.023849465020 0.037828455507];
+
+    wn = cast(wn, 'like', T.filter_coef);
+
+    dwt_mode = 1;
+
+    [h, w] = size(raw_img);
+    %Outputs
+    filtered_img = cast(raw_img, 'like', T.lv1_output);
+
+    if horizontal == 1
+        %Horizontal filtering
+        for i = 1:h
+            row_img = raw_img(i, :);
+
+            % row_img = cast(raw_img(i, :), 'like', T.filter_coef);
+            filtered_row = filterSystem(row_img, wn, w, T,dwt_mode);
+            filtered_img(i, :) = filtered_row;
+        end
+
+    else
+        % Vertical filtering
+        for i = 1:w
+            col_img = raw_img(:, i);
+
+            % col_img = cast(raw_img(:, i), 'like', T.filter_coef);
+            filtered_col = filterSystem(col_img', wn, h, T,dwt_mode);
+            filtered_img(:, i) = filtered_col;
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for hn_LPF&gt;4</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>col_img</code></td><td><code>Local</code></td><td><code>256&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>35</code></td><td><code>No</code></td><td><code>-216.27734375</code></td><td><code>703.5478515625</code></td></tr>
+<tr><td><code>dwt_mode</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>filtered_col</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>49</code></td><td><code>No</code></td><td><code>-294.4345703125</code></td><td><code>1002.7109375</code></td></tr>
+<tr><td><code>filtered_img</code></td><td><code>Output</code></td><td><code>256&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>49</code></td><td><code>No</code></td><td><code>-294.4345703125</code></td><td><code>1002.7109375</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>256</code></td><td><code>256</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>128</code></td></tr>
+<tr><td><code>raw_img</code></td><td><code>Input</code></td><td><code>256&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>35</code></td><td><code>No</code></td><td><code>-216.27734375</code></td><td><code>703.5478515625</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>128</code></td><td><code>128</code></td></tr>
+<tr><td><code>wn&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;9</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>-0.1103515625</code></td><td><code>0.8525390625</code></td></tr>
+<tr><td><code>wn&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;9</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>No</code></td><td><code>-0.110624404418</code></td><td><code>0.852698679009</code></td></tr>
+</table>
+
+<h2>Function downSampler&gt;8 </h2>
+
+<pre>
+function downSampledimg = downSampler(img, stride, odd, n, horizontal,T)
+    [h, w] = size(img);
+    partition = 2 ^ n;
+    downSampledimg = cast(zeros(h),'like',T.filter_coef);
+
+    if horizontal == 1
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 2:stride:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 1:stride:w);
+        end
+
+    else
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h / 2, 1:w) = img(2:stride:h, 1:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h / 2, 1:w) = img(1:stride:h, 1:w);
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for downSampler&gt;8</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>downSampledimg</code></td><td><code>Output</code></td><td><code>256&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>49</code></td><td><code>No</code></td><td><code>-294.3291015625</code></td><td><code>986.5927734375</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>256</code></td><td><code>256</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>img</code></td><td><code>Input</code></td><td><code>256&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>49</code></td><td><code>No</code></td><td><code>-294.4345703125</code></td><td><code>1002.7109375</code></td></tr>
+<tr><td><code>n</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>odd</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>partition</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>4</code></td><td><code>4</code></td></tr>
+<tr><td><code>stride</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>128</code></td><td><code>128</code></td></tr>
+</table>
+
+<h2>Function octave&gt;2 </h2>
+
+<pre>
+function filtered_img = octave(raw_img, stride, n,T)
+    [h, w] = size(raw_img);
+    filtered_img = cast(raw_img,'like',T.lv1_output);
+    partition = 2 ^ n;
+
+    % Horizontal
+    H1 = gn_HPF(raw_img(1:h / (partition / 2), 1:w / (partition / 2)), 1, T);
+    H1_ = downSampler(H1, stride, 0, n, 1,T);
+
+    % H1f = double(H1_);
+    % figure(7);
+    % imshow(H1f, []);
+    % title('H1_');
+
+    L1 = hn_LPF(raw_img(1:h / (partition / 2), 1:w / (partition / 2)), 1, T);
+    L1_ = downSampler(L1, stride, 1, n, 1,T);
+
+    % L1f = double(L1_);
+    % figure(7);
+    % imshow(L1f, []);
+    % title('L1_');
+
+    % Vertical!, i have problem here! The high pass components leads to some errors.
+    HH = gn_HPF(H1_(1:h / (partition / 2), 1:w / partition), 0, T);
+    HH_ = downSampler(HH, stride, 0, n, 0,T);
+
+    HL = hn_LPF(H1_(1:h / (partition / 2), 1:w / partition), 0, T);
+    HL_ = downSampler(HL, stride, 1, n, 0,T);
+
+    LH = gn_HPF(L1_(1:h / (partition / 2), 1:w / partition), 0, T);
+    LH_ = downSampler(LH, stride, 0, n, 0,T);
+
+    LL = hn_LPF(L1_(1:h / (partition / 2), 1:w / partition), 0, T);
+    LL_ = downSampler(LL, stride, 1, n, 0,T);
+    % Trace till here, problems happens with LL_
+    % Recombination
+    filtered_img(1:h / partition, 1:w / partition) = LL_(1:h / partition, 1:w / partition);
+
+    filtered_img(1:(h / partition), (w / partition) + 1:w / (partition / 2)) = HL_(1:h / partition, 1:w / partition);
+
+    filtered_img((h / partition) + 1:(h / (partition / 2)), 1:(w / partition)) = LH_(1:h / partition, 1:w / partition);
+    filtered_img((h / partition) + 1:(h / (partition / 2)), (w / partition) + 1:(w / (partition / 2))) = HH_(1:h / partition, 1:w / partition);
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for octave&gt;2</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>H1</code></td><td><code>Local</code></td><td><code>256&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>11</code></td><td><code>No</code></td><td><code>-216.27734375</code></td><td><code>212.59375</code></td></tr>
+<tr><td><code>H1_</code></td><td><code>Local</code></td><td><code>256&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>11</code></td><td><code>No</code></td><td><code>-216.27734375</code></td><td><code>201.55078125</code></td></tr>
+<tr><td><code>HH</code></td><td><code>Local</code></td><td><code>256&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>12</code></td><td><code>No</code></td><td><code>-234.9365234375</code></td><td><code>239.9658203125</code></td></tr>
+<tr><td><code>HH_</code></td><td><code>Local</code></td><td><code>256&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>12</code></td><td><code>No</code></td><td><code>-230.84375</code></td><td><code>224.23046875</code></td></tr>
+<tr><td><code>HL</code></td><td><code>Local</code></td><td><code>256&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>15</code></td><td><code>No</code></td><td><code>-294.4345703125</code></td><td><code>285.4609375</code></td></tr>
+<tr><td><code>HL_</code></td><td><code>Local</code></td><td><code>256&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>15</code></td><td><code>No</code></td><td><code>-294.3291015625</code></td><td><code>285.4609375</code></td></tr>
+<tr><td><code>L1</code></td><td><code>Local</code></td><td><code>256&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>35</code></td><td><code>No</code></td><td><code>30.427734375</code></td><td><code>704.166015625</code></td></tr>
+<tr><td><code>L1_</code></td><td><code>Local</code></td><td><code>256&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>35</code></td><td><code>No</code></td><td><code>0</code></td><td><code>703.5478515625</code></td></tr>
+<tr><td><code>LH</code></td><td><code>Local</code></td><td><code>256&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>14</code></td><td><code>No</code></td><td><code>-267.6357421875</code></td><td><code>246.2744140625</code></td></tr>
+<tr><td><code>LH_</code></td><td><code>Local</code></td><td><code>256&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>11</code></td><td><code>No</code></td><td><code>-221.3671875</code></td><td><code>219.2119140625</code></td></tr>
+<tr><td><code>LL</code></td><td><code>Local</code></td><td><code>256&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>49</code></td><td><code>No</code></td><td><code>38.220703125</code></td><td><code>1002.7109375</code></td></tr>
+<tr><td><code>LL_</code></td><td><code>Local</code></td><td><code>256&nbsp;x&nbsp;256</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>49</code></td><td><code>No</code></td><td><code>0</code></td><td><code>986.5927734375</code></td></tr>
+<tr><td><code>filtered_img</code></td><td><code>Output</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>49</code></td><td><code>No</code></td><td><code>-294.3291015625</code></td><td><code>986.5927734375</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+<tr><td><code>n</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>partition</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>4</code></td><td><code>4</code></td></tr>
+<tr><td><code>raw_img</code></td><td><code>Input</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>25</code></td><td><code>No</code></td><td><code>-221.99609375</code></td><td><code>504.2392578125</code></td></tr>
+<tr><td><code>stride</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+</table>
+
+<h2>Function filterSystem&gt;5 </h2>
+
+<pre>
+function yn = filterSystem(xn, wn, N, T, dwt_mode)
+    N = length(xn);
+    M = size(wn, 2);
+    L = fix(M / 2); % extend size // 2
+
+    if dwt_mode == 1
+        yn = zeros(1, N); % result
+        yn = cast(yn, 'like', T.filter_coef);
+    else
+        yn = zeros(1, N); % result
+    end
+
+    x = [flip(xn(2:L + 1)), xn, flip(xn(N - L:N - 1))]; % Symmetric extension!
+
+    for i = 1:N
+        yn(i) = wn * x(1, i:i + M - 1)';
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for filterSystem&gt;5</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>L</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>3</code></td><td><code>3</code></td></tr>
+<tr><td><code>M</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>7</code></td><td><code>7</code></td></tr>
+<tr><td><code>N</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>128</code></td><td><code>128</code></td></tr>
+<tr><td><code>dwt_mode</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>128</code></td></tr>
+<tr><td><code>wn</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;7</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>-0.7880859375</code></td><td><code>0.41796875</code></td></tr>
+<tr><td><code>x</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;134</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>69</code></td><td><code>No</code></td><td><code>-397.798828125</code></td><td><code>1393.7099609375</code></td></tr>
+<tr><td><code>xn</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>69</code></td><td><code>No</code></td><td><code>-397.798828125</code></td><td><code>1393.7099609375</code></td></tr>
+<tr><td><code>yn&gt;1</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>28</code></td><td><code>No</code></td><td><code>-543.126953125</code></td><td><code>565.6435546875</code></td></tr>
+<tr><td><code>yn&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;128</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+</table>
+
+<h2>Function gn_HPF&gt;5 </h2>
+
+<pre>
+function filtered_img = gn_HPF(raw_img, horizontal, T)
+    wn = [-0.064538882629 0.040689417609 0.418092273222 ...
+              -0.788485616406 ...
+              0.418092273222 0.040689417609 -0.064538882629];
+
+    wn = cast(wn, 'like', T.filter_coef);
+    dwt_mode = 1;
+
+    [h, w] = size(raw_img);
+    filtered_img = cast(raw_img, 'like', T.filter_coef);
+
+    if horizontal == 1
+        %Horizontal filtering
+        for i = 1:h
+            row_img = cast(raw_img(i, :), 'like', T.filter_coef);
+            filtered_row = filterSystem(row_img, wn, w, T,dwt_mode);
+            filtered_img(i, :) = filtered_row;
+        end
+
+    else
+        % Vertical filtering
+        for i = 1:w
+            col_img = cast(raw_img(:, i), 'like', T.filter_coef);
+            filtered_col = filterSystem(col_img', wn, h, T,dwt_mode);
+            filtered_img(:, i) = filtered_col;
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for gn_HPF&gt;5</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>dwt_mode</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>filtered_img</code></td><td><code>Output</code></td><td><code>128&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>49</code></td><td><code>No</code></td><td><code>-397.798828125</code></td><td><code>986.5927734375</code></td></tr>
+<tr><td><code>filtered_row</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>24</code></td><td><code>No</code></td><td><code>-397.798828125</code></td><td><code>486.3310546875</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>128</code></td><td><code>128</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>128</code></td></tr>
+<tr><td><code>raw_img</code></td><td><code>Input</code></td><td><code>128&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>49</code></td><td><code>No</code></td><td><code>47.3388671875</code></td><td><code>986.5927734375</code></td></tr>
+<tr><td><code>row_img</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>49</code></td><td><code>No</code></td><td><code>47.3388671875</code></td><td><code>986.5927734375</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>128</code></td><td><code>128</code></td></tr>
+<tr><td><code>wn&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;7</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>-0.7880859375</code></td><td><code>0.41796875</code></td></tr>
+<tr><td><code>wn&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;7</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>No</code></td><td><code>-0.788485616406</code></td><td><code>0.418092273222</code></td></tr>
+</table>
+
+<h2>Function downSampler&gt;9 </h2>
+
+<pre>
+function downSampledimg = downSampler(img, stride, odd, n, horizontal,T)
+    [h, w] = size(img);
+    partition = 2 ^ n;
+    downSampledimg = cast(zeros(h),'like',T.filter_coef);
+
+    if horizontal == 1
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 2:stride:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 1:stride:w);
+        end
+
+    else
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h / 2, 1:w) = img(2:stride:h, 1:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h / 2, 1:w) = img(1:stride:h, 1:w);
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for downSampler&gt;9</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>downSampledimg</code></td><td><code>Output</code></td><td><code>128&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>20</code></td><td><code>No</code></td><td><code>-397.798828125</code></td><td><code>385.123046875</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>128</code></td><td><code>128</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>img</code></td><td><code>Input</code></td><td><code>128&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>24</code></td><td><code>No</code></td><td><code>-397.798828125</code></td><td><code>486.3310546875</code></td></tr>
+<tr><td><code>n</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>3</code></td><td><code>3</code></td></tr>
+<tr><td><code>odd</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>partition</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>8</code></td><td><code>8</code></td></tr>
+<tr><td><code>stride</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>128</code></td><td><code>128</code></td></tr>
+</table>
+
+<h2>Function filterSystem&gt;6 </h2>
+
+<pre>
+function yn = filterSystem(xn, wn, N, T, dwt_mode)
+    N = length(xn);
+    M = size(wn, 2);
+    L = fix(M / 2); % extend size // 2
+
+    if dwt_mode == 1
+        yn = zeros(1, N); % result
+        yn = cast(yn, 'like', T.filter_coef);
+    else
+        yn = zeros(1, N); % result
+    end
+
+    x = [flip(xn(2:L + 1)), xn, flip(xn(N - L:N - 1))]; % Symmetric extension!
+
+    for i = 1:N
+        yn(i) = wn * x(1, i:i + M - 1)';
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for filterSystem&gt;6</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>L</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>4</code></td><td><code>4</code></td></tr>
+<tr><td><code>M</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>9</code></td><td><code>9</code></td></tr>
+<tr><td><code>N</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>128</code></td><td><code>128</code></td></tr>
+<tr><td><code>dwt_mode</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>128</code></td></tr>
+<tr><td><code>wn</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;9</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>-0.1103515625</code></td><td><code>0.8525390625</code></td></tr>
+<tr><td><code>x</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;136</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>69</code></td><td><code>No</code></td><td><code>-397.798828125</code></td><td><code>1393.7099609375</code></td></tr>
+<tr><td><code>xn</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>69</code></td><td><code>No</code></td><td><code>-397.798828125</code></td><td><code>1393.7099609375</code></td></tr>
+<tr><td><code>yn&gt;1</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>96</code></td><td><code>No</code></td><td><code>-475.5849609375</code></td><td><code>1960.1298828125</code></td></tr>
+<tr><td><code>yn&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;128</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+</table>
+
+<h2>Function hn_LPF&gt;5 </h2>
+
+<pre>
+function filtered_img = hn_LPF(raw_img, horizontal, T)
+    wn = [0.037828455507 -0.023849465020 -0.110624404418 0.377402855613 ...
+              0.852698679009 ...
+              0.377402855613 -0.110624404418 -0.023849465020 0.037828455507];
+
+    wn = cast(wn, 'like', T.filter_coef);
+
+    dwt_mode = 1;
+
+    [h, w] = size(raw_img);
+    %Outputs
+    filtered_img = cast(raw_img, 'like', T.lv1_output);
+
+    if horizontal == 1
+        %Horizontal filtering
+        for i = 1:h
+            row_img = raw_img(i, :);
+
+            % row_img = cast(raw_img(i, :), 'like', T.filter_coef);
+            filtered_row = filterSystem(row_img, wn, w, T,dwt_mode);
+            filtered_img(i, :) = filtered_row;
+        end
+
+    else
+        % Vertical filtering
+        for i = 1:w
+            col_img = raw_img(:, i);
+
+            % col_img = cast(raw_img(:, i), 'like', T.filter_coef);
+            filtered_col = filterSystem(col_img', wn, h, T,dwt_mode);
+            filtered_img(:, i) = filtered_col;
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for hn_LPF&gt;5</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>dwt_mode</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>filtered_img</code></td><td><code>Output</code></td><td><code>128&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>69</code></td><td><code>No</code></td><td><code>47.3388671875</code></td><td><code>1393.7099609375</code></td></tr>
+<tr><td><code>filtered_row</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>69</code></td><td><code>No</code></td><td><code>50.8115234375</code></td><td><code>1393.7099609375</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>128</code></td><td><code>128</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>128</code></td></tr>
+<tr><td><code>raw_img</code></td><td><code>Input</code></td><td><code>128&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>49</code></td><td><code>No</code></td><td><code>47.3388671875</code></td><td><code>986.5927734375</code></td></tr>
+<tr><td><code>row_img</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>49</code></td><td><code>No</code></td><td><code>47.3388671875</code></td><td><code>986.5927734375</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>128</code></td><td><code>128</code></td></tr>
+<tr><td><code>wn&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;9</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>-0.1103515625</code></td><td><code>0.8525390625</code></td></tr>
+<tr><td><code>wn&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;9</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>No</code></td><td><code>-0.110624404418</code></td><td><code>0.852698679009</code></td></tr>
+</table>
+
+<h2>Function downSampler&gt;10 </h2>
+
+<pre>
+function downSampledimg = downSampler(img, stride, odd, n, horizontal,T)
+    [h, w] = size(img);
+    partition = 2 ^ n;
+    downSampledimg = cast(zeros(h),'like',T.filter_coef);
+
+    if horizontal == 1
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 2:stride:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 1:stride:w);
+        end
+
+    else
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h / 2, 1:w) = img(2:stride:h, 1:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h / 2, 1:w) = img(1:stride:h, 1:w);
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for downSampler&gt;10</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>downSampledimg</code></td><td><code>Output</code></td><td><code>128&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>69</code></td><td><code>No</code></td><td><code>0</code></td><td><code>1393.7099609375</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>128</code></td><td><code>128</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>img</code></td><td><code>Input</code></td><td><code>128&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>69</code></td><td><code>No</code></td><td><code>50.8115234375</code></td><td><code>1393.7099609375</code></td></tr>
+<tr><td><code>n</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>3</code></td><td><code>3</code></td></tr>
+<tr><td><code>odd</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>partition</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>8</code></td><td><code>8</code></td></tr>
+<tr><td><code>stride</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>128</code></td><td><code>128</code></td></tr>
+</table>
+
+<h2>Function gn_HPF&gt;6 </h2>
+
+<pre>
+function filtered_img = gn_HPF(raw_img, horizontal, T)
+    wn = [-0.064538882629 0.040689417609 0.418092273222 ...
+              -0.788485616406 ...
+              0.418092273222 0.040689417609 -0.064538882629];
+
+    wn = cast(wn, 'like', T.filter_coef);
+    dwt_mode = 1;
+
+    [h, w] = size(raw_img);
+    filtered_img = cast(raw_img, 'like', T.filter_coef);
+
+    if horizontal == 1
+        %Horizontal filtering
+        for i = 1:h
+            row_img = cast(raw_img(i, :), 'like', T.filter_coef);
+            filtered_row = filterSystem(row_img, wn, w, T,dwt_mode);
+            filtered_img(i, :) = filtered_row;
+        end
+
+    else
+        % Vertical filtering
+        for i = 1:w
+            col_img = cast(raw_img(:, i), 'like', T.filter_coef);
+            filtered_col = filterSystem(col_img', wn, h, T,dwt_mode);
+            filtered_img(:, i) = filtered_col;
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for gn_HPF&gt;6</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>col_img</code></td><td><code>Local</code></td><td><code>128&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>69</code></td><td><code>No</code></td><td><code>-397.798828125</code></td><td><code>1393.7099609375</code></td></tr>
+<tr><td><code>dwt_mode</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>filtered_col</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>28</code></td><td><code>No</code></td><td><code>-543.126953125</code></td><td><code>565.6435546875</code></td></tr>
+<tr><td><code>filtered_img</code></td><td><code>Output</code></td><td><code>128&nbsp;x&nbsp;64</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>69</code></td><td><code>No</code></td><td><code>-543.126953125</code></td><td><code>1393.7099609375</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>128</code></td><td><code>128</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>64</code></td></tr>
+<tr><td><code>raw_img</code></td><td><code>Input</code></td><td><code>128&nbsp;x&nbsp;64</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>69</code></td><td><code>No</code></td><td><code>-397.798828125</code></td><td><code>1393.7099609375</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>64</code></td><td><code>64</code></td></tr>
+<tr><td><code>wn&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;7</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>-0.7880859375</code></td><td><code>0.41796875</code></td></tr>
+<tr><td><code>wn&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;7</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>No</code></td><td><code>-0.788485616406</code></td><td><code>0.418092273222</code></td></tr>
+</table>
+
+<h2>Function downSampler&gt;11 </h2>
+
+<pre>
+function downSampledimg = downSampler(img, stride, odd, n, horizontal,T)
+    [h, w] = size(img);
+    partition = 2 ^ n;
+    downSampledimg = cast(zeros(h),'like',T.filter_coef);
+
+    if horizontal == 1
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 2:stride:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 1:stride:w);
+        end
+
+    else
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h / 2, 1:w) = img(2:stride:h, 1:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h / 2, 1:w) = img(1:stride:h, 1:w);
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for downSampler&gt;11</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>downSampledimg</code></td><td><code>Output</code></td><td><code>128&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>28</code></td><td><code>No</code></td><td><code>-453.61328125</code></td><td><code>565.6435546875</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>128</code></td><td><code>128</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>img</code></td><td><code>Input</code></td><td><code>128&nbsp;x&nbsp;64</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>28</code></td><td><code>No</code></td><td><code>-543.126953125</code></td><td><code>565.6435546875</code></td></tr>
+<tr><td><code>n</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>3</code></td><td><code>3</code></td></tr>
+<tr><td><code>odd</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>partition</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>8</code></td><td><code>8</code></td></tr>
+<tr><td><code>stride</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>64</code></td><td><code>64</code></td></tr>
+</table>
+
+<h2>Function hn_LPF&gt;6 </h2>
+
+<pre>
+function filtered_img = hn_LPF(raw_img, horizontal, T)
+    wn = [0.037828455507 -0.023849465020 -0.110624404418 0.377402855613 ...
+              0.852698679009 ...
+              0.377402855613 -0.110624404418 -0.023849465020 0.037828455507];
+
+    wn = cast(wn, 'like', T.filter_coef);
+
+    dwt_mode = 1;
+
+    [h, w] = size(raw_img);
+    %Outputs
+    filtered_img = cast(raw_img, 'like', T.lv1_output);
+
+    if horizontal == 1
+        %Horizontal filtering
+        for i = 1:h
+            row_img = raw_img(i, :);
+
+            % row_img = cast(raw_img(i, :), 'like', T.filter_coef);
+            filtered_row = filterSystem(row_img, wn, w, T,dwt_mode);
+            filtered_img(i, :) = filtered_row;
+        end
+
+    else
+        % Vertical filtering
+        for i = 1:w
+            col_img = raw_img(:, i);
+
+            % col_img = cast(raw_img(:, i), 'like', T.filter_coef);
+            filtered_col = filterSystem(col_img', wn, h, T,dwt_mode);
+            filtered_img(:, i) = filtered_col;
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for hn_LPF&gt;6</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>col_img</code></td><td><code>Local</code></td><td><code>128&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>69</code></td><td><code>No</code></td><td><code>-397.798828125</code></td><td><code>1393.7099609375</code></td></tr>
+<tr><td><code>dwt_mode</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>filtered_col</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>96</code></td><td><code>No</code></td><td><code>-475.5849609375</code></td><td><code>1960.1298828125</code></td></tr>
+<tr><td><code>filtered_img</code></td><td><code>Output</code></td><td><code>128&nbsp;x&nbsp;64</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>96</code></td><td><code>No</code></td><td><code>-475.5849609375</code></td><td><code>1960.1298828125</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>128</code></td><td><code>128</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>64</code></td></tr>
+<tr><td><code>raw_img</code></td><td><code>Input</code></td><td><code>128&nbsp;x&nbsp;64</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>69</code></td><td><code>No</code></td><td><code>-397.798828125</code></td><td><code>1393.7099609375</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>64</code></td><td><code>64</code></td></tr>
+<tr><td><code>wn&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;9</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>-0.1103515625</code></td><td><code>0.8525390625</code></td></tr>
+<tr><td><code>wn&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;9</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>No</code></td><td><code>-0.110624404418</code></td><td><code>0.852698679009</code></td></tr>
+</table>
+
+<h2>Function downSampler&gt;12 </h2>
+
+<pre>
+function downSampledimg = downSampler(img, stride, odd, n, horizontal,T)
+    [h, w] = size(img);
+    partition = 2 ^ n;
+    downSampledimg = cast(zeros(h),'like',T.filter_coef);
+
+    if horizontal == 1
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 2:stride:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h, 1:w / 2) = img(1:h, 1:stride:w);
+        end
+
+    else
+
+        if odd == 0
+            %even for HPF
+            downSampledimg(1:h / 2, 1:w) = img(2:stride:h, 1:w);
+        else
+            %odd for LPF
+            downSampledimg(1:h / 2, 1:w) = img(1:stride:h, 1:w);
+        end
+
+    end
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for downSampler&gt;12</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>downSampledimg</code></td><td><code>Output</code></td><td><code>128&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>96</code></td><td><code>No</code></td><td><code>-466.4443359375</code></td><td><code>1956.734375</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>128</code></td><td><code>128</code></td></tr>
+<tr><td><code>horizontal</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>img</code></td><td><code>Input</code></td><td><code>128&nbsp;x&nbsp;64</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>96</code></td><td><code>No</code></td><td><code>-475.5849609375</code></td><td><code>1960.1298828125</code></td></tr>
+<tr><td><code>n</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>3</code></td><td><code>3</code></td></tr>
+<tr><td><code>odd</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>1</code></td></tr>
+<tr><td><code>partition</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>8</code></td><td><code>8</code></td></tr>
+<tr><td><code>stride</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>64</code></td><td><code>64</code></td></tr>
+</table>
+
+<h2>Function octave&gt;3 </h2>
+
+<pre>
+function filtered_img = octave(raw_img, stride, n,T)
+    [h, w] = size(raw_img);
+    filtered_img = cast(raw_img,'like',T.lv1_output);
+    partition = 2 ^ n;
+
+    % Horizontal
+    H1 = gn_HPF(raw_img(1:h / (partition / 2), 1:w / (partition / 2)), 1, T);
+    H1_ = downSampler(H1, stride, 0, n, 1,T);
+
+    % H1f = double(H1_);
+    % figure(7);
+    % imshow(H1f, []);
+    % title('H1_');
+
+    L1 = hn_LPF(raw_img(1:h / (partition / 2), 1:w / (partition / 2)), 1, T);
+    L1_ = downSampler(L1, stride, 1, n, 1,T);
+
+    % L1f = double(L1_);
+    % figure(7);
+    % imshow(L1f, []);
+    % title('L1_');
+
+    % Vertical!, i have problem here! The high pass components leads to some errors.
+    HH = gn_HPF(H1_(1:h / (partition / 2), 1:w / partition), 0, T);
+    HH_ = downSampler(HH, stride, 0, n, 0,T);
+
+    HL = hn_LPF(H1_(1:h / (partition / 2), 1:w / partition), 0, T);
+    HL_ = downSampler(HL, stride, 1, n, 0,T);
+
+    LH = gn_HPF(L1_(1:h / (partition / 2), 1:w / partition), 0, T);
+    LH_ = downSampler(LH, stride, 0, n, 0,T);
+
+    LL = hn_LPF(L1_(1:h / (partition / 2), 1:w / partition), 0, T);
+    LL_ = downSampler(LL, stride, 1, n, 0,T);
+    % Trace till here, problems happens with LL_
+    % Recombination
+    filtered_img(1:h / partition, 1:w / partition) = LL_(1:h / partition, 1:w / partition);
+
+    filtered_img(1:(h / partition), (w / partition) + 1:w / (partition / 2)) = HL_(1:h / partition, 1:w / partition);
+
+    filtered_img((h / partition) + 1:(h / (partition / 2)), 1:(w / partition)) = LH_(1:h / partition, 1:w / partition);
+    filtered_img((h / partition) + 1:(h / (partition / 2)), (w / partition) + 1:(w / (partition / 2))) = HH_(1:h / partition, 1:w / partition);
+
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for octave&gt;3</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>H1</code></td><td><code>Local</code></td><td><code>128&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>24</code></td><td><code>No</code></td><td><code>-397.798828125</code></td><td><code>486.3310546875</code></td></tr>
+<tr><td><code>H1_</code></td><td><code>Local</code></td><td><code>128&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>20</code></td><td><code>No</code></td><td><code>-397.798828125</code></td><td><code>385.123046875</code></td></tr>
+<tr><td><code>HH</code></td><td><code>Local</code></td><td><code>128&nbsp;x&nbsp;64</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>28</code></td><td><code>No</code></td><td><code>-453.61328125</code></td><td><code>565.6435546875</code></td></tr>
+<tr><td><code>HH_</code></td><td><code>Local</code></td><td><code>128&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>28</code></td><td><code>No</code></td><td><code>-453.61328125</code></td><td><code>565.6435546875</code></td></tr>
+<tr><td><code>HL</code></td><td><code>Local</code></td><td><code>128&nbsp;x&nbsp;64</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>26</code></td><td><code>No</code></td><td><code>-475.5849609375</code></td><td><code>530.908203125</code></td></tr>
+<tr><td><code>HL_</code></td><td><code>Local</code></td><td><code>128&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>26</code></td><td><code>No</code></td><td><code>-466.4443359375</code></td><td><code>530.908203125</code></td></tr>
+<tr><td><code>L1</code></td><td><code>Local</code></td><td><code>128&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>69</code></td><td><code>No</code></td><td><code>50.8115234375</code></td><td><code>1393.7099609375</code></td></tr>
+<tr><td><code>L1_</code></td><td><code>Local</code></td><td><code>128&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>69</code></td><td><code>No</code></td><td><code>0</code></td><td><code>1393.7099609375</code></td></tr>
+<tr><td><code>LH</code></td><td><code>Local</code></td><td><code>128&nbsp;x&nbsp;64</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>27</code></td><td><code>No</code></td><td><code>-543.126953125</code></td><td><code>485.263671875</code></td></tr>
+<tr><td><code>LH_</code></td><td><code>Local</code></td><td><code>128&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>20</code></td><td><code>No</code></td><td><code>-398.44140625</code></td><td><code>388.5693359375</code></td></tr>
+<tr><td><code>LL</code></td><td><code>Local</code></td><td><code>128&nbsp;x&nbsp;64</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>96</code></td><td><code>No</code></td><td><code>50.119140625</code></td><td><code>1960.1298828125</code></td></tr>
+<tr><td><code>LL_</code></td><td><code>Local</code></td><td><code>128&nbsp;x&nbsp;128</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>96</code></td><td><code>No</code></td><td><code>0</code></td><td><code>1956.734375</code></td></tr>
+<tr><td><code>filtered_img</code></td><td><code>Output</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>96</code></td><td><code>No</code></td><td><code>-466.4443359375</code></td><td><code>1956.734375</code></td></tr>
+<tr><td><code>h</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+<tr><td><code>n</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>3</code></td><td><code>3</code></td></tr>
+<tr><td><code>partition</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>8</code></td><td><code>8</code></td></tr>
+<tr><td><code>raw_img</code></td><td><code>Input</code></td><td><code>512&nbsp;x&nbsp;512</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>22</code></td><td><code>10</code></td><td><code>49</code></td><td><code>No</code></td><td><code>-294.3291015625</code></td><td><code>986.5927734375</code></td></tr>
+<tr><td><code>stride</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>w</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>512</code></td><td><code>512</code></td></tr>
+</table>
+</html>

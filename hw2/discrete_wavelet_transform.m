@@ -75,7 +75,7 @@ plot([p9(2), p10(2)], [p9(1), p10(1)], [p11(2), p12(2)], [p11(1), p12(1)], 'Colo
 %================================================================
 %  IDWT
 %================================================================
-zero_padded = 1;
+zero_padded = 0;
 octave3_ = zeros(h);
 
 if zero_padded == 1
@@ -397,13 +397,4 @@ function [psnr, difference] = PSNR(img, filtered_img)
     MSE = sum(difference, "all") / (h * w);
 
     psnr = 10 * log10(MAXI ^ 2 / MSE);
-end
-
-function quantized_img = Quantization(img)
-
-    %Quantization
-    quantized_img = ceil(img);
-    quantized_img(quantized_img > 255) = 255;
-    quantized_img(quantized_img < -255) = -255;
-
 end
