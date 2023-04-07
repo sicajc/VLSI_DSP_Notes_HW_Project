@@ -5,7 +5,7 @@
  * File: dwt.h
  *
  * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 07-Apr-2023 14:39:31
+ * C/C++ source code generated on  : 07-Apr-2023 19:49:54
  */
 
 #ifndef DWT_H
@@ -18,8 +18,8 @@
 #include "dwt_types.h"
 
 /* Function Declarations */
-extern void dwt(const short raw_img[262144], double stride, short filtered_img
-                [262144]);
+extern void dwt(const double raw_img[262144], double stride, double
+                filtered_img[262144]);
 
 #endif
 

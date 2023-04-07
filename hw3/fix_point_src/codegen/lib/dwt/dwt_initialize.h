@@ -5,7 +5,7 @@
  * File: dwt_initialize.h
  *
  * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 07-Apr-2023 14:39:31
+ * C/C++ source code generated on  : 07-Apr-2023 19:49:54
  */
 
 #ifndef DWT_INITIALIZE_H

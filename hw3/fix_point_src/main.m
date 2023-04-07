@@ -15,7 +15,7 @@ horizontal = 1;
 zero_padded = 0;
 
 % Broadcasting data types.
-T = filterDataType('fixed', filter_coef, lv1_output, lv2_output, lv3_output);
+T = filterDataType('scaled', filter_coef, lv1_output, lv2_output, lv3_output);
 
 %================================================================
 %  RD image
@@ -54,8 +54,8 @@ disp("PSNR:");
 fprintf('%.2f db\n', psnr);
 
 % Verify results
-showInstrumentationResults dwt_mex
-% -proposeFL -defaultDT numerictype(1, 16)
+% Show instrumentatinResults can suggest you the optimal width you should use for the best result
+showInstrumentationResults dwt_mex -proposeWL -defaultDT numerictype(1,16,4)
 
 % Code generation
 codegen dwt ...

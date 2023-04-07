@@ -5,7 +5,7 @@
  * File: dwt_types.h
  *
  * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 07-Apr-2023 14:39:31
+ * C/C++ source code generated on  : 07-Apr-2023 19:49:54
  */
 
 #ifndef DWT_TYPES_H
@@ -15,26 +15,26 @@
 #include "rtwtypes.h"
 
 /* Type Definitions */
-#ifndef struct_emxArray_int16_T
-#define struct_emxArray_int16_T
+#ifndef struct_emxArray_real_T
+#define struct_emxArray_real_T
 
-struct emxArray_int16_T
+struct emxArray_real_T
 {
-  short *data;
+  double *data;
   int *size;
   int allocatedSize;
   int numDimensions;
   boolean_T canFreeData;
 };
 
-#endif                                 /*struct_emxArray_int16_T*/
+#endif                                 /*struct_emxArray_real_T*/
 
-#ifndef typedef_emxArray_int16_T
-#define typedef_emxArray_int16_T
+#ifndef typedef_emxArray_real_T
+#define typedef_emxArray_real_T
 
-typedef struct emxArray_int16_T emxArray_int16_T;
+typedef struct emxArray_real_T emxArray_real_T;
 
-#endif                                 /*typedef_emxArray_int16_T*/
+#endif                                 /*typedef_emxArray_real_T*/
 #endif
 
 /*

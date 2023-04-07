@@ -5,7 +5,7 @@
  * File: octave.h
  *
  * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 07-Apr-2023 14:39:31
+ * C/C++ source code generated on  : 07-Apr-2023 19:49:54
  */
 
 #ifndef OCTAVE_H
@@ -18,11 +18,11 @@
 #include "dwt_types.h"
 
 /* Function Declarations */
-extern void b_octave(const short raw_img[262144], double stride, short
+extern void b_octave(const double raw_img[262144], double stride, double
                      filtered_img[262144]);
-extern void c_octave(const short raw_img[262144], double stride, short
+extern void c_octave(const double raw_img[262144], double stride, double
                      filtered_img[262144]);
-extern void octave(const short raw_img[262144], double stride, short
+extern void octave(const double raw_img[262144], double stride, double
                    filtered_img[262144]);
 
 #endif

@@ -17,18 +17,8 @@ function filtered_img = octave(raw_img, stride, n, T)
     H1 = gn_HPF(raw_img(1:h / (partition / 2), 1:w / (partition / 2)), 1, T, n);
     H1_ = downSampler(H1, stride, 0, n, 1, T);
 
-    % H1f = double(H1_);
-    % figure(7);
-    % imshow(H1f, []);
-    % title('H1_');
-
     L1 = hn_LPF(raw_img(1:h / (partition / 2), 1:w / (partition / 2)), 1, T, n);
     L1_ = downSampler(L1, stride, 1, n, 1, T);
-
-    % L1f = double(L1_);
-    % figure(7);
-    % imshow(L1f, []);
-    % title('L1_');
 
     % Vertical!, i have problem here! The high pass components leads to some errors.
     HH = gn_HPF(H1_(1:h / (partition / 2), 1:w / partition), 0, T, n);
@@ -42,6 +32,7 @@ function filtered_img = octave(raw_img, stride, n, T)
 
     LL = hn_LPF(L1_(1:h / (partition / 2), 1:w / partition), 0, T, n);
     LL_ = downSampler(LL, stride, 1, n, 0, T);
+
     % Trace till here, problems happens with LL_
     % Recombination
     filtered_img(1:h / partition, 1:w / partition) = LL_(1:h / partition, 1:w / partition);
