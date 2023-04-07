@@ -5,7 +5,7 @@
  * File: _coder_dwt_mex.h
  *
  * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 07-Apr-2023 12:06:50
+ * C/C++ source code generated on  : 07-Apr-2023 14:39:31
  */
 
 #ifndef _CODER_DWT_MEX_H

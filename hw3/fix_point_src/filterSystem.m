@@ -6,7 +6,7 @@ function yn = filterSystem(xn, wn, N, T, dwt_mode)
 
     if dwt_mode == 1
         yn = zeros(1, N); % result
-        yn = cast(yn, 'like', T.filter_coef);
+        yn = cast(yn, 'like', xn);
     else
         yn = zeros(1, N); % result
     end

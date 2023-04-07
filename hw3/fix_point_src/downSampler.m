@@ -1,7 +1,7 @@
 function downSampledimg = downSampler(img, stride, odd, n, horizontal,T)
     [h, w] = size(img);
     partition = 2 ^ n;
-    downSampledimg = cast(zeros(h),'like',T.filter_coef);
+    downSampledimg = cast(zeros(h),'like',img);
 
     if horizontal == 1
 

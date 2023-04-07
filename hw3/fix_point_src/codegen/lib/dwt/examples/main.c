@@ -5,7 +5,7 @@
  * File: main.c
  *
  * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 07-Apr-2023 12:06:50
+ * C/C++ source code generated on  : 07-Apr-2023 14:39:31
  */
 
 /*************************************************************************/
@@ -39,18 +39,18 @@
 #include "dwt_terminate.h"
 
 /* Function Declarations */
-static void argInit_512x512_sfix22_En10(int result[262144]);
+static void argInit_512x512_sfix12(short result[262144]);
 static double argInit_real_T(void);
-static int argInit_sfix22_En10(void);
+static short argInit_sfix12(void);
 static void main_dwt(void);
 
 /* Function Definitions */
 
 /*
- * Arguments    : int result[262144]
+ * Arguments    : short result[262144]
  * Return Type  : void
  */
-static void argInit_512x512_sfix22_En10(int result[262144])
+static void argInit_512x512_sfix12(short result[262144])
 {
   int idx0;
   int idx1;
@@ -60,7 +60,7 @@ static void argInit_512x512_sfix22_En10(int result[262144])
     for (idx1 = 0; idx1 < 512; idx1++) {
       /* Set the value of the array element.
          Change this value to the value that the application requires. */
-      result[idx0 + (idx1 << 9)] = argInit_sfix22_En10();
+      result[idx0 + (idx1 << 9)] = argInit_sfix12();
     }
   }
 }
@@ -76,9 +76,9 @@ static double argInit_real_T(void)
 
 /*
  * Arguments    : void
- * Return Type  : int
+ * Return Type  : short
  */
-static int argInit_sfix22_En10(void)
+static short argInit_sfix12(void)
 {
   return 0;
 }
@@ -89,14 +89,14 @@ static int argInit_sfix22_En10(void)
  */
 static void main_dwt(void)
 {
-  static int b_iv[262144];
-  static int filtered_img[262144];
+  static short b_iv[262144];
+  static short filtered_img[262144];
 
   /* Initialize function 'dwt' input arguments. */
   /* Initialize function input argument 'raw_img'. */
   /* Initialize function input argument 'T'. */
   /* Call the entry-point 'dwt'. */
-  argInit_512x512_sfix22_En10(b_iv);
+  argInit_512x512_sfix12(b_iv);
   dwt(b_iv, argInit_real_T(), filtered_img);
 }
 

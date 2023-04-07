@@ -5,7 +5,7 @@
  * File: dwt_emxutil.h
  *
  * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 07-Apr-2023 12:06:50
+ * C/C++ source code generated on  : 07-Apr-2023 14:39:31
  */
 
 #ifndef DWT_EMXUTIL_H
@@ -18,9 +18,9 @@
 #include "dwt_types.h"
 
 /* Function Declarations */
-extern void emxEnsureCapacity_int32_T(emxArray_int32_T *emxArray, int oldNumel);
-extern void emxFree_int32_T(emxArray_int32_T **pEmxArray);
-extern void emxInit_int32_T(emxArray_int32_T **pEmxArray, int numDimensions);
+extern void emxEnsureCapacity_int16_T(emxArray_int16_T *emxArray, int oldNumel);
+extern void emxFree_int16_T(emxArray_int16_T **pEmxArray);
+extern void emxInit_int16_T(emxArray_int16_T **pEmxArray, int numDimensions);
 
 #endif
 

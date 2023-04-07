@@ -5,7 +5,7 @@
  * File: octave.c
  *
  * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 07-Apr-2023 12:06:50
+ * C/C++ source code generated on  : 07-Apr-2023 14:39:31
  */
 
 /* Include Files */
@@ -69,112 +69,146 @@ static int div_s32_floor(int numerator, int denominator)
 }
 
 /*
- * Arguments    : int raw_img[262144]
+ * Arguments    : const short raw_img[262144]
  *                double stride
+ *                short filtered_img[262144]
  * Return Type  : void
  */
-void b_octave(int raw_img[262144], double stride)
+void b_octave(const short raw_img[262144], double stride, short filtered_img
+              [262144])
 {
   int i;
-  static int H1_[65536];
-  int b_i;
-  int filtered_col[256];
-  int b_iv[256];
   int i1;
-  static int LL_[65536];
-  emxArray_int32_T *b_LL_;
-  int i2;
-  int loop_ub;
-  static int L1_[65536];
-  static int HH_[65536];
-  int L1__tmp;
-  int filtered_img[32768];
-  emxArray_int32_T *b_filtered_img;
-  static int LH_[65536];
-  unsigned char filtered_img_tmp[128];
+  int b_i;
+  short i2;
+  static short H1_[65536];
+  static short LL_[65536];
+  short b_LL_[256];
+  short b_iv[256];
+  int filtered_img_tmp;
+  emxArray_int16_T *c_LL_;
+  int b_filtered_img_tmp;
+  static short L1_[65536];
+  static short HH_[65536];
+  short b_raw_img[32768];
+  emxArray_int16_T *c_raw_img;
+  short LH_[65536];
+  unsigned char c_filtered_img_tmp[128];
+  for (i = 0; i < 262144; i++) {
+    if ((raw_img[i] & 1024) != 0) {
+      filtered_img[i] = (short)(raw_img[i] | -1024);
+    } else {
+      filtered_img[i] = (short)(raw_img[i] & 1023);
+    }
+  }
 
   /*  Horizontal */
-  /* Horizontal filtering */
   for (i = 0; i < 256; i++) {
-    for (b_i = 0; b_i < 256; b_i++) {
-      filtered_col[b_i] = raw_img[i + (b_i << 9)];
-    }
-
-    c_filterSystem(filtered_col, b_iv);
-    for (b_i = 0; b_i < 256; b_i++) {
-      LL_[i + (b_i << 8)] = b_iv[b_i];
-    }
-  }
-
-  memset(&H1_[0], 0, 65536U * sizeof(int));
-
-  /* even for HPF */
-  if ((stride == 0.0) || (0.0 > stride)) {
-    b_i = 0;
-    i1 = 1;
-    i = -1;
-  } else {
-    b_i = 1;
-    i1 = (int)stride;
-    i = 255;
-  }
-
-  emxInit_int32_T(&b_LL_, 2);
-  i2 = b_LL_->size[0] * b_LL_->size[1];
-  b_LL_->size[0] = 256;
-  loop_ub = div_s32_floor(i - b_i, i1);
-  b_LL_->size[1] = loop_ub + 1;
-  emxEnsureCapacity_int32_T(b_LL_, i2);
-  for (i = 0; i <= loop_ub; i++) {
-    for (i2 = 0; i2 < 256; i2++) {
-      b_LL_->data[i2 + 256 * i] = LL_[i2 + ((b_i + i1 * i) << 8)];
-    }
-  }
-
-  for (b_i = 0; b_i < 128; b_i++) {
     for (i1 = 0; i1 < 256; i1++) {
-      loop_ub = i1 + (b_i << 8);
-      H1_[loop_ub] = b_LL_->data[loop_ub];
+      i2 = raw_img[i1 + (i << 9)];
+      if ((i2 & 1024) != 0) {
+        LL_[i1 + (i << 8)] = (short)(i2 | -1024);
+      } else {
+        LL_[i1 + (i << 8)] = (short)(i2 & 1023);
+      }
     }
   }
 
-  /*  H1f = double(H1_); */
-  /*  figure(7); */
-  /*  imshow(H1f, []); */
-  /*  title('H1_'); */
-  /* Outputs */
   /* Horizontal filtering */
-  for (i = 0; i < 256; i++) {
-    /*  row_img = cast(raw_img(i, :), 'like', T.filter_coef); */
-    for (b_i = 0; b_i < 256; b_i++) {
-      filtered_col[b_i] = raw_img[i + (b_i << 9)];
-    }
-
-    d_filterSystem(filtered_col, b_iv);
-    for (b_i = 0; b_i < 256; b_i++) {
-      LL_[i + (b_i << 8)] = b_iv[b_i];
-    }
-  }
-
-  memset(&L1_[0], 0, 65536U * sizeof(int));
-
-  /* odd for LPF */
-  if ((stride == 0.0) || (0.0 > stride)) {
-    b_i = 1;
-    i1 = -1;
-  } else {
-    b_i = (int)stride;
-    i1 = 255;
-  }
-
-  i = b_LL_->size[0] * b_LL_->size[1];
-  b_LL_->size[0] = 256;
-  loop_ub = div_s32_floor(i1, b_i);
-  b_LL_->size[1] = loop_ub + 1;
-  emxEnsureCapacity_int32_T(b_LL_, i);
-  for (i1 = 0; i1 <= loop_ub; i1++) {
+  for (b_i = 0; b_i < 256; b_i++) {
     for (i = 0; i < 256; i++) {
-      b_LL_->data[i + 256 * i1] = LL_[i + ((b_i * i1) << 8)];
+      b_LL_[i] = LL_[b_i + (i << 8)];
+    }
+
+    c_filterSystem(b_LL_, b_iv);
+    for (i = 0; i < 256; i++) {
+      LL_[b_i + (i << 8)] = b_iv[i];
+    }
+  }
+
+  memset(&H1_[0], 0, 65536U * sizeof(short));
+
+  /* even for HPF */
+  if ((stride == 0.0) || (0.0 > stride)) {
+    i = 0;
+    i1 = 1;
+    filtered_img_tmp = -1;
+  } else {
+    i = 1;
+    i1 = (int)stride;
+    filtered_img_tmp = 255;
+  }
+
+  emxInit_int16_T(&c_LL_, 2);
+  b_filtered_img_tmp = c_LL_->size[0] * c_LL_->size[1];
+  c_LL_->size[0] = 256;
+  b_i = div_s32_floor(filtered_img_tmp - i, i1);
+  c_LL_->size[1] = b_i + 1;
+  emxEnsureCapacity_int16_T(c_LL_, b_filtered_img_tmp);
+  for (filtered_img_tmp = 0; filtered_img_tmp <= b_i; filtered_img_tmp++) {
+    for (b_filtered_img_tmp = 0; b_filtered_img_tmp < 256; b_filtered_img_tmp++)
+    {
+      c_LL_->data[b_filtered_img_tmp + 256 * filtered_img_tmp] =
+        LL_[b_filtered_img_tmp + ((i + i1 * filtered_img_tmp) << 8)];
+    }
+  }
+
+  for (i = 0; i < 128; i++) {
+    for (i1 = 0; i1 < 256; i1++) {
+      b_i = i1 + (i << 8);
+      H1_[b_i] = c_LL_->data[b_i];
+    }
+  }
+
+  /*  H1f = double(H1_); */
+  /*  figure(7); */
+  /*  imshow(H1f, []); */
+  /*  title('H1_'); */
+  /*  Output types */
+  for (i = 0; i < 256; i++) {
+    for (i1 = 0; i1 < 256; i1++) {
+      i2 = raw_img[i1 + (i << 9)];
+      if ((i2 & 1024) != 0) {
+        LL_[i1 + (i << 8)] = (short)(i2 | -1024);
+      } else {
+        LL_[i1 + (i << 8)] = (short)(i2 & 1023);
+      }
+    }
+  }
+
+  /* Horizontal filtering */
+  for (b_i = 0; b_i < 256; b_i++) {
+    /*  row_img = cast(raw_img(i, :), 'like', T.filter_coef); */
+    for (i = 0; i < 256; i++) {
+      b_LL_[i] = LL_[b_i + (i << 8)];
+    }
+
+    d_filterSystem(b_LL_, b_iv);
+    for (i = 0; i < 256; i++) {
+      LL_[b_i + (i << 8)] = b_iv[i];
+    }
+  }
+
+  memset(&L1_[0], 0, 65536U * sizeof(short));
+
+  /* odd for LPF */
+  if ((stride == 0.0) || (0.0 > stride)) {
+    i = 1;
+    i1 = -1;
+  } else {
+    i = (int)stride;
+    i1 = 255;
+  }
+
+  filtered_img_tmp = c_LL_->size[0] * c_LL_->size[1];
+  c_LL_->size[0] = 256;
+  b_i = div_s32_floor(i1, i);
+  c_LL_->size[1] = b_i + 1;
+  emxEnsureCapacity_int16_T(c_LL_, filtered_img_tmp);
+  for (i1 = 0; i1 <= b_i; i1++) {
+    for (filtered_img_tmp = 0; filtered_img_tmp < 256; filtered_img_tmp++) {
+      c_LL_->data[filtered_img_tmp + 256 * i1] = LL_[filtered_img_tmp + ((i * i1)
+        << 8)];
     }
   }
 
@@ -183,288 +217,323 @@ void b_octave(int raw_img[262144], double stride)
   /*  imshow(L1f, []); */
   /*  title('L1_'); */
   /*  Vertical!, i have problem here! The high pass components leads to some errors. */
-  /*  Vertical filtering */
   for (i = 0; i < 128; i++) {
-    loop_ub = i << 8;
-    c_filterSystem(*(int (*)[256])&(*(int (*)[32768])&H1_[0])[loop_ub],
-                   filtered_col);
-    for (b_i = 0; b_i < 256; b_i++) {
-      L1__tmp = b_i + loop_ub;
-      L1_[L1__tmp] = b_LL_->data[L1__tmp];
-      filtered_img[L1__tmp] = filtered_col[b_i];
+    for (i1 = 0; i1 < 256; i1++) {
+      b_i = i1 + (i << 8);
+      L1_[b_i] = c_LL_->data[b_i];
+      b_raw_img[b_i] = H1_[b_i];
     }
   }
 
-  emxFree_int32_T(&b_LL_);
-  memset(&HH_[0], 0, 65536U * sizeof(int));
+  emxFree_int16_T(&c_LL_);
+
+  /*  Vertical filtering */
+  for (b_i = 0; b_i < 128; b_i++) {
+    i = b_i << 8;
+    c_filterSystem(*(short (*)[256])&b_raw_img[i], b_iv);
+    memcpy(&b_raw_img[i], &b_iv[0], 256U * sizeof(short));
+  }
+
+  memset(&HH_[0], 0, 65536U * sizeof(short));
 
   /* even for HPF */
   if ((stride == 0.0) || (0.0 > stride)) {
-    b_i = 0;
+    i = 0;
     i1 = 1;
-    i = -1;
+    filtered_img_tmp = -1;
   } else {
-    b_i = 1;
+    i = 1;
     i1 = (int)stride;
-    i = 255;
+    filtered_img_tmp = 255;
   }
 
-  emxInit_int32_T(&b_filtered_img, 2);
-  loop_ub = div_s32_floor(i - b_i, i1);
-  i = b_filtered_img->size[0] * b_filtered_img->size[1];
-  b_filtered_img->size[0] = loop_ub + 1;
-  b_filtered_img->size[1] = 128;
-  emxEnsureCapacity_int32_T(b_filtered_img, i);
-  for (i = 0; i < 128; i++) {
-    for (i2 = 0; i2 <= loop_ub; i2++) {
-      b_filtered_img->data[i2 + b_filtered_img->size[0] * i] = filtered_img[(b_i
-        + i1 * i2) + (i << 8)];
+  emxInit_int16_T(&c_raw_img, 2);
+  b_i = div_s32_floor(filtered_img_tmp - i, i1);
+  filtered_img_tmp = c_raw_img->size[0] * c_raw_img->size[1];
+  c_raw_img->size[0] = b_i + 1;
+  c_raw_img->size[1] = 128;
+  emxEnsureCapacity_int16_T(c_raw_img, filtered_img_tmp);
+  for (filtered_img_tmp = 0; filtered_img_tmp < 128; filtered_img_tmp++) {
+    for (b_filtered_img_tmp = 0; b_filtered_img_tmp <= b_i; b_filtered_img_tmp++)
+    {
+      c_raw_img->data[b_filtered_img_tmp + c_raw_img->size[0] * filtered_img_tmp]
+        = b_raw_img[(i + i1 * b_filtered_img_tmp) + (filtered_img_tmp << 8)];
     }
   }
 
-  /* Outputs */
+  for (i = 0; i < 128; i++) {
+    for (i1 = 0; i1 < 128; i1++) {
+      HH_[i1 + (i << 8)] = c_raw_img->data[i1 + (i << 7)];
+    }
+
+    memcpy(&b_raw_img[i * 256], &H1_[i * 256], 256U * sizeof(short));
+  }
+
+  /*  Output types */
   /*  Vertical filtering */
-  for (i = 0; i < 128; i++) {
-    for (b_i = 0; b_i < 128; b_i++) {
-      HH_[b_i + (i << 8)] = b_filtered_img->data[b_i + (i << 7)];
-    }
-
+  for (b_i = 0; b_i < 128; b_i++) {
     /*  col_img = cast(raw_img(:, i), 'like', T.filter_coef); */
-    loop_ub = i << 8;
-    d_filterSystem(*(int (*)[256])&(*(int (*)[32768])&H1_[0])[loop_ub],
-                   filtered_col);
-    memcpy(&filtered_img[loop_ub], &filtered_col[0], 256U * sizeof(int));
+    i = b_i << 8;
+    d_filterSystem(*(short (*)[256])&b_raw_img[i], b_iv);
+    memcpy(&b_raw_img[i], &b_iv[0], 256U * sizeof(short));
   }
 
-  memset(&H1_[0], 0, 65536U * sizeof(int));
+  memset(&H1_[0], 0, 65536U * sizeof(short));
 
   /* odd for LPF */
   if ((stride == 0.0) || (0.0 > stride)) {
-    b_i = 1;
+    i = 1;
     i1 = -1;
   } else {
-    b_i = (int)stride;
+    i = (int)stride;
     i1 = 255;
   }
 
-  loop_ub = div_s32_floor(i1, b_i);
-  i1 = b_filtered_img->size[0] * b_filtered_img->size[1];
-  b_filtered_img->size[0] = loop_ub + 1;
-  b_filtered_img->size[1] = 128;
-  emxEnsureCapacity_int32_T(b_filtered_img, i1);
+  b_i = div_s32_floor(i1, i);
+  i1 = c_raw_img->size[0] * c_raw_img->size[1];
+  c_raw_img->size[0] = b_i + 1;
+  c_raw_img->size[1] = 128;
+  emxEnsureCapacity_int16_T(c_raw_img, i1);
   for (i1 = 0; i1 < 128; i1++) {
-    for (i = 0; i <= loop_ub; i++) {
-      b_filtered_img->data[i + b_filtered_img->size[0] * i1] = filtered_img[b_i *
-        i + (i1 << 8)];
+    for (filtered_img_tmp = 0; filtered_img_tmp <= b_i; filtered_img_tmp++) {
+      c_raw_img->data[filtered_img_tmp + c_raw_img->size[0] * i1] = b_raw_img[i *
+        filtered_img_tmp + (i1 << 8)];
     }
+  }
+
+  for (i = 0; i < 128; i++) {
+    for (i1 = 0; i1 < 128; i1++) {
+      H1_[i1 + (i << 8)] = c_raw_img->data[i1 + (i << 7)];
+    }
+
+    memcpy(&b_raw_img[i * 256], &L1_[i * 256], 256U * sizeof(short));
   }
 
   /*  Vertical filtering */
-  for (i = 0; i < 128; i++) {
-    for (b_i = 0; b_i < 128; b_i++) {
-      H1_[b_i + (i << 8)] = b_filtered_img->data[b_i + (i << 7)];
-    }
-
-    loop_ub = i << 8;
-    c_filterSystem(*(int (*)[256])&(*(int (*)[32768])&L1_[0])[loop_ub],
-                   filtered_col);
-    memcpy(&filtered_img[loop_ub], &filtered_col[0], 256U * sizeof(int));
+  for (b_i = 0; b_i < 128; b_i++) {
+    i = b_i << 8;
+    c_filterSystem(*(short (*)[256])&b_raw_img[i], b_iv);
+    memcpy(&b_raw_img[i], &b_iv[0], 256U * sizeof(short));
   }
 
-  memset(&LH_[0], 0, 65536U * sizeof(int));
+  memset(&LH_[0], 0, 65536U * sizeof(short));
 
   /* even for HPF */
   if ((stride == 0.0) || (0.0 > stride)) {
-    b_i = 0;
+    i = 0;
     i1 = 1;
-    i = -1;
+    filtered_img_tmp = -1;
   } else {
-    b_i = 1;
+    i = 1;
     i1 = (int)stride;
-    i = 255;
+    filtered_img_tmp = 255;
   }
 
-  loop_ub = div_s32_floor(i - b_i, i1);
-  i = b_filtered_img->size[0] * b_filtered_img->size[1];
-  b_filtered_img->size[0] = loop_ub + 1;
-  b_filtered_img->size[1] = 128;
-  emxEnsureCapacity_int32_T(b_filtered_img, i);
-  for (i = 0; i < 128; i++) {
-    for (i2 = 0; i2 <= loop_ub; i2++) {
-      b_filtered_img->data[i2 + b_filtered_img->size[0] * i] = filtered_img[(b_i
-        + i1 * i2) + (i << 8)];
+  b_i = div_s32_floor(filtered_img_tmp - i, i1);
+  filtered_img_tmp = c_raw_img->size[0] * c_raw_img->size[1];
+  c_raw_img->size[0] = b_i + 1;
+  c_raw_img->size[1] = 128;
+  emxEnsureCapacity_int16_T(c_raw_img, filtered_img_tmp);
+  for (filtered_img_tmp = 0; filtered_img_tmp < 128; filtered_img_tmp++) {
+    for (b_filtered_img_tmp = 0; b_filtered_img_tmp <= b_i; b_filtered_img_tmp++)
+    {
+      c_raw_img->data[b_filtered_img_tmp + c_raw_img->size[0] * filtered_img_tmp]
+        = b_raw_img[(i + i1 * b_filtered_img_tmp) + (filtered_img_tmp << 8)];
     }
   }
 
-  /* Outputs */
+  for (i = 0; i < 128; i++) {
+    for (i1 = 0; i1 < 128; i1++) {
+      LH_[i1 + (i << 8)] = c_raw_img->data[i1 + (i << 7)];
+    }
+
+    memcpy(&b_raw_img[i * 256], &L1_[i * 256], 256U * sizeof(short));
+  }
+
+  /*  Output types */
   /*  Vertical filtering */
-  for (i = 0; i < 128; i++) {
-    for (b_i = 0; b_i < 128; b_i++) {
-      LH_[b_i + (i << 8)] = b_filtered_img->data[b_i + (i << 7)];
-    }
-
+  for (b_i = 0; b_i < 128; b_i++) {
     /*  col_img = cast(raw_img(:, i), 'like', T.filter_coef); */
-    loop_ub = i << 8;
-    d_filterSystem(*(int (*)[256])&(*(int (*)[32768])&L1_[0])[loop_ub],
-                   filtered_col);
-    memcpy(&filtered_img[loop_ub], &filtered_col[0], 256U * sizeof(int));
+    i = b_i << 8;
+    d_filterSystem(*(short (*)[256])&b_raw_img[i], b_iv);
+    memcpy(&b_raw_img[i], &b_iv[0], 256U * sizeof(short));
   }
 
-  memset(&LL_[0], 0, 65536U * sizeof(int));
+  memset(&LL_[0], 0, 65536U * sizeof(short));
 
   /* odd for LPF */
   if ((stride == 0.0) || (0.0 > stride)) {
-    b_i = 1;
+    i = 1;
     i1 = -1;
   } else {
-    b_i = (int)stride;
+    i = (int)stride;
     i1 = 255;
   }
 
-  loop_ub = div_s32_floor(i1, b_i);
-  i1 = b_filtered_img->size[0] * b_filtered_img->size[1];
-  b_filtered_img->size[0] = loop_ub + 1;
-  b_filtered_img->size[1] = 128;
-  emxEnsureCapacity_int32_T(b_filtered_img, i1);
+  b_i = div_s32_floor(i1, i);
+  i1 = c_raw_img->size[0] * c_raw_img->size[1];
+  c_raw_img->size[0] = b_i + 1;
+  c_raw_img->size[1] = 128;
+  emxEnsureCapacity_int16_T(c_raw_img, i1);
   for (i1 = 0; i1 < 128; i1++) {
-    for (i = 0; i <= loop_ub; i++) {
-      b_filtered_img->data[i + b_filtered_img->size[0] * i1] = filtered_img[b_i *
-        i + (i1 << 8)];
+    for (filtered_img_tmp = 0; filtered_img_tmp <= b_i; filtered_img_tmp++) {
+      c_raw_img->data[filtered_img_tmp + c_raw_img->size[0] * i1] = b_raw_img[i *
+        filtered_img_tmp + (i1 << 8)];
     }
   }
 
   /*  Trace till here, problems happens with LL_ */
   /*  Recombination */
-  for (b_i = 0; b_i < 128; b_i++) {
+  for (i = 0; i < 128; i++) {
     for (i1 = 0; i1 < 128; i1++) {
-      LL_[i1 + (b_i << 8)] = b_filtered_img->data[i1 + (b_i << 7)];
+      LL_[i1 + (i << 8)] = c_raw_img->data[i1 + (i << 7)];
     }
 
-    filtered_img_tmp[b_i] = (unsigned char)(b_i + 1U);
+    c_filtered_img_tmp[i] = (unsigned char)(i + 1U);
   }
 
-  emxFree_int32_T(&b_filtered_img);
-  for (b_i = 0; b_i < 128; b_i++) {
+  emxFree_int16_T(&c_raw_img);
+  for (i = 0; i < 128; i++) {
     for (i1 = 0; i1 < 128; i1++) {
-      i = i1 + (b_i << 9);
-      raw_img[i] = LL_[(filtered_img_tmp[i1] + ((filtered_img_tmp[b_i] - 1) << 8))
-        - 1];
-      i2 = i1 + (b_i << 8);
-      L1__tmp = i1 + ((b_i + 128) << 9);
-      raw_img[L1__tmp] = H1_[i2];
-      raw_img[i + 128] = LH_[i2];
-      raw_img[L1__tmp + 128] = HH_[i2];
+      b_i = i1 + (i << 9);
+      filtered_img[b_i] = LL_[(c_filtered_img_tmp[i1] + ((c_filtered_img_tmp[i]
+        - 1) << 8)) - 1];
+      filtered_img_tmp = i1 + (i << 8);
+      b_filtered_img_tmp = i1 + ((i + 128) << 9);
+      filtered_img[b_filtered_img_tmp] = H1_[filtered_img_tmp];
+      filtered_img[b_i + 128] = LH_[filtered_img_tmp];
+      filtered_img[b_filtered_img_tmp + 128] = HH_[filtered_img_tmp];
     }
   }
 }
 
 /*
- * Arguments    : int raw_img[262144]
+ * Arguments    : const short raw_img[262144]
  *                double stride
+ *                short filtered_img[262144]
  * Return Type  : void
  */
-void c_octave(int raw_img[262144], double stride)
+void c_octave(const short raw_img[262144], double stride, short filtered_img
+              [262144])
 {
   int i;
-  static int H1_[16384];
-  int b_i;
-  int filtered_col[128];
-  int b_iv[128];
   int i1;
-  static int LL_[16384];
-  emxArray_int32_T *b_LL_;
-  int i2;
+  int b_i;
+  short i2;
+  short H1_[16384];
+  short LL_[16384];
+  short b_LL_[128];
+  short b_iv[128];
   int loop_ub;
-  static int L1_[16384];
-  static int HH_[16384];
-  int L1__tmp;
-  int filtered_img[8192];
-  int filtered_img_data[8192];
-  int LH_[16384];
-  signed char filtered_img_tmp[64];
+  int filtered_img_tmp;
+  short HH_[16384];
+  short L1_[16384];
+  short b_raw_img[8192];
+  int raw_img_size_idx_0;
+  short raw_img_data[8192];
+  short LH_[16384];
+  signed char b_filtered_img_tmp[64];
+  for (i = 0; i < 262144; i++) {
+    if ((raw_img[i] & 2048) != 0) {
+      filtered_img[i] = (short)(raw_img[i] | -2048);
+    } else {
+      filtered_img[i] = (short)(raw_img[i] & 2047);
+    }
+  }
 
   /*  Horizontal */
-  /* Horizontal filtering */
   for (i = 0; i < 128; i++) {
-    for (b_i = 0; b_i < 128; b_i++) {
-      filtered_col[b_i] = raw_img[i + (b_i << 9)];
-    }
-
-    e_filterSystem(filtered_col, b_iv);
-    for (b_i = 0; b_i < 128; b_i++) {
-      LL_[i + (b_i << 7)] = b_iv[b_i];
-    }
-  }
-
-  memset(&H1_[0], 0, 16384U * sizeof(int));
-
-  /* even for HPF */
-  if ((stride == 0.0) || (0.0 > stride)) {
-    b_i = 0;
-    i1 = 1;
-    i = -1;
-  } else {
-    b_i = 1;
-    i1 = (int)stride;
-    i = 127;
-  }
-
-  emxInit_int32_T(&b_LL_, 2);
-  i2 = b_LL_->size[0] * b_LL_->size[1];
-  b_LL_->size[0] = 128;
-  loop_ub = div_s32_floor(i - b_i, i1);
-  b_LL_->size[1] = loop_ub + 1;
-  emxEnsureCapacity_int32_T(b_LL_, i2);
-  for (i = 0; i <= loop_ub; i++) {
-    for (i2 = 0; i2 < 128; i2++) {
-      b_LL_->data[i2 + 128 * i] = LL_[i2 + ((b_i + i1 * i) << 7)];
-    }
-  }
-
-  for (b_i = 0; b_i < 64; b_i++) {
     for (i1 = 0; i1 < 128; i1++) {
-      loop_ub = i1 + (b_i << 7);
-      H1_[loop_ub] = b_LL_->data[loop_ub];
+      i2 = raw_img[i1 + (i << 9)];
+      if ((i2 & 2048) != 0) {
+        LL_[i1 + (i << 7)] = (short)(i2 | -2048);
+      } else {
+        LL_[i1 + (i << 7)] = (short)(i2 & 2047);
+      }
     }
   }
 
-  /*  H1f = double(H1_); */
-  /*  figure(7); */
-  /*  imshow(H1f, []); */
-  /*  title('H1_'); */
-  /* Outputs */
   /* Horizontal filtering */
-  for (i = 0; i < 128; i++) {
-    /*  row_img = cast(raw_img(i, :), 'like', T.filter_coef); */
-    for (b_i = 0; b_i < 128; b_i++) {
-      filtered_col[b_i] = raw_img[i + (b_i << 9)];
-    }
-
-    f_filterSystem(filtered_col, b_iv);
-    for (b_i = 0; b_i < 128; b_i++) {
-      LL_[i + (b_i << 7)] = b_iv[b_i];
-    }
-  }
-
-  memset(&L1_[0], 0, 16384U * sizeof(int));
-
-  /* odd for LPF */
-  if ((stride == 0.0) || (0.0 > stride)) {
-    b_i = 1;
-    i1 = -1;
-  } else {
-    b_i = (int)stride;
-    i1 = 127;
-  }
-
-  i = b_LL_->size[0] * b_LL_->size[1];
-  b_LL_->size[0] = 128;
-  loop_ub = div_s32_floor(i1, b_i);
-  b_LL_->size[1] = loop_ub + 1;
-  emxEnsureCapacity_int32_T(b_LL_, i);
-  for (i1 = 0; i1 <= loop_ub; i1++) {
+  for (b_i = 0; b_i < 128; b_i++) {
     for (i = 0; i < 128; i++) {
-      b_LL_->data[i + 128 * i1] = LL_[i + ((b_i * i1) << 7)];
+      b_LL_[i] = LL_[b_i + (i << 7)];
+    }
+
+    e_filterSystem(b_LL_, b_iv);
+    for (i = 0; i < 128; i++) {
+      LL_[b_i + (i << 7)] = b_iv[i];
+    }
+  }
+
+  memset(&H1_[0], 0, 16384U * sizeof(short));
+
+  /* even for HPF */
+  if ((stride == 0.0) || (0.0 > stride)) {
+    i = 0;
+    i1 = 1;
+    b_i = -1;
+  } else {
+    i = 1;
+    i1 = (int)stride;
+    b_i = 127;
+  }
+
+  loop_ub = div_s32_floor(b_i - i, i1);
+  for (b_i = 0; b_i <= loop_ub; b_i++) {
+    for (filtered_img_tmp = 0; filtered_img_tmp < 128; filtered_img_tmp++) {
+      HH_[filtered_img_tmp + 128 * b_i] = LL_[filtered_img_tmp + ((i + i1 * b_i)
+        << 7)];
+    }
+  }
+
+  for (i = 0; i < 64; i++) {
+    memcpy(&H1_[i * 128], &HH_[i * 128], 128U * sizeof(short));
+  }
+
+  /*  H1f = double(H1_); */
+  /*  figure(7); */
+  /*  imshow(H1f, []); */
+  /*  title('H1_'); */
+  /*  Output types */
+  for (i = 0; i < 128; i++) {
+    for (i1 = 0; i1 < 128; i1++) {
+      i2 = raw_img[i1 + (i << 9)];
+      if ((i2 & 2048) != 0) {
+        LL_[i1 + (i << 7)] = (short)(i2 | -2048);
+      } else {
+        LL_[i1 + (i << 7)] = (short)(i2 & 2047);
+      }
+    }
+  }
+
+  /* Horizontal filtering */
+  for (b_i = 0; b_i < 128; b_i++) {
+    /*  row_img = cast(raw_img(i, :), 'like', T.filter_coef); */
+    for (i = 0; i < 128; i++) {
+      b_LL_[i] = LL_[b_i + (i << 7)];
+    }
+
+    f_filterSystem(b_LL_, b_iv);
+    for (i = 0; i < 128; i++) {
+      LL_[b_i + (i << 7)] = b_iv[i];
+    }
+  }
+
+  memset(&L1_[0], 0, 16384U * sizeof(short));
+
+  /* odd for LPF */
+  if ((stride == 0.0) || (0.0 > stride)) {
+    i = 1;
+    i1 = -1;
+  } else {
+    i = (int)stride;
+    i1 = 127;
+  }
+
+  loop_ub = div_s32_floor(i1, i);
+  for (i1 = 0; i1 <= loop_ub; i1++) {
+    for (b_i = 0; b_i < 128; b_i++) {
+      HH_[b_i + 128 * i1] = LL_[b_i + ((i * i1) << 7)];
     }
   }
 
@@ -473,221 +542,256 @@ void c_octave(int raw_img[262144], double stride)
   /*  imshow(L1f, []); */
   /*  title('L1_'); */
   /*  Vertical!, i have problem here! The high pass components leads to some errors. */
-  /*  Vertical filtering */
   for (i = 0; i < 64; i++) {
-    loop_ub = i << 7;
-    e_filterSystem(*(int (*)[128])&(*(int (*)[8192])&H1_[0])[loop_ub],
-                   filtered_col);
-    for (b_i = 0; b_i < 128; b_i++) {
-      L1__tmp = b_i + loop_ub;
-      L1_[L1__tmp] = b_LL_->data[L1__tmp];
-      filtered_img[L1__tmp] = filtered_col[b_i];
-    }
+    memcpy(&L1_[i * 128], &HH_[i * 128], 128U * sizeof(short));
+    memcpy(&b_raw_img[i * 128], &H1_[i * 128], 128U * sizeof(short));
   }
 
-  emxFree_int32_T(&b_LL_);
-  memset(&HH_[0], 0, 16384U * sizeof(int));
+  /*  Vertical filtering */
+  for (b_i = 0; b_i < 64; b_i++) {
+    i = b_i << 7;
+    e_filterSystem(*(short (*)[128])&b_raw_img[i], b_iv);
+    memcpy(&b_raw_img[i], &b_iv[0], 128U * sizeof(short));
+  }
+
+  memset(&HH_[0], 0, 16384U * sizeof(short));
 
   /* even for HPF */
   if ((stride == 0.0) || (0.0 > stride)) {
-    b_i = 0;
+    i = 0;
     i1 = 1;
-    i = -1;
+    b_i = -1;
   } else {
-    b_i = 1;
+    i = 1;
     i1 = (int)stride;
-    i = 127;
+    b_i = 127;
   }
 
-  loop_ub = div_s32_floor(i - b_i, i1);
-  L1__tmp = loop_ub + 1;
-  for (i = 0; i < 64; i++) {
-    for (i2 = 0; i2 <= loop_ub; i2++) {
-      filtered_img_data[i2 + L1__tmp * i] = filtered_img[(b_i + i1 * i2) + (i <<
-        7)];
+  loop_ub = div_s32_floor(b_i - i, i1);
+  raw_img_size_idx_0 = loop_ub + 1;
+  for (b_i = 0; b_i < 64; b_i++) {
+    for (filtered_img_tmp = 0; filtered_img_tmp <= loop_ub; filtered_img_tmp++)
+    {
+      raw_img_data[filtered_img_tmp + raw_img_size_idx_0 * b_i] = b_raw_img[(i +
+        i1 * filtered_img_tmp) + (b_i << 7)];
     }
   }
 
-  /* Outputs */
-  /*  Vertical filtering */
   for (i = 0; i < 64; i++) {
-    memcpy(&HH_[i * 128], &filtered_img_data[i * 64], 64U * sizeof(int));
-
-    /*  col_img = cast(raw_img(:, i), 'like', T.filter_coef); */
-    loop_ub = i << 7;
-    f_filterSystem(*(int (*)[128])&(*(int (*)[8192])&H1_[0])[loop_ub],
-                   filtered_col);
-    memcpy(&filtered_img[loop_ub], &filtered_col[0], 128U * sizeof(int));
+    memcpy(&HH_[i * 128], &raw_img_data[i * 64], 64U * sizeof(short));
+    memcpy(&b_raw_img[i * 128], &H1_[i * 128], 128U * sizeof(short));
   }
 
-  memset(&H1_[0], 0, 16384U * sizeof(int));
+  /*  Output types */
+  /*  Vertical filtering */
+  for (b_i = 0; b_i < 64; b_i++) {
+    /*  col_img = cast(raw_img(:, i), 'like', T.filter_coef); */
+    i = b_i << 7;
+    f_filterSystem(*(short (*)[128])&b_raw_img[i], b_iv);
+    memcpy(&b_raw_img[i], &b_iv[0], 128U * sizeof(short));
+  }
+
+  memset(&H1_[0], 0, 16384U * sizeof(short));
 
   /* odd for LPF */
   if ((stride == 0.0) || (0.0 > stride)) {
-    b_i = 1;
+    i = 1;
     i1 = -1;
   } else {
-    b_i = (int)stride;
+    i = (int)stride;
     i1 = 127;
   }
 
-  loop_ub = div_s32_floor(i1, b_i);
-  L1__tmp = loop_ub + 1;
+  loop_ub = div_s32_floor(i1, i);
+  raw_img_size_idx_0 = loop_ub + 1;
   for (i1 = 0; i1 < 64; i1++) {
-    for (i = 0; i <= loop_ub; i++) {
-      filtered_img_data[i + L1__tmp * i1] = filtered_img[b_i * i + (i1 << 7)];
+    for (b_i = 0; b_i <= loop_ub; b_i++) {
+      raw_img_data[b_i + raw_img_size_idx_0 * i1] = b_raw_img[i * b_i + (i1 << 7)];
     }
   }
 
-  /*  Vertical filtering */
   for (i = 0; i < 64; i++) {
-    memcpy(&H1_[i * 128], &filtered_img_data[i * 64], 64U * sizeof(int));
-    loop_ub = i << 7;
-    e_filterSystem(*(int (*)[128])&(*(int (*)[8192])&L1_[0])[loop_ub],
-                   filtered_col);
-    memcpy(&filtered_img[loop_ub], &filtered_col[0], 128U * sizeof(int));
+    memcpy(&H1_[i * 128], &raw_img_data[i * 64], 64U * sizeof(short));
+    memcpy(&b_raw_img[i * 128], &L1_[i * 128], 128U * sizeof(short));
   }
 
-  memset(&LH_[0], 0, 16384U * sizeof(int));
+  /*  Vertical filtering */
+  for (b_i = 0; b_i < 64; b_i++) {
+    i = b_i << 7;
+    e_filterSystem(*(short (*)[128])&b_raw_img[i], b_iv);
+    memcpy(&b_raw_img[i], &b_iv[0], 128U * sizeof(short));
+  }
+
+  memset(&LH_[0], 0, 16384U * sizeof(short));
 
   /* even for HPF */
   if ((stride == 0.0) || (0.0 > stride)) {
-    b_i = 0;
+    i = 0;
     i1 = 1;
-    i = -1;
+    b_i = -1;
   } else {
-    b_i = 1;
+    i = 1;
     i1 = (int)stride;
-    i = 127;
+    b_i = 127;
   }
 
-  loop_ub = div_s32_floor(i - b_i, i1);
-  L1__tmp = loop_ub + 1;
-  for (i = 0; i < 64; i++) {
-    for (i2 = 0; i2 <= loop_ub; i2++) {
-      filtered_img_data[i2 + L1__tmp * i] = filtered_img[(b_i + i1 * i2) + (i <<
-        7)];
+  loop_ub = div_s32_floor(b_i - i, i1);
+  raw_img_size_idx_0 = loop_ub + 1;
+  for (b_i = 0; b_i < 64; b_i++) {
+    for (filtered_img_tmp = 0; filtered_img_tmp <= loop_ub; filtered_img_tmp++)
+    {
+      raw_img_data[filtered_img_tmp + raw_img_size_idx_0 * b_i] = b_raw_img[(i +
+        i1 * filtered_img_tmp) + (b_i << 7)];
     }
   }
 
-  /* Outputs */
-  /*  Vertical filtering */
   for (i = 0; i < 64; i++) {
-    memcpy(&LH_[i * 128], &filtered_img_data[i * 64], 64U * sizeof(int));
-
-    /*  col_img = cast(raw_img(:, i), 'like', T.filter_coef); */
-    loop_ub = i << 7;
-    f_filterSystem(*(int (*)[128])&(*(int (*)[8192])&L1_[0])[loop_ub],
-                   filtered_col);
-    memcpy(&filtered_img[loop_ub], &filtered_col[0], 128U * sizeof(int));
+    memcpy(&LH_[i * 128], &raw_img_data[i * 64], 64U * sizeof(short));
+    memcpy(&b_raw_img[i * 128], &L1_[i * 128], 128U * sizeof(short));
   }
 
-  memset(&LL_[0], 0, 16384U * sizeof(int));
+  /*  Output types */
+  /*  Vertical filtering */
+  for (b_i = 0; b_i < 64; b_i++) {
+    /*  col_img = cast(raw_img(:, i), 'like', T.filter_coef); */
+    i = b_i << 7;
+    f_filterSystem(*(short (*)[128])&b_raw_img[i], b_iv);
+    memcpy(&b_raw_img[i], &b_iv[0], 128U * sizeof(short));
+  }
+
+  memset(&LL_[0], 0, 16384U * sizeof(short));
 
   /* odd for LPF */
   if ((stride == 0.0) || (0.0 > stride)) {
-    b_i = 1;
+    i = 1;
     i1 = -1;
   } else {
-    b_i = (int)stride;
+    i = (int)stride;
     i1 = 127;
   }
 
-  loop_ub = div_s32_floor(i1, b_i);
-  L1__tmp = loop_ub + 1;
+  loop_ub = div_s32_floor(i1, i);
+  raw_img_size_idx_0 = loop_ub + 1;
   for (i1 = 0; i1 < 64; i1++) {
-    for (i = 0; i <= loop_ub; i++) {
-      filtered_img_data[i + L1__tmp * i1] = filtered_img[b_i * i + (i1 << 7)];
+    for (b_i = 0; b_i <= loop_ub; b_i++) {
+      raw_img_data[b_i + raw_img_size_idx_0 * i1] = b_raw_img[i * b_i + (i1 << 7)];
     }
   }
 
   /*  Trace till here, problems happens with LL_ */
   /*  Recombination */
-  for (b_i = 0; b_i < 64; b_i++) {
-    memcpy(&LL_[b_i * 128], &filtered_img_data[b_i * 64], 64U * sizeof(int));
-    filtered_img_tmp[b_i] = (signed char)(b_i + 1);
+  for (i = 0; i < 64; i++) {
+    memcpy(&LL_[i * 128], &raw_img_data[i * 64], 64U * sizeof(short));
+    b_filtered_img_tmp[i] = (signed char)(i + 1);
   }
 
-  for (b_i = 0; b_i < 64; b_i++) {
+  for (i = 0; i < 64; i++) {
     for (i1 = 0; i1 < 64; i1++) {
-      i = i1 + (b_i << 9);
-      raw_img[i] = LL_[(filtered_img_tmp[i1] + ((filtered_img_tmp[b_i] - 1) << 7))
-        - 1];
-      i2 = i1 + (b_i << 7);
-      loop_ub = i1 + ((b_i + 64) << 9);
-      raw_img[loop_ub] = H1_[i2];
-      raw_img[i + 64] = LH_[i2];
-      raw_img[loop_ub + 64] = HH_[i2];
+      b_i = i1 + (i << 9);
+      filtered_img[b_i] = LL_[(b_filtered_img_tmp[i1] + ((b_filtered_img_tmp[i]
+        - 1) << 7)) - 1];
+      loop_ub = i1 + (i << 7);
+      filtered_img_tmp = i1 + ((i + 64) << 9);
+      filtered_img[filtered_img_tmp] = H1_[loop_ub];
+      filtered_img[b_i + 64] = LH_[loop_ub];
+      filtered_img[filtered_img_tmp + 64] = HH_[loop_ub];
     }
   }
 }
 
 /*
- * Arguments    : int raw_img[262144]
+ * Arguments    : const short raw_img[262144]
  *                double stride
+ *                short filtered_img[262144]
  * Return Type  : void
  */
-void octave(int raw_img[262144], double stride)
+void octave(const short raw_img[262144], double stride, short filtered_img
+            [262144])
 {
   int i;
-  static int H1_[262144];
+  short i1;
   int b_i;
-  int filtered_col[512];
-  int b_iv[512];
-  int i1;
-  int L1__tmp;
-  static int LL_[262144];
-  emxArray_int32_T *b_LL_;
-  int loop_ub;
-  static int L1_[262144];
-  static int HH_[262144];
-  static int filtered_img[131072];
-  emxArray_int32_T *b_filtered_img;
-  static int LH_[262144];
-  short filtered_img_tmp[256];
+  static short H1_[262144];
+  short LL_[512];
+  short b_iv[512];
+  static short b_LL_[262144];
+  int i2;
+  int filtered_img_tmp;
+  emxArray_int16_T *c_LL_;
+  int i3;
+  static short L1_[262144];
+  static short HH_[262144];
+  static short b_raw_img[131072];
+  emxArray_int16_T *c_raw_img;
+  static short LH_[262144];
+  short b_filtered_img_tmp[256];
 
   /*  Horizontal */
-  /* Horizontal filtering */
-  for (i = 0; i < 512; i++) {
-    for (b_i = 0; b_i < 512; b_i++) {
-      filtered_col[b_i] = raw_img[i + (b_i << 9)];
+  for (i = 0; i < 262144; i++) {
+    i1 = raw_img[i];
+    if (raw_img[i] > 511) {
+      i1 = 511;
+    } else {
+      if (raw_img[i] < -512) {
+        i1 = -512;
+      }
     }
 
-    filterSystem(filtered_col, b_iv);
-    for (b_i = 0; b_i < 512; b_i++) {
-      LL_[i + (b_i << 9)] = b_iv[b_i];
+    filtered_img[i] = i1;
+    i1 = raw_img[i];
+    if (raw_img[i] > 511) {
+      i1 = 511;
+    } else {
+      if (raw_img[i] < -512) {
+        i1 = -512;
+      }
+    }
+
+    b_LL_[i] = i1;
+  }
+
+  /* Horizontal filtering */
+  for (b_i = 0; b_i < 512; b_i++) {
+    for (i = 0; i < 512; i++) {
+      LL_[i] = b_LL_[b_i + (i << 9)];
+    }
+
+    filterSystem(LL_, b_iv);
+    for (i = 0; i < 512; i++) {
+      b_LL_[b_i + (i << 9)] = b_iv[i];
     }
   }
 
-  memset(&H1_[0], 0, 262144U * sizeof(int));
+  memset(&H1_[0], 0, 262144U * sizeof(short));
 
   /* even for HPF */
   if ((stride == 0.0) || (0.0 > stride)) {
-    b_i = 0;
-    i1 = 1;
-    L1__tmp = -1;
+    i = 0;
+    i2 = 1;
+    filtered_img_tmp = -1;
   } else {
-    b_i = 1;
-    i1 = (int)stride;
-    L1__tmp = 511;
+    i = 1;
+    i2 = (int)stride;
+    filtered_img_tmp = 511;
   }
 
-  emxInit_int32_T(&b_LL_, 2);
-  i = b_LL_->size[0] * b_LL_->size[1];
-  b_LL_->size[0] = 512;
-  loop_ub = div_s32_floor(L1__tmp - b_i, i1);
-  b_LL_->size[1] = loop_ub + 1;
-  emxEnsureCapacity_int32_T(b_LL_, i);
-  for (L1__tmp = 0; L1__tmp <= loop_ub; L1__tmp++) {
-    for (i = 0; i < 512; i++) {
-      b_LL_->data[i + 512 * L1__tmp] = LL_[i + ((b_i + i1 * L1__tmp) << 9)];
+  emxInit_int16_T(&c_LL_, 2);
+  i3 = c_LL_->size[0] * c_LL_->size[1];
+  c_LL_->size[0] = 512;
+  b_i = div_s32_floor(filtered_img_tmp - i, i2);
+  c_LL_->size[1] = b_i + 1;
+  emxEnsureCapacity_int16_T(c_LL_, i3);
+  for (filtered_img_tmp = 0; filtered_img_tmp <= b_i; filtered_img_tmp++) {
+    for (i3 = 0; i3 < 512; i3++) {
+      c_LL_->data[i3 + 512 * filtered_img_tmp] = b_LL_[i3 + ((i + i2 *
+        filtered_img_tmp) << 9)];
     }
   }
 
-  for (b_i = 0; b_i < 256; b_i++) {
-    for (i1 = 0; i1 < 512; i1++) {
-      loop_ub = i1 + (b_i << 9);
-      H1_[loop_ub] = b_LL_->data[loop_ub];
+  for (i = 0; i < 256; i++) {
+    for (i2 = 0; i2 < 512; i2++) {
+      b_i = i2 + (i << 9);
+      H1_[b_i] = c_LL_->data[b_i];
     }
   }
 
@@ -695,39 +799,53 @@ void octave(int raw_img[262144], double stride)
   /*  figure(7); */
   /*  imshow(H1f, []); */
   /*  title('H1_'); */
-  /* Outputs */
-  /* Horizontal filtering */
-  for (i = 0; i < 512; i++) {
-    /*  row_img = cast(raw_img(i, :), 'like', T.filter_coef); */
-    for (b_i = 0; b_i < 512; b_i++) {
-      filtered_col[b_i] = raw_img[i + (b_i << 9)];
+  /*  Output types */
+  for (i = 0; i < 262144; i++) {
+    i1 = raw_img[i];
+    if (raw_img[i] > 511) {
+      i1 = 511;
+    } else {
+      if (raw_img[i] < -512) {
+        i1 = -512;
+      }
     }
 
-    b_filterSystem(filtered_col, b_iv);
-    for (b_i = 0; b_i < 512; b_i++) {
-      LL_[i + (b_i << 9)] = b_iv[b_i];
+    b_LL_[i] = i1;
+  }
+
+  /* Horizontal filtering */
+  for (b_i = 0; b_i < 512; b_i++) {
+    /*  row_img = cast(raw_img(i, :), 'like', T.filter_coef); */
+    for (i = 0; i < 512; i++) {
+      LL_[i] = b_LL_[b_i + (i << 9)];
+    }
+
+    b_filterSystem(LL_, b_iv);
+    for (i = 0; i < 512; i++) {
+      b_LL_[b_i + (i << 9)] = b_iv[i];
     }
   }
 
-  memset(&L1_[0], 0, 262144U * sizeof(int));
+  memset(&L1_[0], 0, 262144U * sizeof(short));
 
   /* odd for LPF */
   if ((stride == 0.0) || (0.0 > stride)) {
-    b_i = 1;
-    i1 = -1;
+    i = 1;
+    i2 = -1;
   } else {
-    b_i = (int)stride;
-    i1 = 511;
+    i = (int)stride;
+    i2 = 511;
   }
 
-  L1__tmp = b_LL_->size[0] * b_LL_->size[1];
-  b_LL_->size[0] = 512;
-  loop_ub = div_s32_floor(i1, b_i);
-  b_LL_->size[1] = loop_ub + 1;
-  emxEnsureCapacity_int32_T(b_LL_, L1__tmp);
-  for (i1 = 0; i1 <= loop_ub; i1++) {
-    for (L1__tmp = 0; L1__tmp < 512; L1__tmp++) {
-      b_LL_->data[L1__tmp + 512 * i1] = LL_[L1__tmp + ((b_i * i1) << 9)];
+  filtered_img_tmp = c_LL_->size[0] * c_LL_->size[1];
+  c_LL_->size[0] = 512;
+  b_i = div_s32_floor(i2, i);
+  c_LL_->size[1] = b_i + 1;
+  emxEnsureCapacity_int16_T(c_LL_, filtered_img_tmp);
+  for (i2 = 0; i2 <= b_i; i2++) {
+    for (filtered_img_tmp = 0; filtered_img_tmp < 512; filtered_img_tmp++) {
+      c_LL_->data[filtered_img_tmp + 512 * i2] = b_LL_[filtered_img_tmp + ((i *
+        i2) << 9)];
     }
   }
 
@@ -736,176 +854,189 @@ void octave(int raw_img[262144], double stride)
   /*  imshow(L1f, []); */
   /*  title('L1_'); */
   /*  Vertical!, i have problem here! The high pass components leads to some errors. */
-  /*  Vertical filtering */
   for (i = 0; i < 256; i++) {
-    loop_ub = i << 9;
-    filterSystem(*(int (*)[512])&(*(int (*)[131072])&H1_[0])[loop_ub],
-                 filtered_col);
-    for (b_i = 0; b_i < 512; b_i++) {
-      L1__tmp = b_i + loop_ub;
-      L1_[L1__tmp] = b_LL_->data[L1__tmp];
-      filtered_img[L1__tmp] = filtered_col[b_i];
+    for (i2 = 0; i2 < 512; i2++) {
+      b_i = i2 + (i << 9);
+      L1_[b_i] = c_LL_->data[b_i];
+      b_raw_img[b_i] = H1_[b_i];
     }
   }
 
-  emxFree_int32_T(&b_LL_);
-  memset(&HH_[0], 0, 262144U * sizeof(int));
+  emxFree_int16_T(&c_LL_);
+
+  /*  Vertical filtering */
+  for (b_i = 0; b_i < 256; b_i++) {
+    i = b_i << 9;
+    filterSystem(*(short (*)[512])&b_raw_img[i], b_iv);
+    memcpy(&b_raw_img[i], &b_iv[0], 512U * sizeof(short));
+  }
+
+  memset(&HH_[0], 0, 262144U * sizeof(short));
 
   /* even for HPF */
   if ((stride == 0.0) || (0.0 > stride)) {
-    b_i = 0;
-    i1 = 1;
-    L1__tmp = -1;
+    i = 0;
+    i2 = 1;
+    filtered_img_tmp = -1;
   } else {
-    b_i = 1;
-    i1 = (int)stride;
-    L1__tmp = 511;
+    i = 1;
+    i2 = (int)stride;
+    filtered_img_tmp = 511;
   }
 
-  emxInit_int32_T(&b_filtered_img, 2);
-  loop_ub = div_s32_floor(L1__tmp - b_i, i1);
-  L1__tmp = b_filtered_img->size[0] * b_filtered_img->size[1];
-  b_filtered_img->size[0] = loop_ub + 1;
-  b_filtered_img->size[1] = 256;
-  emxEnsureCapacity_int32_T(b_filtered_img, L1__tmp);
-  for (L1__tmp = 0; L1__tmp < 256; L1__tmp++) {
-    for (i = 0; i <= loop_ub; i++) {
-      b_filtered_img->data[i + b_filtered_img->size[0] * L1__tmp] =
-        filtered_img[(b_i + i1 * i) + (L1__tmp << 9)];
+  emxInit_int16_T(&c_raw_img, 2);
+  b_i = div_s32_floor(filtered_img_tmp - i, i2);
+  filtered_img_tmp = c_raw_img->size[0] * c_raw_img->size[1];
+  c_raw_img->size[0] = b_i + 1;
+  c_raw_img->size[1] = 256;
+  emxEnsureCapacity_int16_T(c_raw_img, filtered_img_tmp);
+  for (filtered_img_tmp = 0; filtered_img_tmp < 256; filtered_img_tmp++) {
+    for (i3 = 0; i3 <= b_i; i3++) {
+      c_raw_img->data[i3 + c_raw_img->size[0] * filtered_img_tmp] = b_raw_img[(i
+        + i2 * i3) + (filtered_img_tmp << 9)];
     }
   }
 
-  /* Outputs */
-  /*  Vertical filtering */
   for (i = 0; i < 256; i++) {
-    for (b_i = 0; b_i < 256; b_i++) {
-      HH_[b_i + (i << 9)] = b_filtered_img->data[b_i + (i << 8)];
+    for (i2 = 0; i2 < 256; i2++) {
+      HH_[i2 + (i << 9)] = c_raw_img->data[i2 + (i << 8)];
     }
 
-    /*  col_img = cast(raw_img(:, i), 'like', T.filter_coef); */
-    loop_ub = i << 9;
-    b_filterSystem(*(int (*)[512])&(*(int (*)[131072])&H1_[0])[loop_ub],
-                   filtered_col);
-    memcpy(&filtered_img[loop_ub], &filtered_col[0], 512U * sizeof(int));
+    memcpy(&b_raw_img[i * 512], &H1_[i * 512], 512U * sizeof(short));
   }
 
-  memset(&H1_[0], 0, 262144U * sizeof(int));
+  /*  Output types */
+  /*  Vertical filtering */
+  for (b_i = 0; b_i < 256; b_i++) {
+    /*  col_img = cast(raw_img(:, i), 'like', T.filter_coef); */
+    i = b_i << 9;
+    b_filterSystem(*(short (*)[512])&b_raw_img[i], b_iv);
+    memcpy(&b_raw_img[i], &b_iv[0], 512U * sizeof(short));
+  }
+
+  memset(&H1_[0], 0, 262144U * sizeof(short));
 
   /* odd for LPF */
   if ((stride == 0.0) || (0.0 > stride)) {
-    b_i = 1;
-    i1 = -1;
+    i = 1;
+    i2 = -1;
   } else {
-    b_i = (int)stride;
-    i1 = 511;
+    i = (int)stride;
+    i2 = 511;
   }
 
-  loop_ub = div_s32_floor(i1, b_i);
-  i1 = b_filtered_img->size[0] * b_filtered_img->size[1];
-  b_filtered_img->size[0] = loop_ub + 1;
-  b_filtered_img->size[1] = 256;
-  emxEnsureCapacity_int32_T(b_filtered_img, i1);
-  for (i1 = 0; i1 < 256; i1++) {
-    for (L1__tmp = 0; L1__tmp <= loop_ub; L1__tmp++) {
-      b_filtered_img->data[L1__tmp + b_filtered_img->size[0] * i1] =
-        filtered_img[b_i * L1__tmp + (i1 << 9)];
+  b_i = div_s32_floor(i2, i);
+  i2 = c_raw_img->size[0] * c_raw_img->size[1];
+  c_raw_img->size[0] = b_i + 1;
+  c_raw_img->size[1] = 256;
+  emxEnsureCapacity_int16_T(c_raw_img, i2);
+  for (i2 = 0; i2 < 256; i2++) {
+    for (filtered_img_tmp = 0; filtered_img_tmp <= b_i; filtered_img_tmp++) {
+      c_raw_img->data[filtered_img_tmp + c_raw_img->size[0] * i2] = b_raw_img[i *
+        filtered_img_tmp + (i2 << 9)];
     }
+  }
+
+  for (i = 0; i < 256; i++) {
+    for (i2 = 0; i2 < 256; i2++) {
+      H1_[i2 + (i << 9)] = c_raw_img->data[i2 + (i << 8)];
+    }
+
+    memcpy(&b_raw_img[i * 512], &L1_[i * 512], 512U * sizeof(short));
   }
 
   /*  Vertical filtering */
-  for (i = 0; i < 256; i++) {
-    for (b_i = 0; b_i < 256; b_i++) {
-      H1_[b_i + (i << 9)] = b_filtered_img->data[b_i + (i << 8)];
-    }
-
-    loop_ub = i << 9;
-    filterSystem(*(int (*)[512])&(*(int (*)[131072])&L1_[0])[loop_ub],
-                 filtered_col);
-    memcpy(&filtered_img[loop_ub], &filtered_col[0], 512U * sizeof(int));
+  for (b_i = 0; b_i < 256; b_i++) {
+    i = b_i << 9;
+    filterSystem(*(short (*)[512])&b_raw_img[i], b_iv);
+    memcpy(&b_raw_img[i], &b_iv[0], 512U * sizeof(short));
   }
 
-  memset(&LH_[0], 0, 262144U * sizeof(int));
+  memset(&LH_[0], 0, 262144U * sizeof(short));
 
   /* even for HPF */
   if ((stride == 0.0) || (0.0 > stride)) {
-    b_i = 0;
-    i1 = 1;
-    L1__tmp = -1;
+    i = 0;
+    i2 = 1;
+    filtered_img_tmp = -1;
   } else {
-    b_i = 1;
-    i1 = (int)stride;
-    L1__tmp = 511;
+    i = 1;
+    i2 = (int)stride;
+    filtered_img_tmp = 511;
   }
 
-  loop_ub = div_s32_floor(L1__tmp - b_i, i1);
-  L1__tmp = b_filtered_img->size[0] * b_filtered_img->size[1];
-  b_filtered_img->size[0] = loop_ub + 1;
-  b_filtered_img->size[1] = 256;
-  emxEnsureCapacity_int32_T(b_filtered_img, L1__tmp);
-  for (L1__tmp = 0; L1__tmp < 256; L1__tmp++) {
-    for (i = 0; i <= loop_ub; i++) {
-      b_filtered_img->data[i + b_filtered_img->size[0] * L1__tmp] =
-        filtered_img[(b_i + i1 * i) + (L1__tmp << 9)];
+  b_i = div_s32_floor(filtered_img_tmp - i, i2);
+  filtered_img_tmp = c_raw_img->size[0] * c_raw_img->size[1];
+  c_raw_img->size[0] = b_i + 1;
+  c_raw_img->size[1] = 256;
+  emxEnsureCapacity_int16_T(c_raw_img, filtered_img_tmp);
+  for (filtered_img_tmp = 0; filtered_img_tmp < 256; filtered_img_tmp++) {
+    for (i3 = 0; i3 <= b_i; i3++) {
+      c_raw_img->data[i3 + c_raw_img->size[0] * filtered_img_tmp] = b_raw_img[(i
+        + i2 * i3) + (filtered_img_tmp << 9)];
     }
   }
 
-  /* Outputs */
-  /*  Vertical filtering */
   for (i = 0; i < 256; i++) {
-    for (b_i = 0; b_i < 256; b_i++) {
-      LH_[b_i + (i << 9)] = b_filtered_img->data[b_i + (i << 8)];
+    for (i2 = 0; i2 < 256; i2++) {
+      LH_[i2 + (i << 9)] = c_raw_img->data[i2 + (i << 8)];
     }
 
-    /*  col_img = cast(raw_img(:, i), 'like', T.filter_coef); */
-    loop_ub = i << 9;
-    b_filterSystem(*(int (*)[512])&(*(int (*)[131072])&L1_[0])[loop_ub],
-                   filtered_col);
-    memcpy(&filtered_img[loop_ub], &filtered_col[0], 512U * sizeof(int));
+    memcpy(&b_raw_img[i * 512], &L1_[i * 512], 512U * sizeof(short));
   }
 
-  memset(&LL_[0], 0, 262144U * sizeof(int));
+  /*  Output types */
+  /*  Vertical filtering */
+  for (b_i = 0; b_i < 256; b_i++) {
+    /*  col_img = cast(raw_img(:, i), 'like', T.filter_coef); */
+    i = b_i << 9;
+    b_filterSystem(*(short (*)[512])&b_raw_img[i], b_iv);
+    memcpy(&b_raw_img[i], &b_iv[0], 512U * sizeof(short));
+  }
+
+  memset(&b_LL_[0], 0, 262144U * sizeof(short));
 
   /* odd for LPF */
   if ((stride == 0.0) || (0.0 > stride)) {
-    b_i = 1;
-    i1 = -1;
+    i = 1;
+    i2 = -1;
   } else {
-    b_i = (int)stride;
-    i1 = 511;
+    i = (int)stride;
+    i2 = 511;
   }
 
-  loop_ub = div_s32_floor(i1, b_i);
-  i1 = b_filtered_img->size[0] * b_filtered_img->size[1];
-  b_filtered_img->size[0] = loop_ub + 1;
-  b_filtered_img->size[1] = 256;
-  emxEnsureCapacity_int32_T(b_filtered_img, i1);
-  for (i1 = 0; i1 < 256; i1++) {
-    for (L1__tmp = 0; L1__tmp <= loop_ub; L1__tmp++) {
-      b_filtered_img->data[L1__tmp + b_filtered_img->size[0] * i1] =
-        filtered_img[b_i * L1__tmp + (i1 << 9)];
+  b_i = div_s32_floor(i2, i);
+  i2 = c_raw_img->size[0] * c_raw_img->size[1];
+  c_raw_img->size[0] = b_i + 1;
+  c_raw_img->size[1] = 256;
+  emxEnsureCapacity_int16_T(c_raw_img, i2);
+  for (i2 = 0; i2 < 256; i2++) {
+    for (filtered_img_tmp = 0; filtered_img_tmp <= b_i; filtered_img_tmp++) {
+      c_raw_img->data[filtered_img_tmp + c_raw_img->size[0] * i2] = b_raw_img[i *
+        filtered_img_tmp + (i2 << 9)];
     }
   }
 
   /*  Trace till here, problems happens with LL_ */
   /*  Recombination */
-  for (b_i = 0; b_i < 256; b_i++) {
-    for (i1 = 0; i1 < 256; i1++) {
-      LL_[i1 + (b_i << 9)] = b_filtered_img->data[i1 + (b_i << 8)];
+  for (i = 0; i < 256; i++) {
+    for (i2 = 0; i2 < 256; i2++) {
+      b_LL_[i2 + (i << 9)] = c_raw_img->data[i2 + (i << 8)];
     }
 
-    filtered_img_tmp[b_i] = (short)(b_i + 1);
+    b_filtered_img_tmp[i] = (short)(i + 1);
   }
 
-  emxFree_int32_T(&b_filtered_img);
-  for (b_i = 0; b_i < 256; b_i++) {
-    for (i1 = 0; i1 < 256; i1++) {
-      L1__tmp = i1 + (b_i << 9);
-      raw_img[L1__tmp] = LL_[(filtered_img_tmp[i1] + ((filtered_img_tmp[b_i] - 1)
-        << 9)) - 1];
-      i = i1 + ((b_i + 256) << 9);
-      raw_img[i] = H1_[L1__tmp];
-      raw_img[L1__tmp + 256] = LH_[L1__tmp];
-      raw_img[i + 256] = HH_[L1__tmp];
+  emxFree_int16_T(&c_raw_img);
+  for (i = 0; i < 256; i++) {
+    for (i2 = 0; i2 < 256; i2++) {
+      b_i = i2 + (i << 9);
+      filtered_img[b_i] = b_LL_[(b_filtered_img_tmp[i2] + ((b_filtered_img_tmp[i]
+        - 1) << 9)) - 1];
+      filtered_img_tmp = i2 + ((i + 256) << 9);
+      filtered_img[filtered_img_tmp] = H1_[b_i];
+      filtered_img[b_i + 256] = LH_[b_i];
+      filtered_img[filtered_img_tmp + 256] = HH_[b_i];
     }
   }
 }

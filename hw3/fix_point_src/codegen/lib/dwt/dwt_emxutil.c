@@ -5,7 +5,7 @@
  * File: dwt_emxutil.c
  *
  * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 07-Apr-2023 12:06:50
+ * C/C++ source code generated on  : 07-Apr-2023 14:39:31
  */
 
 /* Include Files */
@@ -17,11 +17,11 @@
 /* Function Definitions */
 
 /*
- * Arguments    : emxArray_int32_T *emxArray
+ * Arguments    : emxArray_int16_T *emxArray
  *                int oldNumel
  * Return Type  : void
  */
-void emxEnsureCapacity_int32_T(emxArray_int32_T *emxArray, int oldNumel)
+void emxEnsureCapacity_int16_T(emxArray_int16_T *emxArray, int oldNumel)
 {
   int newNumel;
   int i;
@@ -49,49 +49,49 @@ void emxEnsureCapacity_int32_T(emxArray_int32_T *emxArray, int oldNumel)
       }
     }
 
-    newData = calloc((unsigned int)i, sizeof(int));
+    newData = calloc((unsigned int)i, sizeof(short));
     if (emxArray->data != NULL) {
-      memcpy(newData, emxArray->data, sizeof(int) * oldNumel);
+      memcpy(newData, emxArray->data, sizeof(short) * oldNumel);
       if (emxArray->canFreeData) {
         free(emxArray->data);
       }
     }
 
-    emxArray->data = (int *)newData;
+    emxArray->data = (short *)newData;
     emxArray->allocatedSize = i;
     emxArray->canFreeData = true;
   }
 }
 
 /*
- * Arguments    : emxArray_int32_T **pEmxArray
+ * Arguments    : emxArray_int16_T **pEmxArray
  * Return Type  : void
  */
-void emxFree_int32_T(emxArray_int32_T **pEmxArray)
+void emxFree_int16_T(emxArray_int16_T **pEmxArray)
 {
-  if (*pEmxArray != (emxArray_int32_T *)NULL) {
-    if (((*pEmxArray)->data != (int *)NULL) && (*pEmxArray)->canFreeData) {
+  if (*pEmxArray != (emxArray_int16_T *)NULL) {
+    if (((*pEmxArray)->data != (short *)NULL) && (*pEmxArray)->canFreeData) {
       free((*pEmxArray)->data);
     }
 
     free((*pEmxArray)->size);
     free(*pEmxArray);
-    *pEmxArray = (emxArray_int32_T *)NULL;
+    *pEmxArray = (emxArray_int16_T *)NULL;
   }
 }
 
 /*
- * Arguments    : emxArray_int32_T **pEmxArray
+ * Arguments    : emxArray_int16_T **pEmxArray
  *                int numDimensions
  * Return Type  : void
  */
-void emxInit_int32_T(emxArray_int32_T **pEmxArray, int numDimensions)
+void emxInit_int16_T(emxArray_int16_T **pEmxArray, int numDimensions)
 {
-  emxArray_int32_T *emxArray;
+  emxArray_int16_T *emxArray;
   int i;
-  *pEmxArray = (emxArray_int32_T *)malloc(sizeof(emxArray_int32_T));
+  *pEmxArray = (emxArray_int16_T *)malloc(sizeof(emxArray_int16_T));
   emxArray = *pEmxArray;
-  emxArray->data = (int *)NULL;
+  emxArray->data = (short *)NULL;
   emxArray->numDimensions = numDimensions;
   emxArray->size = (int *)malloc(sizeof(int) * numDimensions);
   emxArray->allocatedSize = 0;

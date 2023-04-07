@@ -5,7 +5,7 @@
  * File: _coder_dwt_api.h
  *
  * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 07-Apr-2023 12:06:50
+ * C/C++ source code generated on  : 07-Apr-2023 14:39:31
  */
 
 #ifndef _CODER_DWT_API_H
@@ -23,7 +23,7 @@ extern emlrtCTX emlrtRootTLSGlobal;
 extern emlrtContext emlrtContextGlobal;
 
 /* Function Declarations */
-extern void dwt(int32_T raw_img[262144], real_T stride, int32_T filtered_img
+extern void dwt(int16_T raw_img[262144], real_T stride, int16_T filtered_img
                 [262144]);
 extern void dwt_api(const mxArray * const prhs[3], int32_T nlhs, const mxArray
                     *plhs[1]);
