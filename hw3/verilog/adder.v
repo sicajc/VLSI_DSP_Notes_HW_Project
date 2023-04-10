@@ -6,6 +6,6 @@ module adder#(
     output signed[width:0]c
   );
 
-  assign c = a*b;
+  assign c = a+b;
 
 endmodule
