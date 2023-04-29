@@ -20,10 +20,10 @@
 2. Retransform the block diagram into nodes of delays, also arrows with the delays assigned to it.
 3. If we cannot reach a certain node, we marked it as -1.
 4. Then we can get the $L^1$ delay matrix
-5. For 4th delay, we would like to compute all the way to $L^4$
-6. To compute $L^2$ with $L^1$, $L^2_{ij} = max_k(L^1_{ik} + L^1_{kj})$
+5. For 4th delay, we would like to com pute all the way to $L^4$
+6. To compute $L^2$ with $L^1$, $L^2_{ij} = max_k(L^1_{ik} + L^1_{k j})$
 7. If you encounter -1, the path does not exist, so we dont have to consider it.
-8. Then $L^3$ can be computed from $L^1$ and $L^2$
+8. Then $L^3$ can be computed from $L^1$ and $L ^2$
 9. $T_{\infin} = max(L^1_{ii}/1,L^2_{ii}/2,L^3_{ii}/3,L^n_{ii}/n...)$ of each iteration can be found by analyzing the diagonal of the matrix L.
 10. The $L^3$ means the maximum delays from a certain node to another node after passing 3 delays.
 11. $L^n$ is the longest path from node to another node after 4 delays.
@@ -33,7 +33,7 @@
 2. We use Bellman Fords's algorithm to calculate shortest path. Single source multiple output shortest algorithm.
 3. We are trying to find the shortest path from 1 node to all other node.
 
-# Bit width error
+# Bit width erro
 1. Must beware of the bit width error.
 2. Use explicit signed number to indicate that it is signed value, s.t. auto sign extension can be made by the synthesis tool.
 
