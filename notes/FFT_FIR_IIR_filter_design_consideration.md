@@ -1,5 +1,7 @@
 # IIR v.s. FIR
 1. IIR filters are usually considered for better design performance, however when designing IIR filters, poles must be considered and ensured that the pole is within the ROC.
+2. Though IIR can use lower order to implement the same functionality as FIR, it has stability problem.
+3. FIR needs a lot higher order but has no stability problem.
 
 # Adaptive filter
 1. Coefficient updating filters, the coefficients changes according to the inputs, however even if the coefficient you trained converges, the whole system stabilbility might not converges, i.e. the bias for whole system performance is still large.

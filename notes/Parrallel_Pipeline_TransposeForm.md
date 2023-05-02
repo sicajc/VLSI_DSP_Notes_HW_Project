@@ -1,5 +1,5 @@
 # Reducing critical paths
-1. We can reduce it by exploting cutset.
+1. We can reduce it by exploiting cutset.
 2. Use transpose form.
 
 # Transpose form
@@ -9,7 +9,8 @@
 4. The difference equation would stay the same!
 5. The CRITICAL path can sometimes be reduced using this technique.
 6. Then we can simply redraw the graph, to get a clearer view of our transformed circuit.
-7. Summing note is the same as fan out node simply in different persepctive.
+7. Summing node is the same as fan out node simply in different persepctive.
+8. The transpose form is also known as the pipelined form, the first output would need some time to be outputed.
 
 # Summing bits after additions and multiplications
 1. a*b actually only need $w_b+w_b-1$ bits
@@ -20,8 +21,8 @@
 
 # Relieving it by using Hybrid form
 1. Inputs can have less fan out, at the same time critical path is not that large.
-2. Ways is by distributing the sum and multiplication and D_ffs into the upper portion of circuit and to the lower bottom of the circuit, instead of putting them all into the upper portion of the circuit. This is the architecture that is used in very high speed digital filter.
-3. Fan out problem wants to be prevented!Otherwise, speed goes down.
+2. Ways is by distributing the sum and multiplications and D_ffs into the upper portion of circuit and to the lower bottom of the circuit, instead of putting them all into the upper portion of the circuit. This is the architecture that is used in very high speed digital filter. This can be achieved by retiming and pipelining.
+3. Fan out problem wants to be prevented! Otherwise, speed goes down. Area goes up!
 
 # Interleaving transformations circuit
 1. Using same datapath to interleave multiple computations.
@@ -56,6 +57,7 @@
 1. Consider 3 parrallel datapath.
 2. Reduce the clock frequency in total, $T_{clock} = 3T$, whole goal is to reduce the total clock speed. In parrallel processing $f$->$f/L$, L is the number of parrallelism.
 3. $LT = c*\beta v_{dd}/k(\beta v_{dd}-v_t)^2$, L factor is used to reduce the clock frequency in total, thus power is reduced.
+4. Power can be reduced if we increase the number of processing element to try to do the computation in a lower clock rate.
 
 # Expander
 1. Insert $x-1$ zeroes after each inputs. An upper arrow with $x$ and a number N.

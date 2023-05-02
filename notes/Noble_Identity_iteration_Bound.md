@@ -33,7 +33,7 @@
 2. We use Bellman Fords's algorithm to calculate shortest path. Single source multiple output shortest algorithm.
 3. We are trying to find the shortest path from 1 node to all other node.
 
-# Bit width erro
+# Bit width error
 1. Must beware of the bit width error.
 2. Use explicit signed number to indicate that it is signed value, s.t. auto sign extension can be made by the synthesis tool.
 

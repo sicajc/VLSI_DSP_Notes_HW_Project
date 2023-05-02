@@ -3,7 +3,7 @@
 1. Ideas of node retiming can be generalized into cutset retiming.
 2. Valid cutset retiming means we can remove the $ith$ delays of a certain cutset input, then attach  $ith$ delay to the output. We call this a valid retiming.
 3. DFG graph and graph algorithm concepts are used extensively here.
-4. Remove incoming edge delays by 1, add 1 outgoing delay to output edge.
+4. Remove incoming edge delays by 1 on the cutset contours, need to add 1 outgoing delay to output all edges on output contours.
 
 # Pipeling v.s. Retiming.
 0. Moving existing delays around a feedbackward cutset(Retiming), pipelining introduces delays around a feedforward cutset.
