@@ -1,6 +1,6 @@
 ## Algorithm
 1. Understand QR givens rotation again.
-2. Understand CORDIC Rotations. Generation mode and rotation modes.
+2. Understand CORDIC Rotations. Generation mode and rotation modes, modify the QR algorithm into givens rotation mode.
 
 ## Matlab code for Givens roation algorithm
 1. Gemerate A=QR algorithm where Products of $Q_nQ_{n-1}..Q_n[A|I] = [R|Q]$
