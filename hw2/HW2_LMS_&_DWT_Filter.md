@@ -250,6 +250,15 @@
 
 - Used to check whether the reconstructed image is close to the original image or not.
 
+
+## Wavelet Compression
+<p align="center">
+  <img src="./img/wavelet_compression.jpg" width="500" heigh ="500">
+</p>
+
+- When using the DWT for JPEG2000, we generally would keep only a certain amount of wavelet coefficients after decomposition. The example shows the restored image after keeping only the largest 10%,5%,1% and 0.5% of wavelets coefficients. Those coefficients approach to 0 are thrown away.
+
+
 <div style="page-break-after: always;"></div>
 
 # Code
@@ -395,3 +404,5 @@
 [6] [VLSI Digital Signal processing systems Design and Implementation, p25~28 by Parhi]()
 
 [7] [Image Denoising Based on Improved Wavelet Threshold Function for Wireless Camera Networks and Transmissions,Sep 2015, Reserach Gate,Xiaoyu Wang Xiaoxu Ou Bo-Wei Chen Mucheol Kim](https://www.researchgate.net/figure/The-inverse-discrete-wavelet-transform-Here-h-i-i14-i-i-h-i-i14-i-i-h-i_fig7_283882847)
+
+[8] [Image Compression and Wavelets,Steve Brunton,2021](https://www.youtube.com/watch?v=jclknhNJBrE)
