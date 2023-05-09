@@ -6,24 +6,30 @@
 
 % 3 types, Circular rotation, Linear rotation and hyperbolic rotation.
 
+%================================================================
+%  Main Driver
+%================================================================
 ITERS_NUM = 12;
 
-x = 5;
-y = 0;
-angle = 53; % Target angle 53 degree. Expect x=3,y=4.
-
-[x_result, y_result, angle_result] = cordic_rotation_mode(x, y, angle, ITERS_NUM);
-fprintf('Rotation Mode:\n x = %f , y = %f , angle = %f  \n',x_result,y_result,angle_result);
-
-
-x = 3;
-y = 4;
+x = -6;
+y = -16;
 angle = 0; % Set x=3,y=4 . Expect 53.
 
 [x_result, y_result, angle_result] = cordic_vector_mode(x, y, angle, ITERS_NUM);
 fprintf('Vector Mode:\n x = %f , y = %f , angle = %f  \n',x_result,y_result,angle_result);
 
+x = 5;
+y = 0;
+angle = 53; % Target angle 53 degree. Expect x=3,y=4.
 
+[x_result, y_result, angle_result] = cordic_rotation_mode(x, y, angle_result, ITERS_NUM);
+fprintf('Rotation Mode:\n x = %f , y = %f , angle = %f  \n',x_result,y_result,angle_result);
+
+
+
+%================================================================
+%  Functions
+%================================================================
 function [x_result, y_result, angle] = cordic_vector_mode(x, y, angle, iters_num)
     % Vectoring mode
     % Description: Vectoring mode uses linear rotation s.t. y approach to 0 iteratively

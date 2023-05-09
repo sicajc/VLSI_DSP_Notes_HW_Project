@@ -1,21 +1,27 @@
-M = [2 16 -6 -16;
-     16 -17 10 -2;
-     -6 10 15 -1;
-     -16 -2 -1 9];
+%================================================================
+%  Main Driver
+%================================================================
+% M = [2 16 -6 -16;
+%      16 -17 10 -2;
+%      -6 10 15 -1;
+%      -16 -2 -1 9];
 
-[Q, R] = QR_decompose(M);
+% [Q, R] = qr_decomposition(M);
 
-disp("Givens rotation QR");
-disp(Q);
-disp(R);
+% disp("Givens rotation QR");
+% disp(Q);
+% disp(R);
 
 
-[Q_m, R_m] = qr(M);
-disp("Matlab QR");
-disp(Q_m);
-disp(R_m);
+% [Q_m, R_m] = qr(M);
+% disp("Matlab QR");
+% disp(Q_m);
+% disp(R_m);
 
-function [Q, R] = QR_decompose(M_in)
+%================================================================
+%  Function
+%================================================================
+function [Q, R] = qr_decomposition(M_in)
     % Algorithm from VLSI DSP lecture notes, 5-54, modify it using CORDIC algorithm
     M = M_in;
     N = length(M);
@@ -25,11 +31,12 @@ function [Q, R] = QR_decompose(M_in)
     for k = 1:N
 
         for i = N:-1:k + 1
-            % This needed to be replaced with 2^-1
+            % This needed to be replaced with cordic, vectoring mode.
             theta = atan(M(i, k) / M(i - 1, k));
 
             for j = k:N
-                % For R, needed to be replaced with cordic algorithm.
+                % For R
+                % This needed to be replaced with cordic, rotation mode.
                 tmp1 = M(i - 1, j) * cos(theta) + M(i, j) * sin(theta);
                 tmp2 = -M(i - 1, j) * sin(theta) + M(i, j) * cos(theta);
 
@@ -49,6 +56,6 @@ function [Q, R] = QR_decompose(M_in)
 
     end
 
-    Q = Q' ;
+    Q = Q';
     R = M;
 end
