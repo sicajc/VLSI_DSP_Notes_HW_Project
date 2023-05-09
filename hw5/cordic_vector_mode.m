@@ -9,6 +9,9 @@ function [x_result, y_result, angle] = cordic_vector_mode(x, y, angle, iters_num
     for i = 1:iters_num
         % Z is the current angle, and also the angle I want to shift toward to.
         if -sign(x * y) > 0
+            % Because in vector mode, di is defined as -sign(x,y), deriving this from the rotation matrix.
+            % Since counterclockwise rotation is of (c  s) however, my version uses clockwise rotation, thus should be (c -s)
+            %                                       (-s c),                                                            (s  c).
             x_new = x - bitsra(y, i - 1);
             y = y + bitsra(x, i - 1);
             x = x_new;

@@ -13,7 +13,8 @@
 0. Find an optimal delta value for allowable error.
 1. Using fixed-point designer to find the optimal design after running through multiple QR factorizations.
 2. Find the optimal fraction and integer length for your algorithm.
-3. Set an error tolerance to be $\delta < 0.1%$, ask for the $\delta$ value.
+3. Set an error tolerance to be $\delta < 1%$, ask for the $\delta$ value.
+4. The range is confined to 1~1/4
 
 ## Rederive HW from lecture notes
 1. From lecture notes, rederive the QR factorization's DG and its linear mapping matrix T.

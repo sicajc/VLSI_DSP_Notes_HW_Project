@@ -29,7 +29,6 @@ function [Q, R] = qr_decomposition(M_in)
     Q = eye(N);
 
     for k = 1:N
-
         for i = N:-1:k + 1
             % This needed to be replaced with cordic, vectoring mode.
             theta = atan(M(i, k) / M(i - 1, k));
