@@ -11,8 +11,6 @@ function [x_result, y_result, angle] = cordic_rotation_mode(x, y, angle, iters_n
     alpha = [45, 26.565, 14.0362, 7.12502, 3.57633, 1.78991, 0.895174, 0.447614, 0.223811, 0.111906, 0.055953, 0.027977];
     K = 0.607252935;
 
-    x = x * K; % Pre-multiply the constant stretching into x.
-
     for i = 1:iters_num
         % Z is the current angle, and also the angle I want to shift toward to.
         if angle > 0
@@ -29,6 +27,6 @@ function [x_result, y_result, angle] = cordic_rotation_mode(x, y, angle, iters_n
 
     end
 
-    x_result = x;
-    y_result = y;
+    x_result = x*K;
+    y_result = y*K;
 end

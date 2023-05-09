@@ -9,20 +9,29 @@
 %================================================================
 %  Main Driver
 %================================================================
+clear;
+clc;
 ITERS_NUM = 12;
 
-x = -6;
-y = -16;
-angle = 0; % Set x=3,y=4 . Expect 53.
+% x = 5;
+% y = 0;
+% angle = 0; % Set x=3,y=4 . Expect 53.
 
-[x_result, y_result, angle_result] = cordic_vector_mode(x, y, angle, ITERS_NUM);
-fprintf('Vector Mode:\n x = %f , y = %f , angle = %f  \n',x_result,y_result,angle_result);
+% [x_result, y_result, angle_result] = cordic_vector_mode(x, y, angle, ITERS_NUM);
+% fprintf('Vector Mode:\n x = %f , y = %f , angle = %f  \n',x_result,y_result,angle_result);
 
-x = 5;
-y = 0;
-angle = 53; % Target angle 53 degree. Expect x=3,y=4.
+% x = 3;
+% y = 4;
+% angle = 37; % Target angle 37 angle, starting from x=3,y=4,angle 53. expect x=0,y=5
 
-[x_result, y_result, angle_result] = cordic_rotation_mode(x, y, angle_result, ITERS_NUM);
+% [x_result, y_result, angle_result] = cordic_rotation_mode(x, y, angle, ITERS_NUM);
+% fprintf('Rotation Mode:\n x = %f , y = %f , angle = %f  \n',x_result,y_result,angle_result);
+
+
+x = -16;
+y = -6;
+angle = 69.4326; % Target angle 37 angle, starting from x=-6,y=-16,angle 69.4326. expect x=-17.088,y=-0.003378
+[x_result, y_result, angle_result] = cordic_rotation_mode(x, y, angle, ITERS_NUM);
 fprintf('Rotation Mode:\n x = %f , y = %f , angle = %f  \n',x_result,y_result,angle_result);
 
 
@@ -71,8 +80,6 @@ function [x_result, y_result, angle] = cordic_rotation_mode(x, y, angle, iters_n
     alpha = [45, 26.565, 14.0362, 7.12502, 3.57633, 1.78991, 0.895174, 0.447614, 0.223811, 0.111906, 0.055953, 0.027977];
     K = 0.607252935;
 
-    x = x * K;
-
     for i = 1:iters_num
         % Z is the current angle, and also the angle I want to shift toward to.
         if angle > 0
@@ -89,6 +96,6 @@ function [x_result, y_result, angle] = cordic_rotation_mode(x, y, angle, iters_n
 
     end
 
-    x_result = x;
-    y_result = y;
+    x_result = x*K;
+    y_result = y*K;
 end

@@ -17,26 +17,36 @@ function [Q, R] = qr_cordic(M)
             for j = k:N
                 % For R
                 % This needed to be replaced with cordic, rotation mode
-                [cosx, sinx, angle] = cordic_rotation_mode(1, 0, theta, iters_num);
-                tmp1 = M(i - 1, j) * cosx + M(i, j) * sinx;
-                tmp2 = -M(i - 1, j) * sinx + M(i, j) * cosx;
+                % theta
+                % M(i-1,j)
+                % M(i,j)
+                % M
+                % [cosx, sinx, angle] = cordic_rotation_mode(1,0, theta, iters_num);
+                % tmp1 =  M(i - 1, j) * cosx + M(i, j) * sinx;
+                % tmp2 = -M(i - 1, j) * sinx + M(i, j) * cosx;
 
-                M(i - 1, j) = tmp1;
-                M(i, j) = tmp2;
+                [tmp1, tmp2, angle] = cordic_rotation_mode(M( i,j ), M( i-1,j ), theta, iters_num);
+                % fprintf('Rotation Mode:\n x = %f , y = %f , j = %d  \n',tmp1,tmp2,j);
+
+                M(i, j) = tmp1;
+                M(i - 1, j) = tmp2;
             end
 
             for j = 1:N
                 % For Q, after calculation, take its transpose to get the correct Q, same for this portion.
-                [cosx, sinx, angle] = cordic_rotation_mode(1, 0, theta, iters_num);
-                tmp1 =  Q(i - 1, j) * cosx + Q(i, j) * sinx;
-                tmp2 = -Q(i - 1, j) * sinx + Q(i, j) * cosx;
+                [tmp1, tmp2, angle] = cordic_rotation_mode(Q(i,j), Q(i-1,j), theta, iters_num);
 
-                Q(i - 1, j) = tmp1;
-                Q(i, j) = tmp2;
+
+                % tmp1 =  Q(i - 1, j) * cosx + Q(i, j) * sinx;
+                % tmp2 = -Q(i - 1, j) * sinx + Q(i, j) * cosx;
+
+                Q(i, j) = tmp1;
+                Q(i - 1, j) = tmp2;
             end
 
         end
 
     end
     R = M;
+    Q = Q';
 end
