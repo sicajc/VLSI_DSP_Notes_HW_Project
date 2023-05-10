@@ -1,0 +1,41 @@
+/*
+ * Academic License - for use in teaching, academic research, and meeting
+ * course requirements at degree granting institutions only.  Not for
+ * government, commercial, or other organizational use.
+ * File: _coder_qr_cordic_api.h
+ *
+ * MATLAB Coder version            : 5.0
+ * C/C++ source code generated on  : 09-May-2023 23:11:02
+ */
+
+#ifndef _CODER_QR_CORDIC_API_H
+#define _CODER_QR_CORDIC_API_H
+
+/* Include Files */
+#include <stddef.h>
+#include <stdlib.h>
+#include "tmwtypes.h"
+#include "mex.h"
+#include "emlrt.h"
+
+/* Variable Declarations */
+extern emlrtCTX emlrtRootTLSGlobal;
+extern emlrtContext emlrtContextGlobal;
+
+/* Function Declarations */
+extern void qr_cordic(int16_T M[16], int16_T Q[16], int16_T R[16]);
+extern void qr_cordic_api(const mxArray * const prhs[2], int32_T nlhs, const
+  mxArray *plhs[2]);
+extern void qr_cordic_atexit(void);
+extern void qr_cordic_initialize(void);
+extern void qr_cordic_terminate(void);
+extern void qr_cordic_xil_shutdown(void);
+extern void qr_cordic_xil_terminate(void);
+
+#endif
+
+/*
+ * File trailer for _coder_qr_cordic_api.h
+ *
+ * [EOF]
+ */

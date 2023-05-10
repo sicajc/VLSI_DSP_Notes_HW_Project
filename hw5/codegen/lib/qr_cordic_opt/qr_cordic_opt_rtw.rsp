@@ -1,0 +1,3 @@
+qr_cordic_opt.obj
+qr_cordic_opt_initialize.obj
+qr_cordic_opt_terminate.obj

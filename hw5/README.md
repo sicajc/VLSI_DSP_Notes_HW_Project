@@ -8,6 +8,7 @@
 2. Understand the iteration number. What does it mean by iteration number, it is set to 12 according to the spec.
 3. The word length should be 12 bits. So the possible pattern range of A should be first specified.
 4. You should have more than 1 test pattern. Other test pattern must also works. Randomly generates the matrix of A then do QR factorization on it.
+5. Instead propogating theta, propogate di = 1 and -1.
 
 ## Turning the design into fixed-point
 0. Find an optimal delta value for allowable error.

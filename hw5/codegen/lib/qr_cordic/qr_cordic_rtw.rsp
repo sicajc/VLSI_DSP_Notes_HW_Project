@@ -1,0 +1,5 @@
+cordic_rotation_mode.obj
+qr_cordic.obj
+qr_cordic_data.obj
+qr_cordic_initialize.obj
+qr_cordic_terminate.obj

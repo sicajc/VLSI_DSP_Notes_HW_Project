@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+<h1>Instrumentation Results for qr_cordic_mex</h1>
+<h2>Summary</h2>
+<p>To re-create this report:</p>
+<pre>  showInstrumentationResults qr_cordic_mex -proposeFL -defaultDT numerictype(1,12,6)</pre>
+
+<p>MEX-function name:</p>
+<pre>qr_cordic_mex</pre>
+<p>Timestamp:</p>
+<pre>Tue May  9 23:10:58 2023</pre>
+<p>To open this report from the MATLAB command line:</p>
+<pre> web('-browser','C:\Users\User\Desktop\VLSI_DSP_Notes_HW_Project\hw5\instrumentation\qr_cordic_mex\html\printable.html')</pre>
+
+
+<h2>Function qr_cordic </h2>
+
+<pre>
+function [Q, R] = qr_cordic(M,T)
+    % Algorithm from VLSI DSP lecture notes, 5-54, modify it using CORDIC algorithm
+    N = length(M);
+    % Augmenting the matrix I to the left, updating I alongside with A when performing rotation
+    Q = eye(N);
+    x = 0;
+    y = 0;
+    tmp1 = 0;
+    tmp2 = 0;
+
+    % Turning into fixed point
+    Q = cast(Q,'like',T.x_output);
+    x = cast(x,'like',T.x_output);
+    y = cast(y,'like',T.y_output);
+    tmp1 = cast(tmp1,'like',T.x_output);
+    tmp2 = cast(tmp2,'like',T.y_output);
+
+    iters_num = 12;
+    for k = 1:N
+
+        for i = N:-1:k + 1
+            % This needed to be replaced with cordic, vectoring mode.
+            % Use vector mode to calculate of givens rotation
+            theta = 0;
+
+            % Fixed point
+            theta = cast(theta,'like',T.theta_output);
+
+            [x_,y_,theta] = cordic_vector_mode(M(i-1, k), M(i, k), theta, iters_num,T);
+            % fprintf('Vector Mode:\n theta = %f , i = %d  \n',theta,i);
+
+            for j = k:N
+                % For R
+                % This needed to be replaced with cordic, rotation mode
+
+
+                [tmp1, tmp2, angle] = cordic_rotation_mode(M(i-1,j), M( i,j ), theta, iters_num,T);
+                % fprintf('Rotation Mode:\n x = %f , y = %f , j = %d  \n',tmp1,tmp2,j);
+
+                M(i - 1, j) = tmp1;
+                M(i, j) = tmp2;
+            end
+
+            for j = 1:N
+                % For Q, after calculation, take its transpose to get the correct Q, same for this portion.
+                [tmp1, tmp2, angle] = cordic_rotation_mode( Q(i-1,j), Q(i,j), theta, iters_num,T);
+
+                Q(i-1, j) = tmp1;
+                Q(i, j) = tmp2;
+            end
+
+        end
+
+    end
+    R = M;
+    Q = Q';
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for qr_cordic</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Proposed<br>Signedness</th><th>Proposed<br>WL</th><th>Proposed<br>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>M</code></td><td><code>Input</code></td><td><code>4&nbsp;x&nbsp;4</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>61</code></td><td><code>No</code></td><td><code>-0.689453125</code></td><td><code>1.2138671875</code></td></tr>
+<tr><td><code>N</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>4</code></td><td><code>4</code></td></tr>
+<tr><td><code>Q&gt;1</code></td><td><code>Output</code></td><td><code>4&nbsp;x&nbsp;4</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>51</code></td><td><code>No</code></td><td><code>-0.9814453125</code></td><td><code>1</code></td></tr>
+<tr><td><code>Q&gt;2</code></td><td><code>Local</code></td><td><code>4&nbsp;x&nbsp;4</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>1</code></td></tr>
+<tr><td><code>R</code></td><td><code>Output</code></td><td><code>4&nbsp;x&nbsp;4</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>61</code></td><td><code>No</code></td><td><code>-0.4736328125</code></td><td><code>1.2138671875</code></td></tr>
+<tr><td><code>angle</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>4</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>0.0625</code></td><td><code>0.0625</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>2</code></td><td><code>4</code></td></tr>
+<tr><td><code>iters_num</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>12</code></td><td><code>12</code></td></tr>
+<tr><td><code>j</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>4</code></td></tr>
+<tr><td><code>k</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>4</code></td></tr>
+<tr><td><code>theta&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>theta&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>4</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>62</code></td><td><code>No</code></td><td><code>-63.625</code></td><td><code>78.625</code></td></tr>
+<tr><td><code>tmp1&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>tmp1&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>0</code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>tmp1&gt;3</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>24</code></td><td><code>21</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>31</code></td><td><code>No</code></td><td><code>-0.8381710052490234</code></td><td><code>1.2142505645751953</code></td></tr>
+<tr><td><code>tmp2&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>tmp2&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>0</code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>tmp2&gt;3</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>24</code></td><td><code>21</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>25</code></td><td><code>No</code></td><td><code>-0.9817218780517578</code></td><td><code>0.7005519866943359</code></td></tr>
+<tr><td><code>x&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>x&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>0</code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>x_</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><span style="background-color: yellow"><span style="color: black"><b>100</b></span></span></code></td><td><code>No</code></td><td><code>-0.3935546875</code></td><td><code>1.9990234375</code></td></tr>
+<tr><td><code>y&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>y&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>0</code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>y_</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>-0.0009765625</code></td><td><code>0.0048828125</code></td></tr>
+</table>
+
+<h2>Function cordic_vector_mode </h2>
+
+<pre>
+function [x_result, y_result, angle] = cordic_vector_mode(x, y, angle, iters_num,T)
+    % Vectoring mode
+    % Description: Vectoring mode uses linear rotation s.t. y approach to 0 iteratively
+    % Input:  vector (x,y) rotates it with the angle z
+    % Output: Value after rotation (x,y) also the angle of tan(y/x)
+    % Goal is trying to nullify y accumulating the angle when rotating.
+    alpha = [45, 26.565, 14.0362, 7.12502, 3.57633, 1.78991, 0.895174, 0.447614, 0.223811, 0.111906, 0.055953, 0.027977];
+
+    % Turning into fixed point
+    alpha = cast(alpha,'like',T.lut_coef);
+    x_result = cast(x,'like',T.x_output);
+    y_result = cast(y,'like',T.y_output);
+    angle    = cast(angle,'like',T.theta_output);
+    x_new    = cast(x,'like',T.x_output);
+
+    for i = 1:iters_num
+        % Z is the current angle, and also the angle I want to shift toward to.
+        if -sign(x * y) > 0
+            % Because in vector mode, di is defined as -sign(x,y), deriving this from the rotation matrix.
+            % Since counterclockwise rotation is of (c  s) however, my version uses clockwise rotation, thus should be (c -s)
+            %                                       (-s c),                                                            (s  c).
+            x_new(:) = x - bitsra(y, i - 1);
+            y(:)     = y + bitsra(x, i - 1);
+            x(:) = x_new;
+            angle(:) = angle - alpha(i);
+        else
+            x_new(:) = x + bitsra(y, i - 1);
+            y(:) = y - bitsra(x, i - 1);
+            x(:) = x_new;
+            angle(:) = angle + alpha(i);
+        end
+
+    end
+
+    x_result = x;
+    y_result = y;
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for cordic_vector_mode</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Proposed<br>Signedness</th><th>Proposed<br>WL</th><th>Proposed<br>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>alpha&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;12</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>5</code></td><td><code></code></td><td><code>No</code></td><td><code>0.027977</code></td><td><code>45</code></td></tr>
+<tr><td><code>alpha&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;12</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>5</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>71</code></td><td><code>No</code></td><td><code>0.03125</code></td><td><code>45</code></td></tr>
+<tr><td><code>angle</code></td><td><code>I/O</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>4</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>67</code></td><td><code>No</code></td><td><code>-71.5625</code></td><td><code>85.625</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>12</code></td></tr>
+<tr><td><code>iters_num</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>12</code></td><td><code>12</code></td></tr>
+<tr><td><code>x</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><span style="background-color: yellow"><span style="color: black"><b>100</b></span></span></code></td><td><code>No</code></td><td><code>-0.3935546875</code></td><td><code>1.9990234375</code></td></tr>
+<tr><td><code>x_new</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><span style="background-color: yellow"><span style="color: black"><b>100</b></span></span></code></td><td><code>No</code></td><td><code>-0.3935546875</code></td><td><code>1.9990234375</code></td></tr>
+<tr><td><code>x_result</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><span style="background-color: yellow"><span style="color: black"><b>100</b></span></span></code></td><td><code>No</code></td><td><code>-0.3935546875</code></td><td><code>1.9990234375</code></td></tr>
+<tr><td><code>y</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>61</code></td><td><code>No</code></td><td><code>-0.6142578125</code></td><td><code>1.2138671875</code></td></tr>
+<tr><td><code>y_result</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>61</code></td><td><code>No</code></td><td><code>-0.19140625</code></td><td><code>1.2138671875</code></td></tr>
+</table>
+
+<h2>Function cordic_rotation_mode </h2>
+
+<pre>
+function [x_result, y_result, angle] = cordic_rotation_mode(x, y, angle, iters_num, T)
+    % Rotation mode
+    % Description: Rotation mode using Linear rotation and multiplied by a constant K = 0.607252935 for stretching
+    % Input:  vector (x,y) rotates it with the angle z
+    % Output: vector (xcos(z),ysin(z))
+    % Enables shift add multiply instead of calculation trigonemetric function
+    % tan(a^i) = 2^(-i), thus tan(a^i) is simply shift.
+    % Try to approach the desirable angle, we multiply the cos(a^i) only after the complete rotation.
+    % Simply multiply K = 0.607252935 after the rotations. See if the angle difference approach to zero.
+
+    alpha = [45, 26.565, 14.0362, 7.12502, 3.57633, 1.78991, 0.895174, 0.447614, 0.223811, 0.111906, 0.055953, 0.027977];
+    K = 0.60725334371201; % This is Products of K_12
+
+     % Turning into fixed point
+     alpha = cast(alpha,'like',T.lut_coef);
+     x_result = cast(x,'like',T.x_output);
+     y_result = cast(y,'like',T.y_output);
+     angle    = cast(angle,'like',T.theta_output);
+     x_new = cast(x,'like',T.x_output);
+
+    for i = 1:iters_num
+        % Z is the current angle, and also the angle I want to shift toward to.
+        if angle > 0
+            x_new(:) = x + bitsra(y, i - 1);
+            y(:) = y - bitsra(x, i - 1);
+            x(:) = x_new;
+            angle(:) = angle - alpha(i);
+        else
+            x_new(:) = x - bitsra(y, i - 1);
+            y(:) = y + bitsra(x, i - 1);
+            x(:) = x_new;
+            angle(:) = angle + alpha(i);
+        end
+
+    end
+
+    x_result = x * K;
+    y_result = y * K;
+end
+</pre>
+<table style="border-collapse: collapse; border: solid;" border="1">
+<caption><b>Logged Variables for cordic_rotation_mode</b></caption>
+<tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Proposed<br>Signedness</th><th>Proposed<br>WL</th><th>Proposed<br>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
+<tr><td><code>K</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>11</code></td><td><code></code></td><td><code>No</code></td><td><code>0.60725334371201</code></td><td><code>0.60725334371201</code></td></tr>
+<tr><td><code>alpha&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;12</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>5</code></td><td><code></code></td><td><code>No</code></td><td><code>0.027977</code></td><td><code>45</code></td></tr>
+<tr><td><code>alpha&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;12</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>5</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>71</code></td><td><code>No</code></td><td><code>0.03125</code></td><td><code>45</code></td></tr>
+<tr><td><code>angle</code></td><td><code>I/O</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>4</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>62</code></td><td><code>No</code></td><td><code>-63.625</code></td><td><code>78.625</code></td></tr>
+<tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>12</code></td></tr>
+<tr><td><code>iters_num</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>12</code></td><td><code>12</code></td></tr>
+<tr><td><code>x</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><span style="background-color: yellow"><span style="color: black"><b>100</b></span></span></code></td><td><code>No</code></td><td><code>-1.4716796875</code></td><td><code>1.9990234375</code></td></tr>
+<tr><td><code>x_new</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><span style="background-color: yellow"><span style="color: black"><b>100</b></span></span></code></td><td><code>No</code></td><td><code>-1.4716796875</code></td><td><code>1.9990234375</code></td></tr>
+<tr><td><code>x_result&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>51</code></td><td><code>No</code></td><td><code>-0.9814453125</code></td><td><code>1</code></td></tr>
+<tr><td><code>x_result&gt;2</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>24</code></td><td><code>21</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>31</code></td><td><code>No</code></td><td><code>-0.8381710052490234</code></td><td><code>1.2142505645751953</code></td></tr>
+<tr><td><code>y</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>82</code></td><td><code>No</code></td><td><code>-1.6298828125</code></td><td><code>1.2138671875</code></td></tr>
+<tr><td><code>y_result&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>61</code></td><td><code>No</code></td><td><code>-0.8603515625</code></td><td><code>1.2138671875</code></td></tr>
+<tr><td><code>y_result&gt;2</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>24</code></td><td><code>21</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>25</code></td><td><code>No</code></td><td><code>-0.9817218780517578</code></td><td><code>0.7005519866943359</code></td></tr>
+</table>
+</html>

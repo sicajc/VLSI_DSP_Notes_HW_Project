@@ -1,4 +1,4 @@
-function [x_result, y_result, angle] = cordic_rotation_mode(x, y, angle, iters_num, T)
+function [x_result, y_result] = cordic_rotation_mode_opt(x, y, d,iters_num, T)
     % Rotation mode
     % Description: Rotation mode using Linear rotation and multiplied by a constant K = 0.607252935 for stretching
     % Input:  vector (x,y) rotates it with the angle z
@@ -8,30 +8,26 @@ function [x_result, y_result, angle] = cordic_rotation_mode(x, y, angle, iters_n
     % Try to approach the desirable angle, we multiply the cos(a^i) only after the complete rotation.
     % Simply multiply K = 0.607252935 after the rotations. See if the angle difference approach to zero.
 
-    alpha = [45, 26.565, 14.0362, 7.12502, 3.57633, 1.78991, 0.895174, 0.447614, 0.223811, 0.111906, 0.055953, 0.027977];
     K = 0.60725334371201; % This is Products of K_12
 
      % Turning into fixed point
-     alpha = cast(alpha,'like',T.lut_coef);
      x_result = cast(x,'like',T.x_output);
      y_result = cast(y,'like',T.y_output);
-     angle    = cast(angle,'like',T.theta_output);
      x_new = cast(x,'like',T.x_output);
+     K     = cast(K,'like',T.x_output);
 
     for i = 1:iters_num
         % Z is the current angle, and also the angle I want to shift toward to.
-        if angle > 0
+        if d(i) == 0
             % If angle is above 0, I would like to rotate in a clockwise manner
             x_new(:) = x + bitsra(y, i - 1);
             y(:) = y - bitsra(x, i - 1);
             x(:) = x_new;
-            angle(:) = angle - alpha(i);
         else
             % Otherwise, rotate counter clockwise.
             x_new(:) = x - bitsra(y, i - 1);
             y(:) = y + bitsra(x, i - 1);
             x(:) = x_new;
-            angle(:) = angle + alpha(i);
         end
 
     end

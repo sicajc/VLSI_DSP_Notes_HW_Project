@@ -15,7 +15,7 @@ horizontal = 1;
 zero_padded = 0;
 
 % Broadcasting data types.
-T = filterDataType('scaled', filter_coef, lv1_output, lv2_output, lv3_output);
+T = filterDataType('double', filter_coef, lv1_output, lv2_output, lv3_output);
 
 %================================================================
 %  RD image

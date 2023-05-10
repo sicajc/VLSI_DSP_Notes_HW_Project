@@ -1,4 +1,4 @@
-function [Q, R] = qr_cordic(M,T)
+function [Q, R] = qr_cordic_opt(M,T)
     % Algorithm from VLSI DSP lecture notes, 5-54, modify it using CORDIC algorithm
     N = length(M);
     % Augmenting the matrix I to the left, updating I alongside with A when performing rotation
@@ -21,12 +21,8 @@ function [Q, R] = qr_cordic(M,T)
         for i = N:-1:k + 1
             % This needed to be replaced with cordic, vectoring mode.
             % Use vector mode to calculate of givens rotation
-            theta = 0;
 
-            % Fixed point
-            theta = cast(theta,'like',T.theta_output);
-
-            [x_,y_,theta] = cordic_vector_mode(M(i-1, k), M(i, k), theta, iters_num,T);
+            d = cordic_vector_mode_opt(M(i-1, k), M(i, k), iters_num,T);
             % fprintf('Vector Mode:\n theta = %f , i = %d  \n',theta,i);
 
             for j = k:N
@@ -34,7 +30,7 @@ function [Q, R] = qr_cordic(M,T)
                 % This needed to be replaced with cordic, rotation mode
 
 
-                [tmp1, tmp2, angle] = cordic_rotation_mode(M(i-1,j), M( i,j ), theta, iters_num,T);
+                [tmp1, tmp2] = cordic_rotation_mode_opt(M(i-1,j), M( i,j ), d, iters_num,T);
                 % fprintf('Rotation Mode:\n x = %f , y = %f , j = %d  \n',tmp1,tmp2,j);
 
                 M(i - 1, j) = tmp1;
@@ -43,7 +39,7 @@ function [Q, R] = qr_cordic(M,T)
 
             for j = 1:N
                 % For Q, after calculation, take its transpose to get the correct Q, same for this portion.
-                [tmp1, tmp2, angle] = cordic_rotation_mode( Q(i-1,j), Q(i,j), theta, iters_num,T);
+                [tmp1, tmp2] = cordic_rotation_mode_opt( Q(i-1,j), Q(i,j), d, iters_num,T);
 
                 Q(i-1, j) = tmp1;
                 Q(i, j) = tmp2;
