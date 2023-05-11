@@ -5,7 +5,7 @@
  * File: qr_cordic_opt.h
  *
  * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 10-May-2023 19:30:40
+ * C/C++ source code generated on  : 11-May-2023 20:41:05
  */
 
 #ifndef QR_CORDIC_OPT_H
@@ -18,7 +18,7 @@
 #include "qr_cordic_opt_types.h"
 
 /* Function Declarations */
-extern void qr_cordic_opt(short M[16], short Q[16], short R[16]);
+extern void qr_cordic_opt(const signed char M[16], short Q[16], short R[16]);
 
 #endif
 

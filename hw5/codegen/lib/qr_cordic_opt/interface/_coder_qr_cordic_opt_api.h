@@ -5,7 +5,7 @@
  * File: _coder_qr_cordic_opt_api.h
  *
  * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 10-May-2023 19:30:40
+ * C/C++ source code generated on  : 11-May-2023 20:41:05
  */
 
 #ifndef _CODER_QR_CORDIC_OPT_API_H
@@ -23,8 +23,8 @@ extern emlrtCTX emlrtRootTLSGlobal;
 extern emlrtContext emlrtContextGlobal;
 
 /* Function Declarations */
-extern void qr_cordic_opt(int16_T M[16], int16_T Q[16], int16_T R[16]);
-extern void qr_cordic_opt_api(const mxArray * const prhs[2], int32_T nlhs, const
+extern void qr_cordic_opt(int8_T M[16], int16_T Q[16], int16_T R[16]);
+extern void qr_cordic_opt_api(const mxArray * const prhs[3], int32_T nlhs, const
   mxArray *plhs[2]);
 extern void qr_cordic_opt_atexit(void);
 extern void qr_cordic_opt_initialize(void);

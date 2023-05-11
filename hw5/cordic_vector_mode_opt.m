@@ -5,10 +5,14 @@ function d = cordic_vector_mode_opt(x, y, iters_num,T)
     % Output: Value after rotation (x,y) also the angle of tan(y/x)
     % Goal is trying to nullify y accumulating the angle when rotating.
 
+    K = 0.60725334371201;
     % Turning into fixed point
-    x_result = cast(x,'like',T.x_output);
-    y_result = cast(y,'like',T.y_output);
-    x_new    = cast(x,'like',T.x_output);
+    % The partial result during calculation
+    x = cast(x,'like',T.x_partial);
+    y = cast(y,'like',T.y_partial);
+    x_new     = cast(x, 'like', T.x_partial);
+
+    % The result of each stage.
     d        = zeros(1,iters_num);
 
     for i = 1:iters_num

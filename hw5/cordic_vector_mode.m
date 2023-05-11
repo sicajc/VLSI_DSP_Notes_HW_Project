@@ -17,7 +17,7 @@ function [x_result, y_result, angle] = cordic_vector_mode(x, y, angle, iters_num
         % Z is the current angle, and also the angle I want to shift toward to.
         if sign(x * y) > 0
             % Since it is at the first dimension, we shoudl shift in a clockwise manner.
-            % Since we are trying to obtain the angle, we must first add when we are rotating.
+            % Since we are trying to obtain the angle, we must add when we are rotating.
             x_new(:) = x + bitsra(y, i - 1);
             y(:)     = y - bitsra(x, i - 1);
             x(:) = x_new;

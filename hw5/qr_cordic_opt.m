@@ -1,19 +1,19 @@
-function [Q, R] = qr_cordic_opt(M,T)
+function [Q, R] = qr_cordic_opt(M,T,S)
     % Algorithm from VLSI DSP lecture notes, 5-54, modify it using CORDIC algorithm
     N = length(M);
     % Augmenting the matrix I to the left, updating I alongside with A when performing rotation
     Q = eye(N);
-    x = 0;
-    y = 0;
+
+
     tmp1 = 0;
     tmp2 = 0;
 
     % Turning into fixed point
-    Q = cast(Q,'like',T.x_output);
-    x = cast(x,'like',T.x_output);
-    y = cast(y,'like',T.y_output);
-    tmp1 = cast(tmp1,'like',T.x_output);
-    tmp2 = cast(tmp2,'like',T.y_output);
+    M        = cast(M, 'like',T.x_output);
+    Q        = cast(Q,'like' ,S.x_output);
+
+    tmp1 = cast(tmp1,'like',T.x_partial);
+    tmp2 = cast(tmp2,'like',T.y_partial);
 
     iters_num = 12;
     for k = 1:N
@@ -39,7 +39,7 @@ function [Q, R] = qr_cordic_opt(M,T)
 
             for j = 1:N
                 % For Q, after calculation, take its transpose to get the correct Q, same for this portion.
-                [tmp1, tmp2] = cordic_rotation_mode_opt( Q(i-1,j), Q(i,j), d, iters_num,T);
+                [tmp1, tmp2] = cordic_rotation_mode_opt( Q(i-1,j), Q(i,j), d, iters_num,S);
 
                 Q(i-1, j) = tmp1;
                 Q(i, j) = tmp2;

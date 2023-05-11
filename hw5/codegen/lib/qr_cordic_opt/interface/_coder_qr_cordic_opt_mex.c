@@ -5,7 +5,7 @@
  * File: _coder_qr_cordic_opt_mex.c
  *
  * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 10-May-2023 19:30:40
+ * C/C++ source code generated on  : 11-May-2023 20:41:05
  */
 
 /* Include Files */
@@ -14,7 +14,7 @@
 
 /* Function Declarations */
 MEXFUNCTION_LINKAGE void qr_cordic_opt_mexFunction(int32_T nlhs, mxArray *plhs[2],
-  int32_T nrhs, const mxArray *prhs[2]);
+  int32_T nrhs, const mxArray *prhs[3]);
 
 /* Function Definitions */
 
@@ -22,11 +22,11 @@ MEXFUNCTION_LINKAGE void qr_cordic_opt_mexFunction(int32_T nlhs, mxArray *plhs[2
  * Arguments    : int32_T nlhs
  *                mxArray *plhs[2]
  *                int32_T nrhs
- *                const mxArray *prhs[2]
+ *                const mxArray *prhs[3]
  * Return Type  : void
  */
 void qr_cordic_opt_mexFunction(int32_T nlhs, mxArray *plhs[2], int32_T nrhs,
-  const mxArray *prhs[2])
+  const mxArray *prhs[3])
 {
   const mxArray *outputs[2];
   int32_T b_nlhs;
@@ -38,8 +38,8 @@ void qr_cordic_opt_mexFunction(int32_T nlhs, mxArray *plhs[2], int32_T nrhs,
   st.tls = emlrtRootTLSGlobal;
 
   /* Check for proper number of arguments. */
-  if (nrhs != 2) {
-    emlrtErrMsgIdAndTxt(&st, "EMLRT:runTime:WrongNumberOfInputs", 5, 12, 2, 4,
+  if (nrhs != 3) {
+    emlrtErrMsgIdAndTxt(&st, "EMLRT:runTime:WrongNumberOfInputs", 5, 12, 3, 4,
                         13, "qr_cordic_opt");
   }
 

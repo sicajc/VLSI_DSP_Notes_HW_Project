@@ -5,7 +5,7 @@
  * File: qr_cordic_opt_terminate.h
  *
  * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 10-May-2023 19:30:40
+ * C/C++ source code generated on  : 11-May-2023 20:41:05
  */
 
 #ifndef QR_CORDIC_OPT_TERMINATE_H

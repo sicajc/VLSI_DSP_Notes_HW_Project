@@ -1,26 +1,31 @@
-function datatype = qrDataType(dt,lut_coef,x_output,y_output,theta_output)
+function datatype = qrDataType(dt, x_partial, y_partial, x_output, y_output)
+
     switch dt
-    case 'double'
-        datatype.lut_coef = double([]);
-        datatype.x_output = double([]);
-        datatype.y_output = double([]);
-        datatype.theta_output = double([]);
-    case 'single'
-        datatype.lut_coef = single([]);
-        datatype.x_output = single([]);
-        datatype.y_output = single([]);
-        datatype.theta_output = single([]);
-    case 'fixed'
-        datatype.lut_coef= fi([],1,lut_coef.WL,lut_coef.FL);
-        datatype.x_output = fi([],1,x_output.WL,x_output.FL);
-        datatype.y_output = fi([],1,y_output.WL,y_output.FL);
-        datatype.theta_output = fi([],1,theta_output.WL,theta_output.FL);
-    case 'scaled'
-        % This runs computation in double but store data in fix point, a debugging type
-        % To check how far your range for your fix-point, want to get all the possible range.
-        datatype.lut_coef    = fi([],1,lut_coef.WL,lut_coef.FL,'DataType','ScaledDouble');
-        datatype.x_output     = fi([],1,x_output.WL,x_output.FL,'DataType','ScaledDouble');
-        datatype.y_output     = fi([],1,y_output.WL,y_output.FL,'DataType','ScaledDouble');
-        datatype.theta_output     = fi([],1,theta_output.WL,theta_output.FL,'DataType','ScaledDouble');
+        case 'double'
+            datatype.x_partial = double([]);
+            datatype.y_partial = double([]);
+            datatype.x_output = double([]);
+            datatype.y_output = double([]);
+        case 'single'
+            datatype.x_partial = single([]);
+            datatype.y_partial = single([]);
+            datatype.x_output = single([]);
+            datatype.y_output = single([]);
+        case 'fixed'
+            % F = fimath('OverflowAction', 'Wrap', 'RoundingMethod', 'Nearest', 'ProductMode', 'KeepMSB');
+            F = fimath('OverflowAction', 'Wrap', 'RoundingMethod', 'Floor', 'ProductMode', 'KeepMSB');
+
+            datatype.x_partial = fi([], 1, x_partial.WL, x_partial.FL,F);
+            datatype.y_partial = fi([], 1, y_partial.WL, y_partial.FL,F);
+            datatype.x_output = fi([], 1, x_output.WL, x_output.FL,F);
+            datatype.y_output = fi([], 1, y_output.WL, y_output.FL,F);
+        case 'scaled'
+            % This runs computation in double but store data in fix point, a debugging type
+            % To check how far your range for your fix-point, want to get all the possible range.
+            datatype.x_partial = fi([], 1, x_partial.WL, x_partial.FL, 'DataType', 'ScaledDouble');
+            datatype.y_partial = fi([], 1, y_partial.WL, y_partial.FL, 'DataType', 'ScaledDouble');
+            datatype.x_output = fi([], 1, x_output.WL, x_output.FL, 'DataType', 'ScaledDouble');
+            datatype.y_output = fi([], 1, y_output.WL, y_output.FL, 'DataType', 'ScaledDouble');
     end
+
 end

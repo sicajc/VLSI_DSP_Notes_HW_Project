@@ -5,7 +5,7 @@
  * File: main.c
  *
  * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 10-May-2023 19:30:40
+ * C/C++ source code generated on  : 11-May-2023 20:41:05
  */
 
 /*************************************************************************/
@@ -39,23 +39,23 @@
 #include "qr_cordic_opt_terminate.h"
 
 /* Function Declarations */
-static void argInit_4x4_sfix12_En9(short result[16]);
-static short argInit_sfix12_En9(void);
+static void argInit_4x4_int8(signed char result[16]);
+static signed char argInit_int8(void);
 static void main_qr_cordic_opt(void);
 
 /* Function Definitions */
 
 /*
- * Arguments    : short result[16]
+ * Arguments    : signed char result[16]
  * Return Type  : void
  */
-static void argInit_4x4_sfix12_En9(short result[16])
+static void argInit_4x4_int8(signed char result[16])
 {
-  short result_tmp;
+  signed char result_tmp;
   int idx0;
 
   /* Loop over the array to initialize each element. */
-  result_tmp = argInit_sfix12_En9();
+  result_tmp = argInit_int8();
   for (idx0 = 0; idx0 < 4; idx0++) {
     /* Set the value of the array element.
        Change this value to the value that the application requires. */
@@ -77,9 +77,9 @@ static void argInit_4x4_sfix12_En9(short result[16])
 
 /*
  * Arguments    : void
- * Return Type  : short
+ * Return Type  : signed char
  */
-static short argInit_sfix12_En9(void)
+static signed char argInit_int8(void)
 {
   return 0;
 }
@@ -90,15 +90,16 @@ static short argInit_sfix12_En9(void)
  */
 static void main_qr_cordic_opt(void)
 {
-  short iv[16];
+  signed char iv[16];
   short Q[16];
   short R[16];
 
   /* Initialize function 'qr_cordic_opt' input arguments. */
   /* Initialize function input argument 'M'. */
   /* Initialize function input argument 'T'. */
+  /* Initialize function input argument 'S'. */
   /* Call the entry-point 'qr_cordic_opt'. */
-  argInit_4x4_sfix12_En9(iv);
+  argInit_4x4_int8(iv);
   qr_cordic_opt(iv, Q, R);
 }
 

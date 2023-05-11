@@ -18,6 +18,7 @@ function [x_result, y_result, angle] = cordic_rotation_mode(x, y, angle, iters_n
      angle    = cast(angle,'like',T.theta_output);
      x_new = cast(x,'like',T.x_output);
 
+
     for i = 1:iters_num
         % Z is the current angle, and also the angle I want to shift toward to.
         if angle > 0
@@ -36,6 +37,6 @@ function [x_result, y_result, angle] = cordic_rotation_mode(x, y, angle, iters_n
 
     end
 
-    x_result = x * K;
-    y_result = y * K;
+    x_result(:) = x * K;
+    y_result(:) = y * K;
 end

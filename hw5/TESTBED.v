@@ -27,7 +27,7 @@ initial begin
   `ifdef GATE
     $sdf_annotate("QR_CORDIC_SYN.sdf", u_SD);
     $fsdbDumpfile("QR_CORDIC_SYN.fsdb");
-  $fsdbDumpvars(0,"+mda");
+    $fsdbDumpvars(0,"+mda");
   `endif
 end
 
@@ -35,7 +35,7 @@ QR_CORDIC u_SD(
     .clk(clk),
     .rst_n(rst_n),
     .in_valid(in_valid),
-	.in(in),
+	  .in(in),
     .out_valid(out_valid),
     .out_q(out_q),
     .out_r(out_r)
@@ -45,7 +45,7 @@ PATTERN u_PATTERN(
     .clk(clk),
     .rst_n(rst_n),
     .in_valid(in_valid),
-	.in(in),
+	  .in(in),
     .out_valid(out_valid),
     .out(out)
     .out_q(out_q),

@@ -1,7 +1,7 @@
 //############################################################################
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //   2023 VLSI DSP course
-//   HW5          : QR Cordic (SD)
+//   HW5          : QR Cordic
 //   Author         : Shun- Linag Yeh (jackyyeh1999@gmail.com)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //   File Name   : PATTERN.v
@@ -20,8 +20,9 @@
     `define CYCLE_TIME 10.0
 `endif
 
-`define Q_GOLDEN  "C:/Xilinx/project/SOC_final/data/Babara_0_row_ans.dat"
-`define R_GOLDEN  "C:/Xilinx/project/SOC_final/data/Babara_0_col_ans.dat"
+`define A_GOLDEN  "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/pattern/matrix_dat.txt"
+`define Q_GOLDEN  "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/pattern/q_dat.txt"
+`define R_GOLDEN  "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/pattern/r_dat.txt"
 
 
 module PATTERN(
@@ -41,25 +42,35 @@ module PATTERN(
 //================================================================
 parameter DATA_WIDTH = 12;
 parameter PATNUM     = 300;
+parameter PAT_COUNTS = 16;
+parameter INTEGER    = 8;
 integer a, c, i, gap, pat_file;
 integer total_cycles;
 integer total_pat;
 integer patcount;
 integer cycles;
 integer addr;
+integer pat_iter;
+integer errors;
+
 integer color_stage = 0, color, r = 5, g = 0, b = 0;
 //================================================================
 //  INPUT AND OUTPUT DECLARATION
 //================================================================
 output reg clk, rst_n, in_valid;
-output reg [DATA_WIDTH-1:0] in;
+output reg [INTEGER-1:0] in;
 input out_valid;
 input [DATA_WIDTH-1:0] out_q,out_r;
 //================================================================
 //  wire & registers
 //================================================================
-reg [DATA_WIDTH-1:0] Q_GOLDEN[0:PATNUM-1];
-reg [DATA_WIDTH-1:0] R_GOLDEN[0:PATNUM-1];
+reg [INTEGER-1:0] A_GOLDEN[0:PATNUM*PAT_COUNTS-1];
+reg [DATA_WIDTH-1:0] Q_GOLDEN[0:PATNUM*PAT_COUNTS-1];
+reg [DATA_WIDTH-1:0] R_GOLDEN[0:PATNUM*PAT_COUNTS-1];
+
+reg [DATA_WIDTH-1:0] r_ans_out[0:PATNUM*PAT_COUNTS-1];
+reg [DATA_WIDTH-1:0] q_ans_out[0:PATNUM*PAT_COUNTS-1];
+
 //================================================================
 //  clock
 //================================================================
@@ -69,8 +80,8 @@ initial clk = 0 ;
 //  initial
 //================================================================
 initial begin
-    //Reading in file
-    pat_file      = $fopen("./pattern/matrix_dat.txt", "r");
+    //Reading in A
+    $readmemb(`A_GOLDEN ,A_GOLDEN);
     //Put golden model in pseudoRAM
     $readmemb(`Q_GOLDEN ,Q_GOLDEN);
     $readmemb(`R_GOLDEN ,R_GOLDEN);
@@ -83,18 +94,20 @@ initial begin
     reset_task;
     total_cycles = 0 ;
     total_pat = 0 ;
+    errors    = 0 ;
 
     @(negedge clk);
     for( patcount=0 ; patcount<PATNUM ; patcount=patcount+1 )
     begin
 
         qr_feed_data_task;
+
         total_pat = total_pat + 1 ;
 
         wait_outvalid;
-
         check_ans;
         delay_task;
+
         case(color_stage)
             0: begin
                 r = r - 1;
@@ -113,8 +126,8 @@ initial begin
             end
         endcase
         color = 16 + r*36 + g*6 + b;
-        if(color < 100) $display("\033[38;5;%2dmPASS PATTERN NO.%4d\033[00m", color, patcount+1);
-        else $display("\033[38;5;%3dmPASS PATTERN NO.%4d\033[00m", color, patcount+1);
+        if(color < 100) $display("/033[38;5;%2dmPASS PATTERN NO.%4d/033[00m", color, patcount+1);
+        else $display("/033[38;5;%3dmPASS PATTERN NO.%4d/033[00m", color, patcount+1);
     end
     #(1000);
     YOU_PASS_task;
@@ -130,40 +143,54 @@ task check_ans ;
 begin
     if (out_valid===1)
     begin
-
-        Q_GOLDEN[addr];
-        R_GOLDEN[addr];
-
-        cycles = 0 ;
-
+        cycles   = 0;
+        pat_iter = 0;
         while(out_valid===1)
         begin
-            // $display("cycles = %d", cycles);
-            if (cycles!==0) c = $fscanf(pat_file, "%d\n", golden_out);
             cycles = cycles + 1 ;
-            if (out!==golden_out)
+            if (cycles>16) begin
+                fail;
+                // Spec. 8
+                // When out_valid is pulled up and there exists a solution for the grid, out should be correct, and out_valid is limited to be high for 15 cycles.
+                $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
+                $display ("                                                                SPEC 8 FAIL!                                                                ");
+                $display ("                                                 out_valid is limited to be high for 16 cycles.                                             ");
+                $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
+                repeat(5)  @(negedge clk);
+                $finish;
+            end
+
+            // Store the result into q_out and r_out, a memory for storing answers.
+            addr = patcount * PAT_COUNTS + pat_iter;
+            q_ans_out[addr] = q_out;
+            r_ans_out[addr] = r_out;
+
+            // check if the answer is correct
+            if (q_ans_out[addr]!==Q_GOLDEN[addr] || r_ans_out[addr] !== R_GOLDEN[addr])
+            begin
+                $display ("Pat No: %d /n",patcount);
+                $display ("Pat's iter is %d /n",pat_iter);
+                $display ("Your answer for Q is %b /t/t", q_out);
+                $display ("Your answer for R is %b /t/n", r_out);
+                $display ("The correct value for Q is %b /t/n", Q_GOLDEN[addr]);
+                $display ("The correct value for R is %b /t/n", R_GOLDEN[addr]);
+                errors = errors + 1;
+            end
+
+            if(errors > 10)
             begin
                 fail;
                 // Spec. 8
                 // When out_valid is pulled up and there exists a solution for the grid, out should be correct, and out_valid is limited to be high for 15 cycles.
                 $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
                 $display ("                                                                SPEC 8 FAIL!                                                                ");
-                $display ("                                                           Out should be correct                                                            ");
+                $display ("                                        Number of errors are more than 10, please fix your design!                                          ");
                 $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
                 repeat(5)  @(negedge clk);
                 $finish;
             end
-            if (cycles>15) begin
-                fail;
-                // Spec. 8
-                // When out_valid is pulled up and there exists a solution for the grid, out should be correct, and out_valid is limited to be high for 15 cycles.
-                $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
-                $display ("                                                                SPEC 8 FAIL!                                                                ");
-                $display ("                                     out should be correct, and out_valid is limited to be high for 15 cycles.                              ");
-                $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
-                repeat(5)  @(negedge clk);
-                $finish;
-            end
+
+            pat_iter = pat_iter + 1;
             @(negedge clk);
         end
     end
@@ -193,9 +220,10 @@ end endtask
 //================================================================
 //  input task
 //================================================================
-task qr_feed_data_task ; begin
+task qr_feed_data_task ;
+begin
     in_valid = 1 ;
-    for( i=0 ; i<16 ; i=i+1 ) begin
+    for( i=0 ; i<PAT_COUNTS ; i=i+1 ) begin
         if (out_q!==0 || out_r !== 0) begin
             fail;
             // Spec. 4
@@ -218,7 +246,9 @@ task qr_feed_data_task ; begin
             repeat(5)  @(negedge clk);
             $finish;
         end
-        a = $fscanf(pat_file, "%d\n", in);
+
+        addr = patcount * PAT_COUNTS + i;
+        in = A_GOLDEN[addr];
         @(negedge clk);
     end
     in_valid = 0 ;
@@ -238,6 +268,7 @@ task reset_task ; begin
         // All output signals should be reset after the reset signal is asserted.
         $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
         $display ("                                                                SPEC 3 FAIL!                                                                ");
+
         $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
 
         #(100);
