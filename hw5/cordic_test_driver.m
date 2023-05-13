@@ -4,37 +4,64 @@
 % cordic(x,y,z)
 % (Rotation mode)  z is the angle we want to rotate, returns the rotated (x = cos(phi),y=sin(phi))
 % 3 types, Circular rotation, Linear rotation and hyperbolic rotation.
-%================================================================
-%  Main Driver
-%================================================================
 clear;
 clc;
+%================================================================
+%  Setting word length and fraction length
+%================================================================
+% For R
+% Values needed to be optimized for QR cordic
+rx_output.WL = 12;
+rx_output.FL = 3;
+
+ry_output.WL = 12;
+ry_output.FL = 3;
+% x_partial, y_partial.
+% The register holding partial product when shifting for each iteration.
+rx_partial.WL = 20;
+rx_partial.FL = 10;
+
+ry_partial.WL = 20;
+ry_partial.FL = 10;
+
+% For Q
+% Values needed to be optimized for QR cordic
+qx_output.WL = 12;
+qx_output.FL = 10;
+
+qy_output.WL = 12;
+qy_output.FL = 10;
+
+% x_partial, y_partial.
+% The register holding partial product when shifting for each iteration.
+% 18 8
+% 20 10
+qx_partial.WL = 12;
+qx_partial.FL = 10;
+
+qy_partial.WL = 12;
+qy_partial.FL = 10;
 
 ITERS_NUM = 12;
-lut_coef.WL = 12;
-lut_coef.FL = 5;
 
-x_output.WL = 12;
-x_output.FL = 10;
+% Data type for R calculation
+T = qrDataType('fixed', rx_partial, ry_partial,rx_output, ry_output);
 
-y_output.WL = 12;
-y_output.FL = 10;
-
-theta_output.WL = 12;
-theta_output.FL = 4;
-
-U = qrDataType('double', lut_coef, x_output, y_output, theta_output);
+% Data type for Q calculation
+S = qrDataType('fixed', qx_partial, qy_partial,qx_output, qy_output);
 
 
 %================================================================
 %  Testing cordic modules
 %================================================================
-x = 3;
-y = 4;
+x = 5;
+y = 0;
 angle = 0; % Set x=3,y=4 . Expect 53.
 
-[x_result, y_result, angle_result] = cordic_vector_mode(x, y, angle, ITERS_NUM,U);
-fprintf('Vector Mode:\n x = %f , y = %f , angle = %f  \n',x_result,y_result,angle_result);
+d = cordic_vector_mode_opt(x, y, ITERS_NUM,T);
+% fprintf('Vector Mode:\n x = %f , y = %f',x_result,y_result);
+
+d
 
 % x = 3;
 % y = 4;
@@ -46,8 +73,8 @@ fprintf('Vector Mode:\n x = %f , y = %f , angle = %f  \n',x_result,y_result,angl
 x = -6;
 y = -16;
 angle = 69.4326; % Target angle 37 angle, starting from x=-6,y=-16,angle 69.4326. expect x=-17.088,y=-0.003378
-[x_result, y_result, angle_result] = cordic_rotation_mode(x, y, angle, ITERS_NUM,U);
-fprintf('Rotation Mode:\n x = %f , y = %f , angle = %f  \n',x_result,y_result,angle_result);
+[x_result, y_result] = cordic_rotation_mode_opt(x, y, d, ITERS_NUM,T);
+fprintf('Rotation Mode:\n x = %f , y = %f \n',x_result,y_result);
 
 
 
@@ -56,33 +83,33 @@ fprintf('Rotation Mode:\n x = %f , y = %f , angle = %f  \n',x_result,y_result,an
 %  Testing QR cordic
 %================================================================
 
-M = [0.25 0.36 0.6 0.88;
-0.76 0.55 0.52 0.28;
-0.6 0.33 0.45 0.25;
-0.86 0.45 0.28 0.92];
+% M = [0.25 0.36 0.6 0.88;
+% 0.76 0.55 0.52 0.28;
+% 0.6 0.33 0.45 0.25;
+% 0.86 0.45 0.28 0.92];
 
-[q,r]     = qr_decomposition(M);
-[q_c,r_c] = qr_cordic(M,U);
+% [q,r]     = qr_decomposition(M);
+% [q_c,r_c] = qr_cordic(M,U);
 
-disp("qr decomposition with double");
-disp("Q");
-disp(q);
-disp("R");
-disp(r);
+% disp("qr decomposition with double");
+% disp("Q");
+% disp(q);
+% disp("R");
+% disp(r);
 
-disp("qr cordic with double");
-disp("Q")
-disp(q_c);
-disp("R")
-disp(r_c);
+% disp("qr cordic with double");
+% disp("Q")
+% disp(q_c);
+% disp("R")
+% disp(r_c);
 
 %================================================================
 %  Testing QR cordic opt
 %================================================================
-[q_opt,r_opt] = qr_cordic_opt(M,U);
+% [q_opt,r_opt] = qr_cordic_opt(M,U);
 
-disp("qr cordic opt");
-disp("Q")
-disp(q_opt);
-disp("R")
-disp(r_opt);
+% disp("qr cordic opt");
+% disp("Q")
+% disp(q_opt);
+% disp("R")
+% disp(r_opt);

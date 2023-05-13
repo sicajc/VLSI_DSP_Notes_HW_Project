@@ -2,7 +2,6 @@ clc;
 clear;
 
 % A is limited to 8 bits integer. So the range of signed integers should be +127 ~ -126
-% However the result for such calculation is terrible, so use 4 bits integer instead but concatenate to 8 bits.
 % Q is limited to 12 bits fix-point value
 % R is limited to 12 bits
 % NOTE:
@@ -91,6 +90,14 @@ buildInstrumentedMex qr_cordic_opt -o qr_cordic_opt_mex ...
 q_f_opt = double(q_f_opt);
 r_f_opt = double(r_f_opt);
 
+[q,r] = qr(M);
+
+disp("Matlab QR decomposition");
+disp("Q")
+disp(q);
+disp("R")
+disp(r);
+
 disp("qr cordic opt with double");
 disp("Q")
 disp(q_double);
@@ -122,9 +129,6 @@ disp("Q Compare to Q_fix")
 %     matrix_i = cast(matrix_i, 'like', C);
 %     [q_f_opt, r_f_opt] = qr_cordic_opt_mex(matrix_i, T,S);
 
-%     q_f_opt
-%     r_f_opt
-
 %     % Convert back to double for verification
 %     q_double = double(q_double);
 %     r_double = double(r_double);
@@ -154,7 +158,6 @@ disp("Q Compare to Q_fix")
 % disp(max(deltaq));
 % disp("Average delta Q:");
 % disp(mean(deltaq,'all'));
-
 
 
 %================================================================

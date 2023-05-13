@@ -49,5 +49,5 @@ function [Q, R] = qr_cordic_opt(M,T,S)
 
     end
     R = M;
-    Q = Q';
+    Q = Q;
 end

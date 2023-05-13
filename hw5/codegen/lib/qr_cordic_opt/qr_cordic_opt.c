@@ -5,7 +5,7 @@
  * File: qr_cordic_opt.c
  *
  * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 11-May-2023 20:41:05
+ * C/C++ source code generated on  : 12-May-2023 15:28:17
  */
 
 /* Include Files */
@@ -26,11 +26,10 @@ void qr_cordic_opt(const signed char M[16], short Q[16], short R[16])
   int k;
   short i1;
   int b_i;
-  int x_tmp;
   static const short iv[16] = { 1024, 0, 0, 0, 0, 1024, 0, 0, 0, 0, 1024, 0, 0,
     0, 0, 1024 };
 
-  short b_Q[16];
+  int x_tmp;
   int b_x_tmp;
   int x;
   int y;
@@ -583,18 +582,6 @@ void qr_cordic_opt(const signed char M[16], short Q[16], short R[16])
         }
       }
     }
-  }
-
-  for (i = 0; i < 4; i++) {
-    x_tmp = i << 2;
-    b_Q[x_tmp] = Q[i];
-    b_Q[x_tmp + 1] = Q[i + 4];
-    b_Q[x_tmp + 2] = Q[i + 8];
-    b_Q[x_tmp + 3] = Q[i + 12];
-  }
-
-  for (i = 0; i < 16; i++) {
-    Q[i] = b_Q[i];
   }
 }
 
