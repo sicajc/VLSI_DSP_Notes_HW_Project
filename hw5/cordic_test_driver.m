@@ -54,14 +54,73 @@ S = qrDataType('fixed', qx_partial, qy_partial,qx_output, qy_output);
 %================================================================
 %  Testing cordic modules
 %================================================================
-x = 5;
+qr_cordic_golden = 'C:\Users\User\Desktop\VLSI_DSP_Notes_HW_Project\hw5\pattern\qr_cordic_dat.txt'
+fileID_0 = fopen(qr_cordic_golden, 'wt');
+
+% Vectoring mode testing!
+% Boundary conditions
+x = 9;
 y = 0;
 angle = 0; % Set x=3,y=4 . Expect 53.
 
-d = cordic_vector_mode_opt(x, y, ITERS_NUM,T);
-% fprintf('Vector Mode:\n x = %f , y = %f',x_result,y_result);
+x = cast(x,'like',T.x_partial);
+y = cast(y,'like',T.y_partial);
 
-d
+x_fix_bin = bin(x);
+y_fix_bin = bin(y);
+
+[r,d] = cordic_vector_mode_opt(x, y, ITERS_NUM,T);
+r_fix_bin = bin(r);
+
+% Write the result into file for later verification
+fprintf(fileID_0, '%s  // GG1 x = %f \n', x_fix_bin,x);
+fprintf(fileID_0, '%s  //    y = %f \n', y_fix_bin,y);
+fprintf(fileID_0, '%s  //    r = %f \n', r_fix_bin,r);
+
+x = 9;
+y = r;
+angle = 0; % Set x=3,y=4 . Expect 53.
+
+x = cast(x,'like',T.x_partial);
+y = cast(y,'like',T.y_partial);
+
+x_fix_bin = bin(x);
+y_fix_bin = bin(y);
+
+[r,d] = cordic_vector_mode_opt(x, y, ITERS_NUM,T);
+r_fix_bin = bin(r);
+
+% Write the result into file for later verification
+fprintf(fileID_0, '%s  // GG2 x = %f \n', x_fix_bin,x);
+fprintf(fileID_0, '%s  //    y = %f \n', y_fix_bin,y);
+fprintf(fileID_0, '%s  //    r = %f \n', r_fix_bin,r);
+
+for i = 1 : length(d)
+    fprintf(fileID_0, '%d ', d(i));
+end
+fprintf(fileID_0, '// Expected di  \n');
+
+% Rotation mode testing
+x = -21;
+y = 0;
+[x_result, y_result] = cordic_rotation_mode_opt(x, y, d, ITERS_NUM,T);
+
+x = cast(x,'like',T.x_partial);
+y = cast(y,'like',T.y_partial);
+
+x_fix_bin = bin(x);
+y_fix_bin = bin(y);
+
+x_result_fix_bin = bin(x_result);
+y_result_fix_bin = bin(y_result);
+
+% Write the result into file for later verification
+fprintf(fileID_0, '%s  // GR1 x = %f \n', x_fix_bin,x);
+fprintf(fileID_0, '%s  //    y = %f \n', y_fix_bin,y);
+fprintf(fileID_0, '%s  //    x_result = %f \n', x_result_fix_bin ,x_result);
+fprintf(fileID_0, '%s  //    y_result = %f \n', y_result_fix_bin ,y_result);
+
+fclose(fileID_0);
 
 % x = 3;
 % y = 4;
@@ -70,46 +129,31 @@ d
 % [x_result, y_result, angle_result] = cordic_rotation_mode(x, y, angle, ITERS_NUM);
 % fprintf('Rotation Mode:\n x = %f , y = %f , angle = %f  \n',x_result,y_result,angle_result);
 
-x = -6;
-y = -16;
-angle = 69.4326; % Target angle 37 angle, starting from x=-6,y=-16,angle 69.4326. expect x=-17.088,y=-0.003378
-[x_result, y_result] = cordic_rotation_mode_opt(x, y, d, ITERS_NUM,T);
-fprintf('Rotation Mode:\n x = %f , y = %f \n',x_result,y_result);
-
-
-
 
 %================================================================
 %  Testing QR cordic
 %================================================================
 
-% M = [0.25 0.36 0.6 0.88;
-% 0.76 0.55 0.52 0.28;
-% 0.6 0.33 0.45 0.25;
-% 0.86 0.45 0.28 0.92];
+M = [25 -36 -6 88;
+-76 55 52 28;
+6 -33 45 -25;
+-86 45 28 -92];
 
-% [q,r]     = qr_decomposition(M);
-% [q_c,r_c] = qr_cordic(M,U);
+[q,r]     = qr(M);
 
-% disp("qr decomposition with double");
-% disp("Q");
-% disp(q);
-% disp("R");
-% disp(r);
-
-% disp("qr cordic with double");
-% disp("Q")
-% disp(q_c);
-% disp("R")
-% disp(r_c);
+disp("MATLAB qr decomposition");
+disp("Q");
+disp(q);
+disp("R");
+disp(r);
 
 %================================================================
 %  Testing QR cordic opt
 %================================================================
-% [q_opt,r_opt] = qr_cordic_opt(M,U);
+[q_opt,r_opt] = qr_cordic_opt(M,T,S);
 
-% disp("qr cordic opt");
-% disp("Q")
-% disp(q_opt);
-% disp("R")
-% disp(r_opt);
+disp("QR Cordic fixed point opt");
+disp("Q")
+disp(q_opt);
+disp("R")
+disp(r_opt);

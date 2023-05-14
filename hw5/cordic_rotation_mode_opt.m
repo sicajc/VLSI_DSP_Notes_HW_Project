@@ -18,8 +18,8 @@ function [x_result, y_result] = cordic_rotation_mode_opt(x, y, d, iters_num, T)
     x_new     = cast(x, 'like', T.x_partial);
 
     % The result of each stage.
-    x_result = cast(x, 'like', T.x_output);
-    y_result = cast(y, 'like', T.y_output);
+    x_result = cast(x, 'like', T.x_partial);
+    y_result = cast(y, 'like', T.y_partial);
 
     for i = 1:iters_num
             % Z is the current angle, and also the angle I want to shift toward to.

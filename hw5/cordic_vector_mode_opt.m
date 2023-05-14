@@ -1,16 +1,22 @@
-function d = cordic_vector_mode_opt(x, y, iters_num,T)
+function [r,d] = cordic_vector_mode_opt(x, y, iters_num,T)
     % Vectoring mode
     % Description: Vectoring mode uses linear rotation s.t. y approach to 0 iteratively
     % Input:  vector (x,y) rotates it with the angle z
     % Output: Value after rotation (x,y) also the angle of tan(y/x)
     % Goal is trying to nullify y accumulating the angle when rotating.
 
+    % Beware the boundary condition!!! The first qr cordic starts from the N+1 rows. Thus the first operation
+    % Is (x,0) -> (r,0)!!
+
     K = 0.60725334371201;
     % Turning into fixed point
     % The partial result during calculation
+    r = 0;
     x = cast(x,'like',T.x_partial);
     y = cast(y,'like',T.y_partial);
+    r = cast(r,'like',T.x_partial);
     x_new     = cast(x, 'like', T.x_partial);
+    K        = cast(K, 'like' , T.x_partial);
 
     % The result of each stage.
     d        = zeros(1,iters_num);
@@ -34,6 +40,5 @@ function d = cordic_vector_mode_opt(x, y, iters_num,T)
 
     end
 
-    x_result = x;
-    y_result = y;
+   r(:) = x*K;
 end

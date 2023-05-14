@@ -1,12 +1,14 @@
 clc;
 clear;
 
-% A is limited to 8 bits integer. So the range of signed integers should be +127 ~ -126
+% A is limited to 8 bits integer. So the range of signed integers should be +127 ~ -128
 % Q is limited to 12 bits fix-point value
 % R is limited to 12 bits
 % NOTE:
-%      When performing calculation in cordic, the rounding mode here is specified as floor, that is simply perform truncation
-%      no need for rounding so that the result can be simplified.
+% When performing calculation in cordic, the rounding mode here is specified as floor, that is simply perform truncation
+% no need for rounding so that the result can be simplified.
+% The datapath of the whole cordic architecture is 20 bits for R, 12 bits for Q ; However, the final result is truncated to
+% 12 bits only for both R and Q.
 
 %================================================================
 %  Setting word length and fraction length
@@ -74,6 +76,12 @@ C = fi([],1,8,0); % Since M is 8 bits.
 C;
 matrix_i = cast(M,'like',C);
 
+K = 0.60725334371201;
+K = cast(K, 'like' , T.x_partial)
+bin(K);
+
+
+
 %================================================================
 %  Testing of QR Cordic
 %================================================================
@@ -117,47 +125,47 @@ disp("Q Compare to Q_fix")
 %================================================================
 %  QR Cordic checking for a random number of matrices
 %================================================================
-% count = 0;
-% for i = 1:NUM_OF_MATRIX
-%     % Generating matrix
-%     matrix_i = randi([lower_bound,upper_bound],MATRIX_SIZE,MATRIX_SIZE);
+count = 0;
+for i = 1:NUM_OF_MATRIX
+    % Generating matrix
+    matrix_i = randi([lower_bound,upper_bound],MATRIX_SIZE,MATRIX_SIZE);
 
-%     % Double calculation
-%     [q_double, r_double] = qr_cordic_opt(matrix_i, U,U);
+    % Double calculation
+    [q_double, r_double] = qr_cordic_opt(matrix_i, U,U);
 
-%     % Fixed point calculation
-%     matrix_i = cast(matrix_i, 'like', C);
-%     [q_f_opt, r_f_opt] = qr_cordic_opt_mex(matrix_i, T,S);
+    % Fixed point calculation
+    matrix_i = cast(matrix_i, 'like', C);
+    [q_f_opt, r_f_opt] = qr_cordic_opt_mex(matrix_i, T,S);
 
-%     % Convert back to double for verification
-%     q_double = double(q_double);
-%     r_double = double(r_double);
+    % Convert back to double for verification
+    q_double = double(q_double);
+    r_double = double(r_double);
 
-%     q_f_opt = double(q_f_opt);
-%     r_f_opt = double(r_f_opt);
+    q_f_opt = double(q_f_opt);
+    r_f_opt = double(r_f_opt);
 
-%     % Should replace the lower triangle with 0, since it is not needed for metrics.
-%     r_double = r_double .* (1 - tril(ones(size(r_double))));
-%     r_f_opt = r_f_opt .* (1 - tril(ones(size(r_f_opt))));
+    % Should replace the lower triangle with 0, since it is not needed for metrics.
+    r_double = r_double .* (1 - tril(ones(size(r_double))));
+    r_f_opt = r_f_opt .* (1 - tril(ones(size(r_f_opt))));
 
-%     % Generate a bit string to check if met or not?
-%     [met_or_not(i), deltar_] = delta_calculation(r_double, r_f_opt, 0.01);
-%     [met_or_not(i), deltaq_] = delta_calculation(q_double, q_f_opt, 0.01);
+    % Generate a bit string to check if met or not?
+    [met_or_not(i), deltar_] = delta_calculation(r_double, r_f_opt, 0.01);
+    [met_or_not(i), deltaq_] = delta_calculation(q_double, q_f_opt, 0.01);
 
-%     deltar(i) = deltar_;
-%     deltaq(i) = deltaq_;
+    deltar(i) = deltar_;
+    deltaq(i) = deltaq_;
 
-% end
+end
 
-% disp("The largest delta of R within is:");
-% disp(max(deltar));
-% disp("Average delta for R:");
-% disp(mean(deltar,'all'));
+disp("The largest delta of R within is:");
+disp(max(deltar));
+disp("Average delta for R:");
+disp(mean(deltar,'all'));
 
-% disp("The largest delta of Q within is:");
-% disp(max(deltaq));
-% disp("Average delta Q:");
-% disp(mean(deltaq,'all'));
+disp("The largest delta of Q within is:");
+disp(max(deltaq));
+disp("Average delta Q:");
+disp(mean(deltaq,'all'));
 
 
 %================================================================
