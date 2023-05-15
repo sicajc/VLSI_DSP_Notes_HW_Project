@@ -4,15 +4,6 @@ Running: C:/Xilinx/Vivado/2022.1/bin/unwrapped/win64.o/xelab.exe --incr --debug 
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 4 for port 'd_i_d_o' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GG_GR_tb.v:86]
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 4 for port 'd_i_d_o' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GG_GR_tb.v:100]
 Completed static elaboration
-Starting simulation data flow analysis
-WARNING: [XSIM 43-4100] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/cordic_gg/cordic_gg.sim/sim_1/behav/xsim/glbl.v" Line 6. Module glbl has a timescale but at least one module in design doesn't have timescale.
-WARNING: [XSIM 43-4100] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/cordic_gg/cordic_gg.sim/sim_1/behav/xsim/glbl.v" Line 6. Module glbl has a timescale but at least one module in design doesn't have timescale.
-Completed simulation data flow analysis
-Time Resolution for simulation is 1ps
-Compiling module xil_defaultlib.GG
-Compiling module xil_defaultlib.GR
-Compiling module xil_defaultlib.GG_GR_tb
-Compiling module xil_defaultlib.glbl
-Built simulation snapshot GG_GR_tb_behav
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel

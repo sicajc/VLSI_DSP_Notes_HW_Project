@@ -1,6 +1,0 @@
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GG.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module GG
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module GR
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GG_GR_tb.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module GG_GR_tb

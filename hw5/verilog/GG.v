@@ -4,9 +4,10 @@ module GG #(
   ) (
     input signed[DATA_WIDTH-1:0] a_ij,
     input valid_i,
-    input propogate_i,
     input clk,
     input rst_n,
+    input clr_i,
+
     output reg valid_d_o,
     output reg rotates_d_o,
     output reg signed[DATA_WIDTH-1:0] rij_ff_o,
@@ -44,10 +45,10 @@ module GG #(
       valid_d_o   <= 0;
       rotates_d_o <= 0;
     end
-    else if(propogate_i)
+    else if(clr_i)
     begin
-      working_f <= working_f;
-      valid_d_o   <= 1;
+      working_f   <= 0;
+      valid_d_o   <= 0;
       rotates_d_o <= 0;
     end
     else if(gg_done_f)
@@ -83,11 +84,7 @@ module GG #(
     begin
       cnt <= 0;
     end
-    else if(propogate_i)
-    begin
-      cnt <= cnt;
-    end
-    else if(gg_done_f)
+    else if(gg_done_f|| clr_i)
     begin
       cnt <= 0;
     end
@@ -109,11 +106,11 @@ module GG #(
       y_ff <= 0;
       rij_ff_o <= 0;
     end
-    else if(propogate_i)
+    else if(clr_i)
     begin
-      x_ff <= x_ff;
-      y_ff <= y_ff;
-      rij_ff_o <= a_ij;
+      x_ff <= 0;
+      y_ff <= 0;
+      rij_ff_o <= 0;
     end
     else if(gg_done_f)
     begin

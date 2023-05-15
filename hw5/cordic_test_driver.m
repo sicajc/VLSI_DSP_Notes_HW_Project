@@ -122,6 +122,13 @@ fprintf(fileID_0, '%s  //    y_result = %f \n', y_result_fix_bin ,y_result);
 
 fclose(fileID_0);
 
+
+% Rotation mode testing
+x = -21;
+y = -14.83203125;
+d = [0,1,0,1,0,1,0,1,0,1,0,1];
+[x_result, y_result] = cordic_rotation_mode_opt(x, y, d, ITERS_NUM,T)
+
 % x = 3;
 % y = 4;
 % angle = 37; % Target angle 37 angle, starting from x=3,y=4,angle 53. expect x=0,y=5
@@ -134,26 +141,26 @@ fclose(fileID_0);
 %  Testing QR cordic
 %================================================================
 
-M = [25 -36 -6 88;
--76 55 52 28;
-6 -33 45 -25;
--86 45 28 -92];
+% M = [25 -36 -6 88;
+% -76 55 52 28;
+% 6 -33 45 -25;
+% -86 45 28 -92];
 
-[q,r]     = qr(M);
+% [q,r]     = qr(M);
 
-disp("MATLAB qr decomposition");
-disp("Q");
-disp(q);
-disp("R");
-disp(r);
+% disp("MATLAB qr decomposition");
+% disp("Q");
+% disp(q);
+% disp("R");
+% disp(r);
 
 %================================================================
 %  Testing QR cordic opt
 %================================================================
-[q_opt,r_opt] = qr_cordic_opt(M,T,S);
+% [q_opt,r_opt] = qr_cordic_opt(M,T,S);
 
-disp("QR Cordic fixed point opt");
-disp("Q")
-disp(q_opt);
-disp("R")
-disp(r_opt);
+% disp("QR Cordic fixed point opt");
+% disp("Q")
+% disp(q_opt);
+% disp("R")
+% disp(r_opt);
