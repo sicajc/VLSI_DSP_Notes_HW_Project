@@ -1,6 +1,8 @@
 module GR #(
     parameter D_WIDTH = 4,
-    parameter DATA_WIDTH = 20
+    parameter DATA_WIDTH = 20,
+    parameter Q_GR = 0,
+    parameter R_GR = 1
   ) (
     input clk,
     input rst_n,
@@ -76,13 +78,12 @@ module GR #(
       if(done_twice_f)
       begin
         valid_d_o   <= 1;
-        Twice_f     <= 0;
       end
       else
       begin
         valid_d_o   <= 0;
-        Twice_f     <= 1;
       end
+      Twice_f <= 1;
     end
     else if(valid_i)
     begin
@@ -151,8 +152,16 @@ module GR #(
     else if(gr_done_f)
     begin
       x_ff     <= x_ff;
-      y_ff     <= $signed({K_product_x[39],K_product_x[28:10]});
-      rij_ff_o <= $signed({K_product_y[39],K_product_y[28:10]});
+      if(R_GR == 1)
+      begin
+        y_ff     <= $signed({K_product_x[39],K_product_x[28:10]});
+        rij_ff_o <= $signed({K_product_y[39],K_product_y[28:10]});
+      end
+      else
+      begin
+        y_ff     <= $signed({K_product_x[23],K_product_x[20:10]});
+        rij_ff_o <= $signed({K_product_y[23],K_product_y[20:10]});
+      end
     end
     else if(gr_in_work_f && rotates_i)
     begin

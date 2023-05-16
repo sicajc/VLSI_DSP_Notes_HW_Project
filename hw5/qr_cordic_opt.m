@@ -33,6 +33,7 @@ function [Q, R] = qr_cordic_opt(M,T,S)
                 M_(i,k) = r;
                 M_(i+1,k) = 0;
             end
+            % disp("After Vector mode");
             M_;
 
 
@@ -56,6 +57,7 @@ function [Q, R] = qr_cordic_opt(M,T,S)
                 % fprintf('Rotation Mode:\n x = %f , y = %f , j = %d  \n',tmp1,tmp2,j);
             end
 
+            % disp("After Rotations");
             M_;
 
             for j = 1:N
@@ -72,8 +74,10 @@ function [Q, R] = qr_cordic_opt(M,T,S)
                 % For Q, after calculation, take its transpose to get the correct Q, same for this portion.
                 % [tmp1, tmp2] = cordic_rotation_mode_opt( Q(i-1,j), Q(i,j), d, iters_num,S);
             end
+            Q
         end
     end
+    Q;
     R(:) = M_;
     Q(:) = Q;
 end

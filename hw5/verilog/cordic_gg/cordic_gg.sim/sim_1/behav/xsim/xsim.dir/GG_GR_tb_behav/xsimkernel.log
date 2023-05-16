@@ -2,3 +2,6 @@ Running: xsim.dir/GG_GR_tb_behav/xsimk.exe -simmode gui -wdb GG_GR_tb_behav.wdb 
 Design successfully loaded
 Design Loading Memory Usage: 7036 KB (Peak: 7036 KB)
 Design Loading CPU Usage: 0 ms
+Simulation completed
+Simulation Memory Usage: 7676 KB (Peak: 7676 KB)
+Simulation CPU Usage: 0 ms

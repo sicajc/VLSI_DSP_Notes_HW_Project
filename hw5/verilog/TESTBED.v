@@ -1,39 +1,28 @@
 `timescale 1ns/10ps
-
-`include "PATTERN.v"
-`ifdef RTL
-  `include "QR_CORDIC.v"
-`endif
-`ifdef GATE
-  `include "QR_CORDIC_SYN.v"
-`endif
+`define RTL
 
 module TESTBED;
 
+  parameter INPUT_DATA_WIDTH = 8;
   parameter DATA_WIDTH = 12;
+  parameter D_WIDTH = 4;
+  parameter R_DATA_WIDTH = 20;
+  parameter Q_DATA_WIDTH = 12;
+
 
   wire clk, rst_n, in_valid;
-  wire [DATA_WIDTH-1:0] in;
+  wire [INPUT_DATA_WIDTH-1:0] in;
   wire out_valid;
   wire [DATA_WIDTH-1:0] out_q;
   wire [DATA_WIDTH-1:0] out_r;
 
 
-  initial
-  begin
-`ifdef RTL
-    $fsdbDumpfile("QR_CORDIC.fsdb");
-    $fsdbDumpvars(0,"+mda");
-`endif
-  `ifdef GATE
-
-    $sdf_annotate("QR_CORDIC_SYN.sdf", u_SD);
-    $fsdbDumpfile("QR_CORDIC_SYN.fsdb");
-    $fsdbDumpvars(0,"+mda");
-`endif
-  end
-
-  QR_CORDIC u_SD(
+  QR_CORDIC #( .D_WIDTH(D_WIDTH),
+               .DATA_WIDTH(DATA_WIDTH),
+               .INPUT_DATA_WIDTH(INPUT_DATA_WIDTH),
+               .R_DATA_WIDTH(R_DATA_WIDTH),
+               .Q_DATA_WIDTH(Q_DATA_WIDTH))
+               u_CORDIC(
               .clk(clk),
               .rst_n(rst_n),
               .in_valid(in_valid),
@@ -49,7 +38,6 @@ module TESTBED;
             .in_valid(in_valid),
             .in(in),
             .out_valid(out_valid),
-            .out(out)
             .out_q(out_q),
             .out_r(out_r)
           );

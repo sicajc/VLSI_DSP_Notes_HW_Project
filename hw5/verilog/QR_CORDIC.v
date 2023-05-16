@@ -1,8 +1,10 @@
-module GR #(
+`define GGR2OUTPUT 18:7
+module QR_CORDIC #(
     parameter D_WIDTH = 4,
     parameter DATA_WIDTH = 20,
-    parameter INPUT_DATA_WIDTH = 8
-
+    parameter INPUT_DATA_WIDTH = 8,
+    parameter R_DATA_WIDTH = 20,
+    parameter Q_DATA_WIDTH = 12
   ) (
     input clk,
     input rst_n,
@@ -10,8 +12,9 @@ module GR #(
     input in_valid,
     input signed[INPUT_DATA_WIDTH-1:0] in,
 
-    output reg signed[DATA_WIDTH-1:0] out_r,
-    output reg signed[DATA_WIDTH-1:0] out_q
+    output reg out_valid,
+    output reg signed[Q_DATA_WIDTH-1:0] out_r,
+    output reg signed[Q_DATA_WIDTH-1:0] out_q
   );
   //===============================
   //   PARAMETERS & GENVARS
@@ -19,8 +22,7 @@ module GR #(
   parameter GG_NUM   = 3;
   parameter R_GR_NUM = 6;
   parameter Q_GR_NUM = 12;
-  parameter R_DATA_WIDTH = 20;
-  parameter Q_DATA_WIDTH = 12;
+
   genvar i,j,k;
 
   //===============================
@@ -44,7 +46,7 @@ module GR #(
   //===============================
   //   4xFIFO
   //===============================
-  reg[DATA_WIDTH-1:0] aij_bufs[0:3][0:3];
+  reg[R_DATA_WIDTH-1:0] aij_shift_bufs[0:3][0:3];
   reg[3:0] qij_bufs[0:3];
   //===============================
   //   Valid Delays line
@@ -55,11 +57,11 @@ module GR #(
   //   GGs
   //===============================
   // Inputs
-  wire[DATA_WIDTH-1:0] gg_in_aij[0:GG_NUM-1];
+  wire[R_DATA_WIDTH-1:0] gg_in_aij[0:GG_NUM-1];
   wire gg_in_valid[0:GG_NUM-1];
 
   //Outputs
-  wire[DATA_WIDTH-1:0] gg_out_rij[0:GG_NUM-1];
+  wire[R_DATA_WIDTH-1:0] gg_out_rij[0:GG_NUM-1];
   wire[D_WIDTH   -1:0] gg_out_d[0:GG_NUM-1];
 
   wire gg_out_rotates[0:GG_NUM-1];
@@ -71,7 +73,6 @@ module GR #(
   wire signed[R_DATA_WIDTH-1:0] gr_r_in_aij  [0:R_GR_NUM-1];
   wire signed[D_WIDTH-1:0] gr_r_in_d[0:R_GR_NUM-1];
   wire gr_r_in_valid[0:R_GR_NUM-1];
-  wire gr_r_in_propogate [0:R_GR_NUM-1];
   wire gr_r_in_rotates[0:R_GR_NUM-1];
 
   wire signed[R_DATA_WIDTH-1:0] gr_r_out_rij[0:R_GR_NUM-1];
@@ -81,8 +82,8 @@ module GR #(
   wire gr_r_out_valid[0:R_GR_NUM-1];
   wire gr_r_out_rotates[0:R_GR_NUM-1];
 
-  wire signed[R_DATA_WIDTH-1:0] gr_r_x_out[0:Q_GR_NUM-1];
-  wire signed[R_DATA_WIDTH-1:0] gr_r_y_out[0:Q_GR_NUM-1];
+  wire signed[R_DATA_WIDTH-1:0] gr_r_x_out[0:R_GR_NUM-1];
+  wire signed[R_DATA_WIDTH-1:0] gr_r_y_out[0:R_GR_NUM-1];
 
   //===============================
   //   Q_GRs
@@ -109,7 +110,7 @@ module GR #(
   //   Flags
   //===============================
   wire rd_data_done_f    = cordic_cnt == 15 && state_RD_DATA;
-  wire cordic_cal_done_f = cordic_cnt == 28 && state_CAL;
+  wire cordic_cal_done_f = cordic_cnt == 30 && state_CAL;
   wire output_done_f     = cordic_cnt == 15 && state_OUTPUT;
 
   //===============================
@@ -145,7 +146,7 @@ module GR #(
   //===============================
   //   INPUT SIGN EXTENSION
   //===============================
-  wire signed[R_DATA_WIDTH-1:0] extended_in = $signed({(2){in[INPUT_DATA_WIDTH-1]}},in,{(10){1'b0}});
+  wire signed[R_DATA_WIDTH-1:0] extended_in = $signed({{(2){in[INPUT_DATA_WIDTH-1]}},in,{(10){1'b0}}});
 
   //==============================================
   //   R INPUT 4x FIFOs & valid_delay_line_ff
@@ -159,60 +160,61 @@ module GR #(
           if(~rst_n)
           begin
             valid_delay_line_ff <= 0;
-            aij_bufs[i][j] <= 0;
+            aij_shift_bufs[i][j] <= 0;
           end
           else if(state_RD_DATA && in_valid)
           begin
             case(cordic_cnt/4)
               0:
               begin
-                aij_bufs[0][0] <= extended_in;
+                aij_shift_bufs[0][0] <= extended_in;
+
                 if(i>=1)
                 begin
-                  aij_bufs[i][0] <= aij_bufs[i-1][0];
+                  aij_shift_bufs[i][0] <= aij_shift_bufs[i-1][0];
                 end
               end
               1:
               begin
-                aij_bufs[0][1] <= extended_in;
+                aij_shift_bufs[0][1] <= extended_in;
                 if(i>=1)
                 begin
-                  aij_bufs[i][1] <= aij_bufs[i-1][1];
+                  aij_shift_bufs[i][1] <= aij_shift_bufs[i-1][1];
                 end
               end
               2:
               begin
-                aij_bufs[0][2] <= extended_in;
+                aij_shift_bufs[0][2] <= extended_in;
                 if(i>=1)
                 begin
-                  aij_bufs[i][2] <= aij_bufs[i-1][2];
+                  aij_shift_bufs[i][2] <= aij_shift_bufs[i-1][2];
                 end
               end
               3:
               begin
-                aij_bufs[0][3] <= extended_in;
+                aij_shift_bufs[0][3] <= extended_in;
                 if(i>=1)
                 begin
-                  aij_bufs[i][3] <= aij_bufs[i-1][3];
+                  aij_shift_bufs[i][3] <= aij_shift_bufs[i-1][3];
                 end
               end
               default:
-                aij_bufs[i][j] <= 0;
+                aij_shift_bufs[i][j] <= 0;
             endcase
           end
           else if(state_CAL)
           begin
-            valid_delay_line_ff <= { valid_delay_line_ff[6:0],(cordic_cnt%4 == 0)};
+            valid_delay_line_ff <= { valid_delay_line_ff[6:0],sends_valid_f};
 
             if(valid_delay_line_ff[j]==1)
             begin
               if(i>=1)
               begin
-                aij_bufs[i][j] <= aij_bufs[i-1][j];
+                aij_shift_bufs[i][j] <= aij_shift_bufs[i-1][j];
               end
               else
               begin
-                aij_bufs[i][j] <= 0;
+                aij_shift_bufs[i][j] <= 0;
               end
             end
           end
@@ -223,6 +225,7 @@ module GR #(
         end
       end
   endgenerate
+  wire sends_valid_f = (cordic_cnt%4 == 0) && cordic_cnt<=12;
   //===============================
   //   Q INPUT 4x FIFOs
   //===============================
@@ -238,7 +241,7 @@ module GR #(
           qij_bufs[2]<=4'b0100;
           qij_bufs[3]<=4'b1000;
         end
-        else if(valid_delay_line_ff[j+5] == 1)
+        else if(valid_delay_line_ff[j+4] == 1)
         begin
           qij_bufs[j] <= {qij_bufs[j][2:0],qij_bufs[j][3]};
         end
@@ -280,26 +283,26 @@ module GR #(
   //   CORDIC INPUTS
   //===============================
   // R parts
-  assign gg_in_aij[0]   = $signed(aij_bufs[3][0]);
-  assign gr_r_in_aij[0] = $signed(aij_bufs[3][1]);
-  assign gr_r_in_aij[1] = $signed(aij_bufs[3][2]);
-  assign gr_r_in_aij[2] = $signed(aij_bufs[3][3]);
+  assign gg_in_aij[0]   = $signed(aij_shift_bufs[3][0]);
+  assign gr_r_in_aij[0] = $signed(aij_shift_bufs[3][1]);
+  assign gr_r_in_aij[1] = $signed(aij_shift_bufs[3][2]);
+  assign gr_r_in_aij[2] = $signed(aij_shift_bufs[3][3]);
 
   assign gg_in_valid[0]   = valid_delay_line_ff[0];
   assign gr_r_in_valid[0] = valid_delay_line_ff[1];
   assign gr_r_in_valid[1] = valid_delay_line_ff[2];
   assign gr_r_in_valid[2] = valid_delay_line_ff[3];
 
-  //Q parts, this need some fixes.
-  assign gr_q_in_valid[0] = valid_delay_line_ff[5];
-  assign gr_q_in_valid[1] = valid_delay_line_ff[6];
-  assign gr_q_in_valid[2] = valid_delay_line_ff[7];
-  assign gr_q_in_valid[3] = valid_delay_line_ff[8];
+  //Q parts
+  assign gr_q_in_valid[0] = valid_delay_line_ff[4];
+  assign gr_q_in_valid[1] = valid_delay_line_ff[5];
+  assign gr_q_in_valid[2] = valid_delay_line_ff[6];
+  assign gr_q_in_valid[3] = valid_delay_line_ff[7];
 
-  assign gr_q_in_aij[0] = $signed({1'b0,qij_bufs[0],{(10){1'b0}}});
-  assign gr_q_in_aij[1] = $signed({1'b0,qij_bufs[1],{(10){1'b0}}});
-  assign gr_q_in_aij[2] = $signed({1'b0,qij_bufs[2],{(10){1'b0}}});
-  assign gr_q_in_aij[3] = $signed({1'b0,qij_bufs[3],{(10){1'b0}}});
+  assign gr_q_in_aij[0] = $signed({1'b0,qij_bufs[0][3],{(10){1'b0}}});
+  assign gr_q_in_aij[1] = $signed({1'b0,qij_bufs[1][3],{(10){1'b0}}});
+  assign gr_q_in_aij[2] = $signed({1'b0,qij_bufs[2][3],{(10){1'b0}}});
+  assign gr_q_in_aij[3] = $signed({1'b0,qij_bufs[3][3],{(10){1'b0}}});
 
   //===============================
   //   CORDIC MODULES
@@ -309,12 +312,13 @@ module GR #(
     begin
       GG #(
            .D_WIDTH(D_WIDTH),
-           .DATA_WIDTH(DATA_WIDTH)
+           .DATA_WIDTH(R_DATA_WIDTH)
          ) u_GG(
            .a_ij(gg_in_aij[i]),
            .valid_i(gg_in_valid[i]),
            .clk(clk),
            .rst_n(rst_n),
+           .clr_i(state_IDLE),
 
            .valid_d_o(gg_out_valid[i]),
            .rotates_d_o(gg_out_rotates[i]),
@@ -328,10 +332,13 @@ module GR #(
     begin
       GR #(
            .D_WIDTH(D_WIDTH),
-           .DATA_WIDTH(R_DATA_WIDTH)
+           .DATA_WIDTH(R_DATA_WIDTH),
+           .Q(0),
+           .R(1)
          ) u_GR(
            .clk(clk),
            .rst_n(rst_n),
+           .clr_i(state_IDLE),
 
            .a_ij(gr_r_in_aij[i]),
            .valid_i(gr_r_in_valid[i]),
@@ -351,7 +358,9 @@ module GR #(
     begin
       GR #(
            .D_WIDTH(D_WIDTH),
-           .DATA_WIDTH(Q_DATA_WIDTH)
+           .DATA_WIDTH(Q_DATA_WIDTH),
+           .Q(1),
+           .R(0)
          ) u_GR(
            .clk(clk),
            .rst_n(rst_n),
@@ -360,6 +369,7 @@ module GR #(
            .valid_i(gr_q_in_valid[i]),
            .d_i(gr_q_in_d[i]),
            .rotates_i(gr_q_in_rotates[i]),
+           .clr_i(state_IDLE),
 
            .rij_ff_o(gr_q_out_rij[i]),
            .rotates_d_o(gr_q_out_rotates[i]),
@@ -413,8 +423,8 @@ module GR #(
   endgenerate
 
   //gg1 -> gr3
-  assign gr_r_in_d[3] = gr_r_out_d[1];
-  assign gr_r_in_rotates[3] = gr_r_out_rotates[1];
+  assign gr_r_in_d[3] = gg_out_d[1];
+  assign gr_r_in_rotates[3] = gg_out_rotates[1];
 
   //gr3 -> gr4
   assign gr_r_in_d[4] = gr_r_out_d[3];
@@ -432,9 +442,9 @@ module GR #(
   assign gr_q_in_d[4] = gr_r_out_d[4];
   assign gr_q_in_rotates[4] = gr_r_out_rotates[4];
 
-  //r_gr8 -> q_gr5
-  assign gr_q_in_d[5] = gr_r_out_d[8];
-  assign gr_q_in_rotates[5] = gr_r_out_rotates[8];
+  //r_gr5 -> q_gr8
+  assign gr_q_in_d[8] = gr_r_out_d[5];
+  assign gr_q_in_rotates[8] = gr_r_out_rotates[5];
 
   // Connections of q PEs.
   generate
@@ -447,13 +457,14 @@ module GR #(
         assign gr_q_in_rotates[i+j*4] = gr_q_out_rotates[(i+j*4)-1];
       end
     end
+
     // q's column gr0 -> gr4 -> gr8
     for ( i= 0; i<4; i=i+1)
     begin //3
       for (j=1;j<3;j=j+1)
       begin //1
-        assign gr_q_in_valid[i+j*4]     = gr_q_in_valid[i+(j-1)*4];
-        assign gr_q_in_aij[i+j*4]       = gr_q_in_aij[i+(j-1)*4];
+        assign gr_q_in_valid[i+j*4]     = gr_q_out_valid[i+(j-1)*4];
+        assign gr_q_in_aij[i+j*4]       = gr_q_out_rij[i+(j-1)*4];
       end
     end
   endgenerate
@@ -462,6 +473,110 @@ module GR #(
   //   OUTPUTS
   //===============================
   // Feeding value to output buffers
-
-
+  always @(posedge clk or negedge rst_n)
+  begin
+    if(~rst_n)
+    begin
+      out_q <= 0;
+      out_r <= 0;
+      out_valid <= 0;
+    end
+    else if(output_done_f)
+    begin
+      out_q <= 0;
+      out_r <= 0;
+      out_valid <= 0;
+    end
+    else if(state_OUTPUT)
+    begin
+      out_valid <= 1;
+      case(cordic_cnt)
+        0:
+        begin
+          out_q <= gr_q_y_out[0];
+          out_r <= $signed(gg_out_rij[0][`GGR2OUTPUT]);
+        end
+        1:
+        begin
+          out_q <= gr_q_y_out[1];
+          out_r <= gr_r_y_out[0][`GGR2OUTPUT];
+        end
+        2:
+        begin
+          out_q <= gr_q_y_out[2];
+          out_r <= gr_r_y_out[1][`GGR2OUTPUT];
+        end
+        3:
+        begin
+          out_q <= gr_q_y_out[3];
+          out_r <= gr_r_y_out[2][`GGR2OUTPUT];
+        end
+        4:
+        begin
+          out_q <= gr_q_y_out[4];
+          out_r <= 'd0;
+        end
+        5:
+        begin
+          out_q <= gr_q_y_out[5];
+          out_r <= gg_out_rij[1][`GGR2OUTPUT];
+        end
+        6:
+        begin
+          out_q <= gr_q_y_out[6];
+          out_r <= gr_r_y_out[3][`GGR2OUTPUT];
+        end
+        7:
+        begin
+          out_q <= gr_q_y_out[7];
+          out_r <= gr_r_y_out[4][`GGR2OUTPUT];
+        end
+        8:
+        begin
+          out_q <= gr_q_y_out[8];
+          out_r <= 'd0;
+        end
+        9:
+        begin
+          out_q <= gr_q_y_out[9];
+          out_r <= 'd0;
+        end
+        10:
+        begin
+          out_q <= gr_q_y_out[10];
+          out_r <= gg_out_rij[2][`GGR2OUTPUT];
+        end
+        11:
+        begin
+          out_q <= gr_q_y_out[11];
+          out_r <= gr_r_y_out[5][`GGR2OUTPUT];
+        end
+        12:
+        begin
+          out_q <= gr_q_out_rij[8];
+          out_r <= 'd0;
+        end
+        13:
+        begin
+          out_q <= gr_q_out_rij[9];
+          out_r <= 'd0;
+        end
+        14:
+        begin
+          out_q <= gr_q_out_rij[10];
+          out_r <= 'd0;
+        end
+        15:
+        begin
+          out_q <= gr_q_out_rij[11];
+          out_r <= gr_r_out_rij[5][`GGR2OUTPUT];
+        end
+        default:
+        begin
+          out_q <= 0;
+          out_r <= 0;
+        end
+      endcase
+    end
+  end
 endmodule

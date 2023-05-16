@@ -5,7 +5,7 @@
  * File: qr_cordic_opt.c
  *
  * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 13-May-2023 15:33:13
+ * C/C++ source code generated on  : 16-May-2023 07:56:53
  */
 
 /* Include Files */
@@ -392,6 +392,7 @@ void qr_cordic_opt(const signed char M[16], short Q[16], short R[16])
         M_[x_tmp] = 0;
       }
 
+      /*  disp("After Vector mode"); */
       /*  fprintf('Vector Mode:\n theta = %f , i = %d  \n',theta,i); */
       i1 = 2 - k;
       for (j = 0; j <= i1; j++) {
@@ -734,6 +735,7 @@ void qr_cordic_opt(const signed char M[16], short Q[16], short R[16])
         /*  fprintf('Rotation Mode:\n x = %f , y = %f , j = %d  \n',tmp1,tmp2,j); */
       }
 
+      /*  disp("After Rotations"); */
       for (j = 0; j < 4; j++) {
         if (4 - b_i == 4) {
           /*  The boundary conditions for i = 4. */

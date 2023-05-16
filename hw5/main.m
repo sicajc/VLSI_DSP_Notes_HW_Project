@@ -55,118 +55,113 @@ MATRIX_SIZE = 4;
 NUM_OF_MATRIX = 300;
 
 % Broadcasting data types.
-U = qrDataType('double', rx_partial, ry_partial,rx_output, ry_output);
+U = qrDataType('double', rx_partial, ry_partial, rx_output, ry_output);
 
 % Data type for R calculation
-T = qrDataType('fixed', rx_partial, ry_partial,rx_output, ry_output);
+T = qrDataType('fixed', rx_partial, ry_partial, rx_output, ry_output);
 
 % Data type for Q calculation
-S = qrDataType('fixed', qx_partial, qy_partial,qx_output, qy_output);
-
+S = qrDataType('fixed', qx_partial, qy_partial, qx_output, qy_output);
 
 %================================================================
 %  matrix for testing
 %================================================================
-M = [34 -100 21 1;
-22 126 72 13;
-19 23 21 -12;
--24 -33 -123 -23];
+M = [-70 55 80 90;
+     -112 36 -47 1;
+     68 -21 80 34;
+     43 -28 74 115];
 
-C = fi([],1,8,0); % Since M is 8 bits.
+C = fi([], 1, 8, 0); % Since M is 8 bits.
 C;
-matrix_i = cast(M,'like',C);
+matrix_i = cast(M, 'like', C);
 
 K = 0.60725334371201;
-K = cast(K, 'like' , T.x_partial)
+K = cast(K, 'like',T.x_partial);
 bin(K);
-
-
 
 %================================================================
 %  Testing of QR Cordic
 %================================================================
 buildInstrumentedMex qr_cordic_opt -o qr_cordic_opt_mex ...
--args {matrix_i, T,S} -histogram
+    -args {matrix_i, T, S} -histogram
 
 % [q_d, r_d] = qr_cordic(M, U);
 % [q_f, r_f] = qr_cordic_mex(M, T);
 
-[q_double, r_double] = qr_cordic_opt(M, U, U);
-[q_f_opt, r_f_opt] = qr_cordic_opt_mex(matrix_i, T,S);
+% [q_double, r_double] = qr_cordic_opt(M, U, U);
+[q_f_opt, r_f_opt] = qr_cordic_opt_mex(matrix_i, T, S);
 
+% q_f_opt = double(q_f_opt);
+% r_f_opt = double(r_f_opt);
 
-q_f_opt = double(q_f_opt);
-r_f_opt = double(r_f_opt);
+% [q, r] = qr(M);
 
-[q,r] = qr(M);
+% disp("Matlab QR decomposition");
+% disp("Q")
+% disp(q);
+% disp("R")
+% disp(r);
 
-disp("Matlab QR decomposition");
-disp("Q")
-disp(q);
-disp("R")
-disp(r);
+% disp("qr cordic opt with double");
+% disp("Q")
+% disp(q_double);
+% disp("R")
+% disp(r_double);
 
-disp("qr cordic opt with double");
-disp("Q")
-disp(q_double);
-disp("R")
-disp(r_double);
+% disp("qr cordic opt");
+% disp("Q")
+% disp(q_f_opt);
+% disp("R")
+% disp(r_f_opt);
 
-disp("qr cordic opt");
-disp("Q")
-disp(q_f_opt);
-disp("R")
-disp(r_f_opt);
-
-disp("delta calculation");
-disp("Q Compare to Q_fix")
-[met_or_not,delta_] = delta_calculation(r_double, r_f_opt, 0.01)
+% disp("delta calculation");
+% disp("Q Compare to Q_fix");
+% [met_or_not, delta_] = delta_calculation(r_double, r_f_opt, 0.01);
 
 %================================================================
 %  QR Cordic checking for a random number of matrices
 %================================================================
-count = 0;
-for i = 1:NUM_OF_MATRIX
-    % Generating matrix
-    matrix_i = randi([lower_bound,upper_bound],MATRIX_SIZE,MATRIX_SIZE);
+% count = 0;
+% for i = 1:NUM_OF_MATRIX
+%     % Generating matrix
+%     matrix_i = randi([lower_bound,upper_bound],MATRIX_SIZE,MATRIX_SIZE);
 
-    % Double calculation
-    [q_double, r_double] = qr_cordic_opt(matrix_i, U,U);
+%     % Double calculation
+%     [q_double, r_double] = qr_cordic_opt(matrix_i, U,U);
 
-    % Fixed point calculation
-    matrix_i = cast(matrix_i, 'like', C);
-    [q_f_opt, r_f_opt] = qr_cordic_opt_mex(matrix_i, T,S);
+%     % Fixed point calculation
+%     matrix_i = cast(matrix_i, 'like', C);
+%     [q_f_opt, r_f_opt] = qr_cordic_opt_mex(matrix_i, T,S);
 
-    % Convert back to double for verification
-    q_double = double(q_double);
-    r_double = double(r_double);
+%     % Convert back to double for verification
+%     q_double = double(q_double);
+%     r_double = double(r_double);
 
-    q_f_opt = double(q_f_opt);
-    r_f_opt = double(r_f_opt);
+%     q_f_opt = double(q_f_opt);
+%     r_f_opt = double(r_f_opt);
 
-    % Should replace the lower triangle with 0, since it is not needed for metrics.
-    r_double = r_double .* (1 - tril(ones(size(r_double))));
-    r_f_opt = r_f_opt .* (1 - tril(ones(size(r_f_opt))));
+%     % Should replace the lower triangle with 0, since it is not needed for metrics.
+%     r_double = r_double .* (1 - tril(ones(size(r_double))));
+%     r_f_opt = r_f_opt .* (1 - tril(ones(size(r_f_opt))));
 
-    % Generate a bit string to check if met or not?
-    [met_or_not(i), deltar_] = delta_calculation(r_double, r_f_opt, 0.01);
-    [met_or_not(i), deltaq_] = delta_calculation(q_double, q_f_opt, 0.01);
+%     % Generate a bit string to check if met or not?
+%     [met_or_not(i), deltar_] = delta_calculation(r_double, r_f_opt, 0.01);
+%     [met_or_not(i), deltaq_] = delta_calculation(q_double, q_f_opt, 0.01);
 
-    deltar(i) = deltar_;
-    deltaq(i) = deltaq_;
+%     deltar(i) = deltar_;
+%     deltaq(i) = deltaq_;
 
-end
+% end
 
-disp("The largest delta of R within is:");
-disp(max(deltar));
-disp("Average delta for R:");
-disp(mean(deltar,'all'));
+% disp("The largest delta of R within is:");
+% disp(max(deltar));
+% disp("Average delta for R:");
+% disp(mean(deltar,'all'));
 
-disp("The largest delta of Q within is:");
-disp(max(deltaq));
-disp("Average delta Q:");
-disp(mean(deltaq,'all'));
-
+% disp("The largest delta of Q within is:");
+% disp(max(deltaq));
+% disp("Average delta Q:");
+% disp(mean(deltaq,'all'));
 
 %================================================================
 %  Write out golden pattern
@@ -184,20 +179,35 @@ fileID_2 = fopen(r_golden, 'wt');
 
 for i = 1:NUM_OF_MATRIX
     % Generating matrix
-    matrix_i = randi([lower_bound,upper_bound],MATRIX_SIZE,MATRIX_SIZE);
+    matrix_i = randi([lower_bound, upper_bound], MATRIX_SIZE, MATRIX_SIZE);
 
     % Fixed point calculation
-    matrix_i = cast(matrix_i, 'like', C);
-    [q_f_opt, r_f_opt] = qr_cordic_opt_mex(matrix_i, T,S);
+    matrix_i = cast(matrix_i, 'like', C)
+    [q_f_opt, r_f_opt] = qr_cordic_opt_mex(matrix_i, T, S);
 
-    q_f_opt = cast(q_f_opt,'like',S.x_output);
-    r_f_opt = cast(r_f_opt,'like',T.x_output);
-    for j = 1:MATRIX_SIZE
+    q_f_opt = cast(q_f_opt, 'like', S.x_output)
+    r_f_opt = cast(r_f_opt, 'like', T.x_output)
 
-        for k = 1:MATRIX_SIZE
+    for k = 1:MATRIX_SIZE
+
+        for j = MATRIX_SIZE:-1:1
             matrix_fix_val = matrix_i(j, k);
             matrix_fix_bin = bin(matrix_i(j, k));
 
+            % Append the pattern number at the start of every pattern.
+            if j == 4 && k == 1
+                fprintf(fileID_0, '%s  //  %f pat# %d (%d,%d) \n', matrix_fix_bin, matrix_fix_val, i, j, k);
+            else
+                fprintf(fileID_0, '%s  //  %f (%d,%d)\n', matrix_fix_bin, matrix_fix_val, j, k);
+            end
+
+        end
+
+    end
+
+    for j = 1:MATRIX_SIZE
+
+        for k = 1:MATRIX_SIZE
             q_fix_val = q_f_opt(j, k);
             q_fix_bin = bin(q_f_opt(j, k));
 
@@ -211,20 +221,18 @@ for i = 1:NUM_OF_MATRIX
 
             % Append the pattern number at the start of every pattern.
             if j == 1 && k == 1
-                fprintf(fileID_0, '%s  //  %f pat# %d \n', matrix_fix_bin, matrix_fix_val, i);
-                fprintf(fileID_1, '%s  //  %f pat# %d \n', q_fix_bin, q_fix_val, i);
+                fprintf(fileID_1, '%s  //  %f pat# %d (%d,%d)\n', q_fix_bin, q_fix_val, i, j, k);
             else
-                fprintf(fileID_0, '%s  //  %f \n', matrix_fix_bin, matrix_fix_val);
-                fprintf(fileID_1, '%s  //  %f \n', q_fix_bin, q_fix_val);
+                fprintf(fileID_1, '%s  //  %f (%d,%d)\n', q_fix_bin, q_fix_val, j, k);
             end
 
             % R matrices, the lower part should all be zeroes.
             if j == 1 && k == 1
-                fprintf(fileID_2, '%s  //  %f pat# %d \n', r_fix_bin, r_fix_val, i);
+                fprintf(fileID_2, '%s  //  %f pat# %d (%d,%d)\n', r_fix_bin, r_fix_val, i, j, k);
             elseif j > k
-                fprintf(fileID_2, '%s  //  %f \n', zero, zero_d);
+                fprintf(fileID_2, '%s  //  %f (%d,%d)\n', zero, zero_d, j, k);
             else
-                fprintf(fileID_2, '%s  //  %f \n', r_fix_bin, r_fix_val);
+                fprintf(fileID_2, '%s  //  %f (%d,%d)\n', r_fix_bin, r_fix_val, j, k);
             end
 
         end
@@ -246,4 +254,4 @@ showInstrumentationResults qr_cordic_opt_mex -proposeFL -defaultDT numerictype(1
 
 % Code generation
 codegen qr_cordic_opt ...
-    -args {matrix_i, T,S} -config:lib -report
+    -args {matrix_i, T, S} -config:lib -report

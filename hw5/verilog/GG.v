@@ -133,8 +133,6 @@ module GG #(
   end
 
   assign K_product = $signed(x_ff) * $signed(K);
-  assign K_extracted = {K_product[39],K_product[28:10]};
-
   assign iters_x_in = iters_start_f ? a_ij : x_ff;
   assign iters_y_in = y_ff;
 
