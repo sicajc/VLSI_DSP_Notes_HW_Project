@@ -152,7 +152,9 @@ module GR #(
     else if(gr_done_f)
     begin
       x_ff     <= x_ff;
-      if(R_GR == 1)
+
+      //How to bypass this?
+      if(R_GR === 1)
       begin
         y_ff     <= $signed({K_product_x[39],K_product_x[28:10]});
         rij_ff_o <= $signed({K_product_y[39],K_product_y[28:10]});
@@ -162,6 +164,7 @@ module GR #(
         y_ff     <= $signed({K_product_x[23],K_product_x[20:10]});
         rij_ff_o <= $signed({K_product_y[23],K_product_y[20:10]});
       end
+
     end
     else if(gr_in_work_f && rotates_i)
     begin
@@ -179,7 +182,6 @@ module GR #(
 
   assign K_product_x = $signed(x_ff) * $signed(K);
   assign K_product_y = $signed(y_ff) * $signed(K);
-  assign K_extracted = {K_product_x[39],K_product_x[28:10]};
 
   assign iters_x_in = iters_start_f ? a_ij : x_ff;
   assign iters_y_in = y_ff;

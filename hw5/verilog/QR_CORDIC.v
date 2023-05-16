@@ -333,8 +333,8 @@ module QR_CORDIC #(
       GR #(
            .D_WIDTH(D_WIDTH),
            .DATA_WIDTH(R_DATA_WIDTH),
-           .Q(0),
-           .R(1)
+           .Q_GR(0),
+           .R_GR(1)
          ) u_GR(
            .clk(clk),
            .rst_n(rst_n),
@@ -359,8 +359,8 @@ module QR_CORDIC #(
       GR #(
            .D_WIDTH(D_WIDTH),
            .DATA_WIDTH(Q_DATA_WIDTH),
-           .Q(1),
-           .R(0)
+           .Q_GR(1),
+           .R_GR(0)
          ) u_GR(
            .clk(clk),
            .rst_n(rst_n),

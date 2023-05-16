@@ -1,0 +1,628 @@
+Time resolution is 1 ps
+/033[38;5;166mPASS PATTERN NO.   1/033[00m
+/033[38;5;136mPASS PATTERN NO.   2/033[00m
+/033[38;5;106mPASS PATTERN NO.   3/033[00m
+/033[38;5;76mPASS PATTERN NO.   4/033[00m
+/033[38;5;46mPASS PATTERN NO.   5/033[00m
+/033[38;5;41mPASS PATTERN NO.   6/033[00m
+/033[38;5;36mPASS PATTERN NO.   7/033[00m
+/033[38;5;31mPASS PATTERN NO.   8/033[00m
+/033[38;5;26mPASS PATTERN NO.   9/033[00m
+/033[38;5;21mPASS PATTERN NO.  10/033[00m
+Pat No:          10 /n
+Pat's iter is           1 /n
+Your answer for Q is 110110011100 /t/t
+Your answer for R is 111111110101 /t/n
+The correct value for Q is 110110011100 /t/n
+The correct value for R is 111111110110 /t/n
+Pat No:          10 /n
+Pat's iter is           6 /n
+Your answer for Q is 000011110110 /t/t
+Your answer for R is 101001110011 /t/n
+The correct value for Q is 000011111000 /t/n
+The correct value for R is 101001110010 /t/n
+Pat No:          10 /n
+Pat's iter is          10 /n
+Your answer for Q is 000010001001 /t/t
+Your answer for R is 111001000001 /t/n
+The correct value for Q is 000010000111 /t/n
+The correct value for R is 111001000010 /t/n
+/033[38;5;56mPASS PATTERN NO.  11/033[00m
+/033[38;5;91mPASS PATTERN NO.  12/033[00m
+/033[38;5;126mPASS PATTERN NO.  13/033[00m
+/033[38;5;161mPASS PATTERN NO.  14/033[00m
+/033[38;5;196mPASS PATTERN NO.  15/033[00m
+/033[38;5;166mPASS PATTERN NO.  16/033[00m
+/033[38;5;136mPASS PATTERN NO.  17/033[00m
+/033[38;5;106mPASS PATTERN NO.  18/033[00m
+/033[38;5;76mPASS PATTERN NO.  19/033[00m
+/033[38;5;46mPASS PATTERN NO.  20/033[00m
+/033[38;5;41mPASS PATTERN NO.  21/033[00m
+/033[38;5;36mPASS PATTERN NO.  22/033[00m
+/033[38;5;31mPASS PATTERN NO.  23/033[00m
+/033[38;5;26mPASS PATTERN NO.  24/033[00m
+/033[38;5;21mPASS PATTERN NO.  25/033[00m
+/033[38;5;56mPASS PATTERN NO.  26/033[00m
+/033[38;5;91mPASS PATTERN NO.  27/033[00m
+/033[38;5;126mPASS PATTERN NO.  28/033[00m
+/033[38;5;161mPASS PATTERN NO.  29/033[00m
+/033[38;5;196mPASS PATTERN NO.  30/033[00m
+Pat No:          30 /n
+Pat's iter is           6 /n
+Your answer for Q is 111010001010 /t/t
+Your answer for R is 111000000111 /t/n
+The correct value for Q is 111010001011 /t/n
+The correct value for R is 111000001000 /t/n
+/033[38;5;166mPASS PATTERN NO.  31/033[00m
+/033[38;5;136mPASS PATTERN NO.  32/033[00m
+/033[38;5;106mPASS PATTERN NO.  33/033[00m
+/033[38;5;76mPASS PATTERN NO.  34/033[00m
+Pat No:          34 /n
+Pat's iter is          11 /n
+Your answer for Q is 110101100110 /t/t
+Your answer for R is 000010000001 /t/n
+The correct value for Q is 110101101001 /t/n
+The correct value for R is 000010000010 /t/n
+/033[38;5;46mPASS PATTERN NO.  35/033[00m
+/033[38;5;41mPASS PATTERN NO.  36/033[00m
+/033[38;5;36mPASS PATTERN NO.  37/033[00m
+/033[38;5;31mPASS PATTERN NO.  38/033[00m
+/033[38;5;26mPASS PATTERN NO.  39/033[00m
+/033[38;5;21mPASS PATTERN NO.  40/033[00m
+/033[38;5;56mPASS PATTERN NO.  41/033[00m
+/033[38;5;91mPASS PATTERN NO.  42/033[00m
+Pat No:          42 /n
+Pat's iter is           3 /n
+Your answer for Q is 111010101101 /t/t
+Your answer for R is 000101010011 /t/n
+The correct value for Q is 111010101110 /t/n
+The correct value for R is 000101010100 /t/n
+Pat No:          42 /n
+Pat's iter is           5 /n
+Your answer for Q is 111001011011 /t/t
+Your answer for R is 001010000101 /t/n
+The correct value for Q is 111001011011 /t/n
+The correct value for R is 001010000110 /t/n
+Pat No:          42 /n
+Pat's iter is           7 /n
+Your answer for Q is 001010111000 /t/t
+Your answer for R is 000101010000 /t/n
+The correct value for Q is 001010110110 /t/n
+The correct value for R is 000101010010 /t/n
+/033[38;5;126mPASS PATTERN NO.  43/033[00m
+/033[38;5;161mPASS PATTERN NO.  44/033[00m
+/033[38;5;196mPASS PATTERN NO.  45/033[00m
+Pat No:          45 /n
+Pat's iter is          10 /n
+Your answer for Q is 111010110001 /t/t
+Your answer for R is 000111001001 /t/n
+The correct value for Q is 111010101110 /t/n
+The correct value for R is 000111001000 /t/n
+/033[38;5;166mPASS PATTERN NO.  46/033[00m
+/033[38;5;136mPASS PATTERN NO.  47/033[00m
+/033[38;5;106mPASS PATTERN NO.  48/033[00m
+Pat No:          48 /n
+Pat's iter is           6 /n
+Your answer for Q is 001100101111 /t/t
+Your answer for R is 111000010111 /t/n
+The correct value for Q is 001100101111 /t/n
+The correct value for R is 111000011000 /t/n
+Pat No:          48 /n
+Pat's iter is           7 /n
+Your answer for Q is 000011011010 /t/t
+Your answer for R is 000001110110 /t/n
+The correct value for Q is 000011011010 /t/n
+The correct value for R is 000001110101 /t/n
+Pat No:          48 /n
+Pat's iter is          10 /n
+Your answer for Q is 001001010110 /t/t
+Your answer for R is 110001110011 /t/n
+The correct value for Q is 001001011100 /t/n
+The correct value for R is 110001110010 /t/n
+/033[38;5;76mPASS PATTERN NO.  49/033[00m
+/033[38;5;46mPASS PATTERN NO.  50/033[00m
+Pat No:          50 /n
+Pat's iter is           5 /n
+Your answer for Q is 001000001000 /t/t
+Your answer for R is 001101110011 /t/n
+The correct value for Q is 001000001000 /t/n
+The correct value for R is 001101110010 /t/n
+Pat No:          50 /n
+Pat's iter is           7 /n
+Your answer for Q is 001001011011 /t/t
+Your answer for R is 000101101110 /t/n
+The correct value for Q is 001001011000 /t/n
+The correct value for R is 000101101101 /t/n
+/033[38;5;41mPASS PATTERN NO.  51/033[00m
+/033[38;5;36mPASS PATTERN NO.  52/033[00m
+/033[38;5;31mPASS PATTERN NO.  53/033[00m
+/033[38;5;26mPASS PATTERN NO.  54/033[00m
+/033[38;5;21mPASS PATTERN NO.  55/033[00m
+/033[38;5;56mPASS PATTERN NO.  56/033[00m
+/033[38;5;91mPASS PATTERN NO.  57/033[00m
+/033[38;5;126mPASS PATTERN NO.  58/033[00m
+/033[38;5;161mPASS PATTERN NO.  59/033[00m
+/033[38;5;196mPASS PATTERN NO.  60/033[00m
+/033[38;5;166mPASS PATTERN NO.  61/033[00m
+/033[38;5;136mPASS PATTERN NO.  62/033[00m
+Pat No:          62 /n
+Pat's iter is           5 /n
+Your answer for Q is 000101101010 /t/t
+Your answer for R is 001011001100 /t/n
+The correct value for Q is 000101101010 /t/n
+The correct value for R is 001011001011 /t/n
+/033[38;5;106mPASS PATTERN NO.  63/033[00m
+/033[38;5;76mPASS PATTERN NO.  64/033[00m
+/033[38;5;46mPASS PATTERN NO.  65/033[00m
+/033[38;5;41mPASS PATTERN NO.  66/033[00m
+/033[38;5;36mPASS PATTERN NO.  67/033[00m
+Pat No:          67 /n
+Pat's iter is           7 /n
+Your answer for Q is 000100001101 /t/t
+Your answer for R is 001000000110 /t/n
+The correct value for Q is 000100001101 /t/n
+The correct value for R is 001000000101 /t/n
+/033[38;5;31mPASS PATTERN NO.  68/033[00m
+/033[38;5;26mPASS PATTERN NO.  69/033[00m
+/033[38;5;21mPASS PATTERN NO.  70/033[00m
+/033[38;5;56mPASS PATTERN NO.  71/033[00m
+/033[38;5;91mPASS PATTERN NO.  72/033[00m
+/033[38;5;126mPASS PATTERN NO.  73/033[00m
+/033[38;5;161mPASS PATTERN NO.  74/033[00m
+/033[38;5;196mPASS PATTERN NO.  75/033[00m
+/033[38;5;166mPASS PATTERN NO.  76/033[00m
+/033[38;5;136mPASS PATTERN NO.  77/033[00m
+Pat No:          77 /n
+Pat's iter is           7 /n
+Your answer for Q is 000010100101 /t/t
+Your answer for R is 111001010000 /t/n
+The correct value for Q is 000010100100 /t/n
+The correct value for R is 111001001111 /t/n
+/033[38;5;106mPASS PATTERN NO.  78/033[00m
+/033[38;5;76mPASS PATTERN NO.  79/033[00m
+/033[38;5;46mPASS PATTERN NO.  80/033[00m
+/033[38;5;41mPASS PATTERN NO.  81/033[00m
+/033[38;5;36mPASS PATTERN NO.  82/033[00m
+/033[38;5;31mPASS PATTERN NO.  83/033[00m
+/033[38;5;26mPASS PATTERN NO.  84/033[00m
+/033[38;5;21mPASS PATTERN NO.  85/033[00m
+/033[38;5;56mPASS PATTERN NO.  86/033[00m
+/033[38;5;91mPASS PATTERN NO.  87/033[00m
+/033[38;5;126mPASS PATTERN NO.  88/033[00m
+/033[38;5;161mPASS PATTERN NO.  89/033[00m
+/033[38;5;196mPASS PATTERN NO.  90/033[00m
+/033[38;5;166mPASS PATTERN NO.  91/033[00m
+Pat No:          91 /n
+Pat's iter is           2 /n
+Your answer for Q is 000110011001 /t/t
+Your answer for R is 000100000101 /t/n
+The correct value for Q is 000110011000 /t/n
+The correct value for R is 000100000100 /t/n
+Pat No:          91 /n
+Pat's iter is           3 /n
+Your answer for Q is 001000010101 /t/t
+Your answer for R is 110101101010 /t/n
+The correct value for Q is 001000010011 /t/n
+The correct value for R is 110101101011 /t/n
+Pat No:          91 /n
+Pat's iter is           7 /n
+Your answer for Q is 000000000001 /t/t
+Your answer for R is 110101110100 /t/n
+The correct value for Q is 000000000011 /t/n
+The correct value for R is 110101110101 /t/n
+Pat No:          91 /n
+Pat's iter is          11 /n
+Your answer for Q is 001001001011 /t/t
+Your answer for R is 000010000101 /t/n
+The correct value for Q is 001001000111 /t/n
+The correct value for R is 000010000110 /t/n
+/033[38;5;136mPASS PATTERN NO.  92/033[00m
+/033[38;5;106mPASS PATTERN NO.  93/033[00m
+/033[38;5;76mPASS PATTERN NO.  94/033[00m
+/033[38;5;46mPASS PATTERN NO.  95/033[00m
+/033[38;5;41mPASS PATTERN NO.  96/033[00m
+/033[38;5;36mPASS PATTERN NO.  97/033[00m
+/033[38;5;31mPASS PATTERN NO.  98/033[00m
+/033[38;5;26mPASS PATTERN NO.  99/033[00m
+/033[38;5;21mPASS PATTERN NO. 100/033[00m
+Pat No:         100 /n
+Pat's iter is           6 /n
+Your answer for Q is 000111001000 /t/t
+Your answer for R is 111000110010 /t/n
+The correct value for Q is 000111001000 /t/n
+The correct value for R is 111000110001 /t/n
+/033[38;5;56mPASS PATTERN NO. 101/033[00m
+Pat No:         101 /n
+Pat's iter is           6 /n
+Your answer for Q is 110111110101 /t/t
+Your answer for R is 000000001000 /t/n
+The correct value for Q is 110111110100 /t/n
+The correct value for R is 000000000111 /t/n
+/033[38;5;91mPASS PATTERN NO. 102/033[00m
+/033[38;5;126mPASS PATTERN NO. 103/033[00m
+/033[38;5;161mPASS PATTERN NO. 104/033[00m
+/033[38;5;196mPASS PATTERN NO. 105/033[00m
+/033[38;5;166mPASS PATTERN NO. 106/033[00m
+/033[38;5;136mPASS PATTERN NO. 107/033[00m
+/033[38;5;106mPASS PATTERN NO. 108/033[00m
+/033[38;5;76mPASS PATTERN NO. 109/033[00m
+/033[38;5;46mPASS PATTERN NO. 110/033[00m
+Pat No:         110 /n
+Pat's iter is           1 /n
+Your answer for Q is 000111001011 /t/t
+Your answer for R is 000001111000 /t/n
+The correct value for Q is 000111001100 /t/n
+The correct value for R is 000001111001 /t/n
+Pat No:         110 /n
+Pat's iter is           7 /n
+Your answer for Q is 110111010101 /t/t
+Your answer for R is 111111010110 /t/n
+The correct value for Q is 110111010110 /t/n
+The correct value for R is 111111010101 /t/n
+Pat No:         110 /n
+Pat's iter is          11 /n
+Your answer for Q is 001100010100 /t/t
+Your answer for R is 001000101000 /t/n
+The correct value for Q is 001100010011 /t/n
+The correct value for R is 001000100111 /t/n
+/033[38;5;41mPASS PATTERN NO. 111/033[00m
+/033[38;5;36mPASS PATTERN NO. 112/033[00m
+/033[38;5;31mPASS PATTERN NO. 113/033[00m
+Pat No:         113 /n
+Pat's iter is          11 /n
+Your answer for Q is 000000000101 /t/t
+Your answer for R is 111100011101 /t/n
+The correct value for Q is 000000001000 /t/n
+The correct value for R is 111100011100 /t/n
+/033[38;5;26mPASS PATTERN NO. 114/033[00m
+/033[38;5;21mPASS PATTERN NO. 115/033[00m
+/033[38;5;56mPASS PATTERN NO. 116/033[00m
+/033[38;5;91mPASS PATTERN NO. 117/033[00m
+/033[38;5;126mPASS PATTERN NO. 118/033[00m
+/033[38;5;161mPASS PATTERN NO. 119/033[00m
+/033[38;5;196mPASS PATTERN NO. 120/033[00m
+/033[38;5;166mPASS PATTERN NO. 121/033[00m
+/033[38;5;136mPASS PATTERN NO. 122/033[00m
+/033[38;5;106mPASS PATTERN NO. 123/033[00m
+Pat No:         123 /n
+Pat's iter is          11 /n
+Your answer for Q is 110101101010 /t/t
+Your answer for R is 111011110100 /t/n
+The correct value for Q is 110101101111 /t/n
+The correct value for R is 111011110101 /t/n
+/033[38;5;76mPASS PATTERN NO. 124/033[00m
+/033[38;5;46mPASS PATTERN NO. 125/033[00m
+/033[38;5;41mPASS PATTERN NO. 126/033[00m
+/033[38;5;36mPASS PATTERN NO. 127/033[00m
+/033[38;5;31mPASS PATTERN NO. 128/033[00m
+Pat No:         128 /n
+Pat's iter is          11 /n
+Your answer for Q is 111100011000 /t/t
+Your answer for R is 110010000101 /t/n
+The correct value for Q is 111100011000 /t/n
+The correct value for R is 110010000110 /t/n
+/033[38;5;26mPASS PATTERN NO. 129/033[00m
+Pat No:         129 /n
+Pat's iter is          11 /n
+Your answer for Q is 000010001010 /t/t
+Your answer for R is 111101101001 /t/n
+The correct value for Q is 000010000111 /t/n
+The correct value for R is 111101101000 /t/n
+/033[38;5;21mPASS PATTERN NO. 130/033[00m
+/033[38;5;56mPASS PATTERN NO. 131/033[00m
+/033[38;5;91mPASS PATTERN NO. 132/033[00m
+/033[38;5;126mPASS PATTERN NO. 133/033[00m
+/033[38;5;161mPASS PATTERN NO. 134/033[00m
+/033[38;5;196mPASS PATTERN NO. 135/033[00m
+/033[38;5;166mPASS PATTERN NO. 136/033[00m
+/033[38;5;136mPASS PATTERN NO. 137/033[00m
+/033[38;5;106mPASS PATTERN NO. 138/033[00m
+/033[38;5;76mPASS PATTERN NO. 139/033[00m
+/033[38;5;46mPASS PATTERN NO. 140/033[00m
+/033[38;5;41mPASS PATTERN NO. 141/033[00m
+Pat No:         141 /n
+Pat's iter is          10 /n
+Your answer for Q is 001010100010 /t/t
+Your answer for R is 010000110011 /t/n
+The correct value for Q is 001010100010 /t/n
+The correct value for R is 010000110010 /t/n
+/033[38;5;36mPASS PATTERN NO. 142/033[00m
+/033[38;5;31mPASS PATTERN NO. 143/033[00m
+Pat No:         143 /n
+Pat's iter is           7 /n
+Your answer for Q is 110001011101 /t/t
+Your answer for R is 001010110010 /t/n
+The correct value for Q is 110001011110 /t/n
+The correct value for R is 001010110011 /t/n
+/033[38;5;26mPASS PATTERN NO. 144/033[00m
+/033[38;5;21mPASS PATTERN NO. 145/033[00m
+Pat No:         145 /n
+Pat's iter is           6 /n
+Your answer for Q is 110100100001 /t/t
+Your answer for R is 001001110000 /t/n
+The correct value for Q is 110100100001 /t/n
+The correct value for R is 001001101111 /t/n
+/033[38;5;56mPASS PATTERN NO. 146/033[00m
+Pat No:         146 /n
+Pat's iter is          10 /n
+Your answer for Q is 111110110000 /t/t
+Your answer for R is 101100100100 /t/n
+The correct value for Q is 111110110100 /t/n
+The correct value for R is 101100100101 /t/n
+/033[38;5;91mPASS PATTERN NO. 147/033[00m
+/033[38;5;126mPASS PATTERN NO. 148/033[00m
+/033[38;5;161mPASS PATTERN NO. 149/033[00m
+Pat No:         149 /n
+Pat's iter is          11 /n
+Your answer for Q is 000101010001 /t/t
+Your answer for R is 001000111101 /t/n
+The correct value for Q is 000101001110 /t/n
+The correct value for R is 001000111100 /t/n
+/033[38;5;196mPASS PATTERN NO. 150/033[00m
+/033[38;5;166mPASS PATTERN NO. 151/033[00m
+/033[38;5;136mPASS PATTERN NO. 152/033[00m
+/033[38;5;106mPASS PATTERN NO. 153/033[00m
+/033[38;5;76mPASS PATTERN NO. 154/033[00m
+Pat No:         154 /n
+Pat's iter is           7 /n
+Your answer for Q is 110010101111 /t/t
+Your answer for R is 000001101111 /t/n
+The correct value for Q is 110010110101 /t/n
+The correct value for R is 000001110000 /t/n
+/033[38;5;46mPASS PATTERN NO. 155/033[00m
+/033[38;5;41mPASS PATTERN NO. 156/033[00m
+Pat No:         156 /n
+Pat's iter is           6 /n
+Your answer for Q is 001010001001 /t/t
+Your answer for R is 111010100001 /t/n
+The correct value for Q is 001010000101 /t/n
+The correct value for R is 111010100000 /t/n
+Pat No:         156 /n
+Pat's iter is           7 /n
+Your answer for Q is 001011110110 /t/t
+Your answer for R is 110000010001 /t/n
+The correct value for Q is 001011110100 /t/n
+The correct value for R is 110000010010 /t/n
+Pat No:         156 /n
+Pat's iter is          11 /n
+Your answer for Q is 111011100111 /t/t
+Your answer for R is 101111000000 /t/n
+The correct value for Q is 111011101010 /t/n
+The correct value for R is 101110111111 /t/n
+/033[38;5;36mPASS PATTERN NO. 157/033[00m
+/033[38;5;31mPASS PATTERN NO. 158/033[00m
+/033[38;5;26mPASS PATTERN NO. 159/033[00m
+/033[38;5;21mPASS PATTERN NO. 160/033[00m
+/033[38;5;56mPASS PATTERN NO. 161/033[00m
+/033[38;5;91mPASS PATTERN NO. 162/033[00m
+/033[38;5;126mPASS PATTERN NO. 163/033[00m
+/033[38;5;161mPASS PATTERN NO. 164/033[00m
+/033[38;5;196mPASS PATTERN NO. 165/033[00m
+/033[38;5;166mPASS PATTERN NO. 166/033[00m
+/033[38;5;136mPASS PATTERN NO. 167/033[00m
+Pat No:         167 /n
+Pat's iter is           3 /n
+Your answer for Q is 110101000101 /t/t
+Your answer for R is 000001111001 /t/n
+The correct value for Q is 110101000111 /t/n
+The correct value for R is 000001111010 /t/n
+Pat No:         167 /n
+Pat's iter is          10 /n
+Your answer for Q is 000101000110 /t/t
+Your answer for R is 010001010101 /t/n
+The correct value for Q is 000101000100 /t/n
+The correct value for R is 010001010110 /t/n
+Pat No:         167 /n
+Pat's iter is          11 /n
+Your answer for Q is 001011100110 /t/t
+Your answer for R is 010000111111 /t/n
+The correct value for Q is 001011100001 /t/n
+The correct value for R is 010000111110 /t/n
+/033[38;5;106mPASS PATTERN NO. 168/033[00m
+Pat No:         168 /n
+Pat's iter is          11 /n
+Your answer for Q is 001100100011 /t/t
+Your answer for R is 000101110110 /t/n
+The correct value for Q is 001100100001 /t/n
+The correct value for R is 000101110101 /t/n
+/033[38;5;76mPASS PATTERN NO. 169/033[00m
+/033[38;5;46mPASS PATTERN NO. 170/033[00m
+/033[38;5;41mPASS PATTERN NO. 171/033[00m
+/033[38;5;36mPASS PATTERN NO. 172/033[00m
+/033[38;5;31mPASS PATTERN NO. 173/033[00m
+/033[38;5;26mPASS PATTERN NO. 174/033[00m
+/033[38;5;21mPASS PATTERN NO. 175/033[00m
+/033[38;5;56mPASS PATTERN NO. 176/033[00m
+/033[38;5;91mPASS PATTERN NO. 177/033[00m
+/033[38;5;126mPASS PATTERN NO. 178/033[00m
+/033[38;5;161mPASS PATTERN NO. 179/033[00m
+/033[38;5;196mPASS PATTERN NO. 180/033[00m
+Pat No:         180 /n
+Pat's iter is           5 /n
+Your answer for Q is 001100001001 /t/t
+Your answer for R is 101111100101 /t/n
+The correct value for Q is 001100001001 /t/n
+The correct value for R is 101111100110 /t/n
+/033[38;5;166mPASS PATTERN NO. 181/033[00m
+Pat No:         181 /n
+Pat's iter is          11 /n
+Your answer for Q is 110010011001 /t/t
+Your answer for R is 110100101111 /t/n
+The correct value for Q is 110010011010 /t/n
+The correct value for R is 110100110000 /t/n
+/033[38;5;136mPASS PATTERN NO. 182/033[00m
+Pat No:         182 /n
+Pat's iter is          10 /n
+Your answer for Q is 110000100110 /t/t
+Your answer for R is 000111101110 /t/n
+The correct value for Q is 110000100101 /t/n
+The correct value for R is 000111101101 /t/n
+Pat No:         182 /n
+Pat's iter is          11 /n
+Your answer for Q is 000011100100 /t/t
+Your answer for R is 110001100110 /t/n
+The correct value for Q is 000011100100 /t/n
+The correct value for R is 110001101000 /t/n
+/033[38;5;106mPASS PATTERN NO. 183/033[00m
+/033[38;5;76mPASS PATTERN NO. 184/033[00m
+/033[38;5;46mPASS PATTERN NO. 185/033[00m
+/033[38;5;41mPASS PATTERN NO. 186/033[00m
+/033[38;5;36mPASS PATTERN NO. 187/033[00m
+/033[38;5;31mPASS PATTERN NO. 188/033[00m
+Pat No:         188 /n
+Pat's iter is           7 /n
+Your answer for Q is 001011111010 /t/t
+Your answer for R is 111011000010 /t/n
+The correct value for Q is 001011111001 /t/n
+The correct value for R is 111011000001 /t/n
+/033[38;5;26mPASS PATTERN NO. 189/033[00m
+/033[38;5;21mPASS PATTERN NO. 190/033[00m
+/033[38;5;56mPASS PATTERN NO. 191/033[00m
+/033[38;5;91mPASS PATTERN NO. 192/033[00m
+/033[38;5;126mPASS PATTERN NO. 193/033[00m
+Pat No:         193 /n
+Pat's iter is           7 /n
+Your answer for Q is 001011111100 /t/t
+Your answer for R is 000001110111 /t/n
+The correct value for Q is 001011111001 /t/n
+The correct value for R is 000001110110 /t/n
+/033[38;5;161mPASS PATTERN NO. 194/033[00m
+/033[38;5;196mPASS PATTERN NO. 195/033[00m
+/033[38;5;166mPASS PATTERN NO. 196/033[00m
+Pat No:         196 /n
+Pat's iter is           5 /n
+Your answer for Q is 110111011001 /t/t
+Your answer for R is 001110010111 /t/n
+The correct value for Q is 110111011001 /t/n
+The correct value for R is 001110010110 /t/n
+/033[38;5;136mPASS PATTERN NO. 197/033[00m
+/033[38;5;106mPASS PATTERN NO. 198/033[00m
+/033[38;5;76mPASS PATTERN NO. 199/033[00m
+/033[38;5;46mPASS PATTERN NO. 200/033[00m
+/033[38;5;41mPASS PATTERN NO. 201/033[00m
+/033[38;5;36mPASS PATTERN NO. 202/033[00m
+/033[38;5;31mPASS PATTERN NO. 203/033[00m
+Pat No:         203 /n
+Pat's iter is           7 /n
+Your answer for Q is 000001000010 /t/t
+Your answer for R is 010000110111 /t/n
+The correct value for Q is 000001000101 /t/n
+The correct value for R is 010000111000 /t/n
+Pat No:         203 /n
+Pat's iter is          11 /n
+Your answer for Q is 111001111011 /t/t
+Your answer for R is 000010000010 /t/n
+The correct value for Q is 111001111001 /t/n
+The correct value for R is 000010000001 /t/n
+/033[38;5;26mPASS PATTERN NO. 204/033[00m
+/033[38;5;21mPASS PATTERN NO. 205/033[00m
+/033[38;5;56mPASS PATTERN NO. 206/033[00m
+/033[38;5;91mPASS PATTERN NO. 207/033[00m
+/033[38;5;126mPASS PATTERN NO. 208/033[00m
+/033[38;5;161mPASS PATTERN NO. 209/033[00m
+/033[38;5;196mPASS PATTERN NO. 210/033[00m
+/033[38;5;166mPASS PATTERN NO. 211/033[00m
+/033[38;5;136mPASS PATTERN NO. 212/033[00m
+/033[38;5;106mPASS PATTERN NO. 213/033[00m
+/033[38;5;76mPASS PATTERN NO. 214/033[00m
+/033[38;5;46mPASS PATTERN NO. 215/033[00m
+/033[38;5;41mPASS PATTERN NO. 216/033[00m
+Pat No:         216 /n
+Pat's iter is          10 /n
+Your answer for Q is 000001001000 /t/t
+Your answer for R is 110011010010 /t/n
+The correct value for Q is 000001001001 /t/n
+The correct value for R is 110011010011 /t/n
+/033[38;5;36mPASS PATTERN NO. 217/033[00m
+/033[38;5;31mPASS PATTERN NO. 218/033[00m
+/033[38;5;26mPASS PATTERN NO. 219/033[00m
+/033[38;5;21mPASS PATTERN NO. 220/033[00m
+/033[38;5;56mPASS PATTERN NO. 221/033[00m
+/033[38;5;91mPASS PATTERN NO. 222/033[00m
+/033[38;5;126mPASS PATTERN NO. 223/033[00m
+/033[38;5;161mPASS PATTERN NO. 224/033[00m
+/033[38;5;196mPASS PATTERN NO. 225/033[00m
+/033[38;5;166mPASS PATTERN NO. 226/033[00m
+/033[38;5;136mPASS PATTERN NO. 227/033[00m
+/033[38;5;106mPASS PATTERN NO. 228/033[00m
+/033[38;5;76mPASS PATTERN NO. 229/033[00m
+/033[38;5;46mPASS PATTERN NO. 230/033[00m
+/033[38;5;41mPASS PATTERN NO. 231/033[00m
+Pat No:         231 /n
+Pat's iter is          10 /n
+Your answer for Q is 110011111101 /t/t
+Your answer for R is 111011110000 /t/n
+The correct value for Q is 110011111101 /t/n
+The correct value for R is 111011110001 /t/n
+Pat No:         231 /n
+Pat's iter is          11 /n
+Your answer for Q is 001001111111 /t/t
+Your answer for R is 000000000101 /t/n
+The correct value for Q is 001001111100 /t/n
+The correct value for R is 000000000100 /t/n
+/033[38;5;36mPASS PATTERN NO. 232/033[00m
+/033[38;5;31mPASS PATTERN NO. 233/033[00m
+Pat No:         233 /n
+Pat's iter is          11 /n
+Your answer for Q is 000111011100 /t/t
+Your answer for R is 000100101001 /t/n
+The correct value for Q is 000111011010 /t/n
+The correct value for R is 000100101000 /t/n
+/033[38;5;26mPASS PATTERN NO. 234/033[00m
+/033[38;5;21mPASS PATTERN NO. 235/033[00m
+/033[38;5;56mPASS PATTERN NO. 236/033[00m
+/033[38;5;91mPASS PATTERN NO. 237/033[00m
+/033[38;5;126mPASS PATTERN NO. 238/033[00m
+/033[38;5;161mPASS PATTERN NO. 239/033[00m
+/033[38;5;196mPASS PATTERN NO. 240/033[00m
+/033[38;5;166mPASS PATTERN NO. 241/033[00m
+/033[38;5;136mPASS PATTERN NO. 242/033[00m
+/033[38;5;106mPASS PATTERN NO. 243/033[00m
+/033[38;5;76mPASS PATTERN NO. 244/033[00m
+/033[38;5;46mPASS PATTERN NO. 245/033[00m
+/033[38;5;41mPASS PATTERN NO. 246/033[00m
+/033[38;5;36mPASS PATTERN NO. 247/033[00m
+/033[38;5;31mPASS PATTERN NO. 248/033[00m
+Pat No:         248 /n
+Pat's iter is          10 /n
+Your answer for Q is 000101100111 /t/t
+Your answer for R is 111100000010 /t/n
+The correct value for Q is 000101100101 /t/n
+The correct value for R is 111100000001 /t/n
+/033[38;5;26mPASS PATTERN NO. 249/033[00m
+/033[38;5;21mPASS PATTERN NO. 250/033[00m
+/033[38;5;56mPASS PATTERN NO. 251/033[00m
+Pat No:         251 /n
+Pat's iter is           6 /n
+Your answer for Q is 000000101100 /t/t
+Your answer for R is 111010000000 /t/n
+The correct value for Q is 000000101100 /t/n
+The correct value for R is 111001111111 /t/n
+/033[38;5;91mPASS PATTERN NO. 252/033[00m
+/033[38;5;126mPASS PATTERN NO. 253/033[00m
+/033[38;5;161mPASS PATTERN NO. 254/033[00m
+Pat No:         254 /n
+Pat's iter is           5 /n
+Your answer for Q is 000110011000 /t/t
+Your answer for R is 101011111011 /t/n
+The correct value for Q is 000110011000 /t/n
+The correct value for R is 101011111100 /t/n
+/033[38;5;196mPASS PATTERN NO. 255/033[00m
+/033[38;5;166mPASS PATTERN NO. 256/033[00m
+/033[38;5;136mPASS PATTERN NO. 257/033[00m
+/033[38;5;106mPASS PATTERN NO. 258/033[00m
+/033[38;5;76mPASS PATTERN NO. 259/033[00m
+/033[38;5;46mPASS PATTERN NO. 260/033[00m
+/033[38;5;41mPASS PATTERN NO. 261/033[00m
+/033[38;5;36mPASS PATTERN NO. 262/033[00m
+/033[38;5;31mPASS PATTERN NO. 263/033[00m
+/033[38;5;26mPASS PATTERN NO. 264/033[00m
+/033[38;5;21mPASS PATTERN NO. 265/033[00m
+/033[38;5;56mPASS PATTERN NO. 266/033[00m
+/033[38;5;91mPASS PATTERN NO. 267/033[00m
+/033[38;5;126mPASS PATTERN NO. 268/033[00m
+/033[38;5;161mPASS PATTERN NO. 269/033[00m
+/033[38;5;196mPASS PATTERN NO. 270/033[00m
+/033[38;5;166mPASS PATTERN NO. 271/033[00m
+/033[38;5;136mPASS PATTERN NO. 272/033[00m
+/033[38;5;106mPASS PATTERN NO. 273/033

@@ -4,13 +4,9 @@ Running: C:/Xilinx/Vivado/2022.1/bin/unwrapped/win64.o/xelab.exe --incr --debug 
 Using 2 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-2861] module 'GR' does not have a parameter named Q [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:336]
-WARNING: [VRFC 10-2861] module 'GR' does not have a parameter named R [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:337]
-WARNING: [VRFC 10-2861] module 'GR' does not have a parameter named Q [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:362]
-WARNING: [VRFC 10-2861] module 'GR' does not have a parameter named R [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:363]
-WARNING: [VRFC 10-3705] select index 39 into 'K_product_x' is out of bounds [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v:157]
-WARNING: [VRFC 10-3705] select index 39 into 'K_product_y' is out of bounds [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v:158]
-WARNING: [VRFC 10-3705] select index 39 into 'K_product_x' is out of bounds [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v:182]
+WARNING: [VRFC 10-3705] select index 39 into 'K_product_x' is out of bounds [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v:159]
+WARNING: [VRFC 10-3705] select index 39 into 'K_product_y' is out of bounds [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v:160]
+WARNING: [VRFC 10-3705] select index 39 into 'K_product_x' is out of bounds [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v:185]
 Completed static elaboration
 Starting simulation data flow analysis
 WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v" Line 2. Module QR_CORDIC(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
