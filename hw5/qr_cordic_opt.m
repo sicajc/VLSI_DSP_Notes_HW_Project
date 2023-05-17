@@ -10,6 +10,7 @@ function [Q, R] = qr_cordic_opt(M,T,S)
 
     % Turning into fixed point
     M_        = cast(M, 'like',T.x_partial);
+
     R         = cast(M_,'like',T.x_output);
     Q         = cast(Q,'like' ,S.x_output);
 
@@ -26,13 +27,19 @@ function [Q, R] = qr_cordic_opt(M,T,S)
             % The boundary condition of cordics. While N = 4, the input value is 0.
             if i == 4
                 [r,d] = cordic_vector_mode_opt(M_(i,k), 0, iters_num,T);
+                % fprintf('Entry: (%d,%d)',i,k);
+                % disp("Vector mode Result r:");
+                % r
+                % bin(r)
                 M_(i,k) = r;
 
             else
                 [r,d] = cordic_vector_mode_opt(M_(i, k), M_(i+1, k), iters_num,T);
+                % fprintf('Entry: (%d,%d)',i,k);
                 M_(i,k) = r;
                 M_(i+1,k) = 0;
             end
+
             % disp("After Vector mode");
             M_;
 
@@ -48,16 +55,24 @@ function [Q, R] = qr_cordic_opt(M,T,S)
                     M_(i, j) = tmp1;
                 else
                     [tmp1,tmp2] = cordic_rotation_mode_opt(M_(i, j), M_(i+1, j),d, iters_num,T);
-
+                    % fprintf('Entry: (%d,%d)',i,j);
+                    % disp("Rotation mode Result x:");
+                    % tmp1
+                    % bin(tmp1)
                     M_(i, j) = tmp1;
+
+                    % disp("Rotation mode Result y:");
+                    % tmp2
+                    % bin(tmp2)
                     M_(i+1, j) = tmp2;
+
                 end
 
                 % [tmp1, tmp2] = cordic_rotation_mode_opt(M_(i,j), M_( i+1,j ), d, iters_num,T);
                 % fprintf('Rotation Mode:\n x = %f , y = %f , j = %d  \n',tmp1,tmp2,j);
             end
 
-            % disp("After Rotations");
+            disp("After Rotations");
             M_;
 
             for j = 1:N
@@ -74,7 +89,7 @@ function [Q, R] = qr_cordic_opt(M,T,S)
                 % For Q, after calculation, take its transpose to get the correct Q, same for this portion.
                 % [tmp1, tmp2] = cordic_rotation_mode_opt( Q(i-1,j), Q(i,j), d, iters_num,S);
             end
-            Q
+            Q;
         end
     end
     Q;

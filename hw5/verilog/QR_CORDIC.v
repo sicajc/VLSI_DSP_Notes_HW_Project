@@ -110,7 +110,7 @@ module QR_CORDIC #(
   //   Flags
   //===============================
   wire rd_data_done_f    = cordic_cnt == 15 && state_RD_DATA;
-  wire cordic_cal_done_f = cordic_cnt == 30 && state_CAL;
+  wire cordic_cal_done_f = cordic_cnt == 28 && state_CAL;
   wire output_done_f     = cordic_cnt == 15 && state_OUTPUT;
 
   //===============================
@@ -225,6 +225,7 @@ module QR_CORDIC #(
         end
       end
   endgenerate
+
   wire sends_valid_f = (cordic_cnt%4 == 0) && cordic_cnt<=12;
   //===============================
   //   Q INPUT 4x FIFOs
@@ -494,7 +495,7 @@ module QR_CORDIC #(
         0:
         begin
           out_q <= gr_q_y_out[0];
-          out_r <= $signed(gg_out_rij[0][`GGR2OUTPUT]);
+          out_r <= gg_out_rij[0][`GGR2OUTPUT];
         end
         1:
         begin

@@ -9,9 +9,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //############################################################################
 
-
 `define CYCLE_TIME 10.0
-
 
 `define A_GOLDEN  "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/pattern/matrix_dat.txt"
 `define Q_GOLDEN  "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/pattern/q_dat.txt"
@@ -131,6 +129,8 @@ module PATTERN(
       else
         $display("/033[38;5;%3dmPASS PATTERN NO.%4d/033[00m", color, patcount+1);
     end
+
+
     #(1000);
     YOU_PASS_task;
     $finish;
@@ -171,24 +171,31 @@ module PATTERN(
           // check if the answer is correct
           if (r_ans_out[addr] !== R_GOLDEN[addr])
           begin
-            $display ("Pat No: %d /n",patcount);
-            $display ("Pat's iter is %d /n",pat_iter);
-            $display ("Your answer for Q is %b /t/t", out_q);
-            $display ("Your answer for R is %b /t/n", out_r);
-            $display ("The correct value for Q is %b /t/n", Q_GOLDEN[addr]);
-            $display ("The correct value for R is %b /t/n", R_GOLDEN[addr]);
+            $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
+            $display ("Pat No: %d",patcount);
+            $display ("Pat's iter is %d",pat_iter);
+            $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
+            $display ("Your answer for R is %b ", out_r);
+            $display ("The correct value for R is %b ", R_GOLDEN[addr]);
+            // $display("/%d",PATTERN.u_CORDIC.genblk3[0].u_GG.iters_x);
+            // $display ("Your answer for R is %b ", out_r);
+            // $display ("Data writes into address %d ", addr);
+            $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
+            // $display ("The correct value for Q is %b ", Q_GOLDEN[addr]);
+            // $display ("The correct value for R is %b ", R_GOLDEN[addr]);
+            $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
             errors = errors + 1;
           end
 
           // You have 4800 values. Tolerate 80 errors, I dont know how to calculate differences...
-          if(errors > 70)
+          if(errors > 10)
           begin
             fail;
             // Spec. 8
             // When out_valid is pulled up and there exists a solution for the grid, out should be correct, and out_valid is limited to be high for 15 cycles.
             $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
             $display ("                                                                SPEC 8 FAIL!                                                                ");
-            $display ("                                        Number of errors are more than 70, please fix your design!                                          ");
+            $display ("                                        Number of errors are more than 10, please fix your design!                                          ");
             $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
             repeat(5)  @(negedge clk);
             $finish;
@@ -267,6 +274,13 @@ module PATTERN(
       in = 8'bx ;
     end
   endtask
+
+  task writing_out_data;
+  begin
+
+  end
+  endtask
+
   //================================================================
   //  env task
   //================================================================
@@ -314,6 +328,7 @@ module PATTERN(
       $display ("                                                                                                                      ");
       $display ("                                        Your execution cycles   = %5d cycles                                          ", total_cycles);
       $display ("                                        Your clock period       = %.1f ns                                             ", `CYCLE_TIME);
+      $display ("                                      Average Cycle Per pattern = %.1f ns                                             ", total_cycles/PATNUM);
       $display ("                                        Total latency           = %.1f ns                                             ", (total_cycles + total_pat)*`CYCLE_TIME);
       $display ("----------------------------------------------------------------------------------------------------------------------");
 
@@ -325,7 +340,7 @@ module PATTERN(
     begin
       $display(":( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( ");
 
-      /*
+
       $display("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
       $display("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@8Oo::::ooOOO8@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
       $display("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@o:   ..::..       .:o88@@@@@@@@@@@8OOoo:::..::oooOO8@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
@@ -390,7 +405,7 @@ module PATTERN(
       $display("@@@@@@@@@@@@@@@@8O.             o8@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@8o                 .@@@@@@@@@@@@@@@@@");
       $display("@@@@@@@@@@@@@@@@@@@@::.       :O@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@O..         .:8@@@@@@@@@@@@@@@@@@");
       $display("@@@@@@@@@@@@@@@@@@@@@@@@@88O8@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@88@@@@@@@@@@@@@@@@@@@@@@@@@@");
-      */
+
       // fail_.fail;
     end
   endtask

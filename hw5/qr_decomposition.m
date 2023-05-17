@@ -1,22 +1,22 @@
 %================================================================
 %  Main Driver
 %================================================================
-% M = [2 16 -6 -16;
-%      16 -17 10 -2;
-%      -6 10 15 -1;
-%      -16 -2 -1 9];
+M = [2 16 -6 -16;
+     16 -17 10 -2;
+     -6 10 15 -1;
+     -16 -2 -1 9];
 
-% [Q, R] = qr_decomposition(M);
+[Q, R] = qr_decomposition(M);
 
-% disp("Givens rotation QR");
-% disp(Q);
-% disp(R);
+disp("Givens rotation QR");
+disp(Q);
+disp(R);
 
 
-% [Q_m, R_m] = qr(M);
-% disp("Matlab QR");
-% disp(Q_m);
-% disp(R_m);
+[Q_m, R_m] = qr(M);
+disp("Matlab QR");
+disp(Q_m);
+disp(R_m);
 
 %================================================================
 %  Function

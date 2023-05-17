@@ -14,7 +14,7 @@ module GG #(
     output reg [D_WIDTH-1:0] d_i_d_o
   );
 
-  parameter K = 20'b0000000000_1001101101;
+  parameter signed K = 20'b0000000000_1001101101;
   // I:10, F:10
   genvar idx;
 
@@ -24,7 +24,7 @@ module GG #(
 
   wire signed[DATA_WIDTH-1:0] iters_x_in;
   wire signed[DATA_WIDTH-1:0] iters_y_in;
-  wire signed[DATA_WIDTH*2:0] K_product;
+  wire signed[DATA_WIDTH*2-1:0] K_product;
   wire signed[DATA_WIDTH-1:0] K_extracted;
 
   reg signed[DATA_WIDTH-1:0] iters_x[0:3];
@@ -143,34 +143,55 @@ module GG #(
       begin
         if(idx == 0)
         begin
-          d_i[0] = iters_x_in[DATA_WIDTH-1] ^ iters_y_in[DATA_WIDTH-1];
+          if(iters_x_in == 'd0 || iters_y_in == 'd0)
+          begin
+            d_i[0] = 0;
+          end
+          else
+          begin
+            d_i[0] = iters_x_in[DATA_WIDTH-1] ^ iters_y_in[DATA_WIDTH-1];
+          end
+
+          // d_i[0] = iters_x_in[DATA_WIDTH-1] ^ iters_y_in[DATA_WIDTH-1];
+
 
           if(d_i[0]==0)
           begin
             // Shifting in a clockwise Manner
-            iters_x[0] = iters_x_in + (iters_y_in >>> (cnt*4 + 0));
-            iters_y[0] = iters_y_in - (iters_x_in >>> (cnt*4 + 0));
+            iters_x[0] = $signed(iters_x_in + (iters_y_in >>> (cnt*4 + 0)));
+            iters_y[0] = $signed(iters_y_in - (iters_x_in >>> (cnt*4 + 0)));
           end
           else
           begin
-            iters_x[0] = iters_x_in - (iters_y_in >>> (cnt*4 + 0));
-            iters_y[0] = iters_y_in + (iters_x_in >>> (cnt*4 + 0));
+            iters_x[0] = $signed(iters_x_in - (iters_y_in >>> (cnt*4 + 0)));
+            iters_y[0] = $signed(iters_y_in + (iters_x_in >>> (cnt*4 + 0)));
           end
         end
         else
         begin
-          d_i[idx] = iters_x[idx-1][DATA_WIDTH-1] ^ iters_y[idx-1][DATA_WIDTH-1];
+          if(iters_x[idx-1] == 'd0 || iters_y[idx-1] == 'd0)
+          begin
+            d_i[idx] = 0;
+          end
+          else
+          begin
+            d_i[idx] = iters_x[idx-1][DATA_WIDTH-1] ^ iters_y[idx-1][DATA_WIDTH-1];
+          end
+
+          // d_i[idx] = iters_x[idx-1][DATA_WIDTH-1] ^ iters_y[idx-1][DATA_WIDTH-1];
 
           if(d_i[idx]==0)
           begin
             // Shifting in a clockwise Manner
-            iters_x[idx] = iters_x[idx-1] + (iters_y[idx-1] >>> (cnt*4 + idx));
-            iters_y[idx] = iters_y[idx-1] - (iters_x[idx-1] >>> (cnt*4 + idx));
+            iters_x[idx] = $signed(iters_x[idx-1] + (iters_y[idx-1] >>> (cnt*4 + idx)));
+
+            iters_y[idx] = $signed(iters_y[idx-1] - (iters_x[idx-1] >>> (cnt*4 + idx)));
           end
           else
           begin
-            iters_x[idx] = iters_x[idx-1] - (iters_y[idx-1] >>> (cnt*4 + idx));
-            iters_y[idx] = iters_y[idx-1] + (iters_x[idx-1] >>> (cnt*4 + idx));
+            iters_x[idx] = $signed(iters_x[idx-1] - (iters_y[idx-1] >>> (cnt*4 + idx)));
+
+            iters_y[idx] = $signed(iters_y[idx-1] + (iters_x[idx-1] >>> (cnt*4 + idx)));
           end
         end
       end

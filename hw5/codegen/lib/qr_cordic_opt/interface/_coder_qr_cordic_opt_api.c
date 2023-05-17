@@ -5,7 +5,7 @@
  * File: _coder_qr_cordic_opt_api.c
  *
  * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 16-May-2023 07:56:53
+ * C/C++ source code generated on  : 17-May-2023 15:30:22
  */
 
 /* Include Files */
@@ -512,12 +512,12 @@ static void qr_cordic_opt_once(const emlrtStack *sp)
     10.0, "BinaryPoint", 10.0, "Slope", 0.0009765625, "FixedExponent", -10.0,
     &emlrtMCI));
   emlrtAssignP(&c_eml_mx, fimath(sp, "RoundMode", "floor", "RoundingMethod",
-    "Floor", "OverflowMode", "wrap", "OverflowAction", "Wrap", "ProductMode",
-    "KeepMSB", "SumMode", "FullPrecision", "ProductWordLength", 32.0,
-    "SumWordLength", 32.0, "MaxProductWordLength", 65535.0, "MaxSumWordLength",
-    65535.0, "ProductFractionLength", 30.0, "ProductFixedExponent", -30.0,
-    "SumFractionLength", 30.0, "SumFixedExponent", -30.0,
-    "SumSlopeAdjustmentFactor", 1.0, "SumBias", 0.0,
+    "Floor", "OverflowMode", "saturate", "OverflowAction", "Saturate",
+    "ProductMode", "FullPrecision", "SumMode", "FullPrecision",
+    "ProductWordLength", 32.0, "SumWordLength", 32.0, "MaxProductWordLength",
+    65535.0, "MaxSumWordLength", 65535.0, "ProductFractionLength", 30.0,
+    "ProductFixedExponent", -30.0, "SumFractionLength", 30.0, "SumFixedExponent",
+    -30.0, "SumSlopeAdjustmentFactor", 1.0, "SumBias", 0.0,
     "ProductSlopeAdjustmentFactor", 1.0, "ProductBias", 0.0, "CastBeforeSum",
     true, "SumSlope", 9.3132257461547852E-10, "ProductSlope",
     9.3132257461547852E-10, &emlrtMCI));

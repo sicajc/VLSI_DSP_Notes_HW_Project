@@ -9,7 +9,6 @@ clear;
 % no need for rounding so that the result can be simplified.
 % The datapath of the whole cordic architecture is 20 bits for R, 12 bits for Q ; However, the final result is truncated to
 % 12 bits only for both R and Q.
-
 %================================================================
 %  Setting word length and fraction length
 %================================================================
@@ -66,10 +65,11 @@ S = qrDataType('fixed', qx_partial, qy_partial, qx_output, qy_output);
 %================================================================
 %  matrix for testing
 %================================================================
-M = [-70 55 80 90;
-     -112 36 -47 1;
-     68 -21 80 34;
-     43 -28 74 115];
+% Pattern 8 wrong!
+M = [-79   71   117   46;
+     31   -59  96 54;
+     -16   -58  -37 -34;
+     73  77   0 15];
 
 C = fi([], 1, 8, 0); % Since M is 8 bits.
 C;
@@ -91,10 +91,10 @@ buildInstrumentedMex qr_cordic_opt -o qr_cordic_opt_mex ...
 % [q_double, r_double] = qr_cordic_opt(M, U, U);
 [q_f_opt, r_f_opt] = qr_cordic_opt_mex(matrix_i, T, S);
 
-% q_f_opt = double(q_f_opt);
-% r_f_opt = double(r_f_opt);
+q_f_opt = double(q_f_opt);
+r_f_opt = double(r_f_opt);
 
-% [q, r] = qr(M);
+[q, r] = qr(M);
 
 % disp("Matlab QR decomposition");
 % disp("Q")
@@ -163,6 +163,7 @@ buildInstrumentedMex qr_cordic_opt -o qr_cordic_opt_mex ...
 % disp("Average delta Q:");
 % disp(mean(deltaq,'all'));
 
+
 %================================================================
 %  Write out golden pattern
 %================================================================
@@ -176,42 +177,40 @@ fileID_1 = fopen(q_golden, 'wt');
 fileID_2 = fopen(r_golden, 'wt');
 
 % fprintf(fileID_0, '%d \n\n', NUM_OF_MATRIX);
+% Set the seed value
+seedValue = 1234;
+
+% Fix the seed for random number generation
+rng(seedValue);
+
 
 for i = 1:NUM_OF_MATRIX
+    fprintf("Pat# %d",i);
     % Generating matrix
     matrix_i = randi([lower_bound, upper_bound], MATRIX_SIZE, MATRIX_SIZE);
 
     % Fixed point calculation
-    matrix_i = cast(matrix_i, 'like', C)
+    matrix_i = cast(matrix_i, 'like', C);
     [q_f_opt, r_f_opt] = qr_cordic_opt_mex(matrix_i, T, S);
 
-    q_f_opt = cast(q_f_opt, 'like', S.x_output)
-    r_f_opt = cast(r_f_opt, 'like', T.x_output)
-
     for k = 1:MATRIX_SIZE
-
         for j = MATRIX_SIZE:-1:1
             matrix_fix_val = matrix_i(j, k);
             matrix_fix_bin = bin(matrix_i(j, k));
-
             % Append the pattern number at the start of every pattern.
             if j == 4 && k == 1
                 fprintf(fileID_0, '%s  //  %f pat# %d (%d,%d) \n', matrix_fix_bin, matrix_fix_val, i, j, k);
             else
                 fprintf(fileID_0, '%s  //  %f (%d,%d)\n', matrix_fix_bin, matrix_fix_val, j, k);
             end
-
         end
-
     end
-
     for j = 1:MATRIX_SIZE
-
         for k = 1:MATRIX_SIZE
             q_fix_val = q_f_opt(j, k);
             q_fix_bin = bin(q_f_opt(j, k));
 
-            r_fix_val = r_f_opt(j, k);
+            r_fix_val = r_f_opt(j, k)
             r_fix_bin = bin(r_f_opt(j, k));
 
             % the lower half of R should be regarded as zeroes, so instantiate a fixed point zero for them.
@@ -234,11 +233,8 @@ for i = 1:NUM_OF_MATRIX
             else
                 fprintf(fileID_2, '%s  //  %f (%d,%d)\n', r_fix_bin, r_fix_val, j, k);
             end
-
         end
-
     end
-
 end
 
 fclose(fileID_0);

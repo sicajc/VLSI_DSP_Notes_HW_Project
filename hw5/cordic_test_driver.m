@@ -59,75 +59,75 @@ fileID_0 = fopen(qr_cordic_golden, 'wt');
 
 % Vectoring mode testing!
 % Boundary conditions
-x = 9;
-y = 0;
+x = 0;
+y = -172.2021484375;
 angle = 0; % Set x=3,y=4 . Expect 53.
 
 x = cast(x,'like',T.x_partial);
 y = cast(y,'like',T.y_partial);
 
-x_fix_bin = bin(x);
-y_fix_bin = bin(y);
 
 [r,d] = cordic_vector_mode_opt(x, y, ITERS_NUM,T);
-r_fix_bin = bin(r);
+r
+r_fix_bin = bin(r)
 
-% Write the result into file for later verification
-fprintf(fileID_0, '%s  // GG1 x = %f \n', x_fix_bin,x);
-fprintf(fileID_0, '%s  //    y = %f \n', y_fix_bin,y);
-fprintf(fileID_0, '%s  //    r = %f \n', r_fix_bin,r);
+% % Write the result into file for later verification
+% fprintf(fileID_0, '%s  // GG1 x = %f \n', x_fix_bin,x);
+% fprintf(fileID_0, '%s  //    y = %f \n', y_fix_bin,y);
+% fprintf(fileID_0, '%s  //    r = %f \n', r_fix_bin,r);
 
-x = 9;
-y = r;
-angle = 0; % Set x=3,y=4 . Expect 53.
+% x = 9;
+% y = r;
+% angle = 0; % Set x=3,y=4 . Expect 53.
 
-x = cast(x,'like',T.x_partial);
-y = cast(y,'like',T.y_partial);
+% x = cast(x,'like',T.x_partial);
+% y = cast(y,'like',T.y_partial);
 
-x_fix_bin = bin(x);
-y_fix_bin = bin(y);
+% x_fix_bin = bin(x);
+% y_fix_bin = bin(y);
 
-[r,d] = cordic_vector_mode_opt(x, y, ITERS_NUM,T);
-r_fix_bin = bin(r);
+% [r,d] = cordic_vector_mode_opt(x, y, ITERS_NUM,T);
+% r_fix_bin = bin(r);
 
-% Write the result into file for later verification
-fprintf(fileID_0, '%s  // GG2 x = %f \n', x_fix_bin,x);
-fprintf(fileID_0, '%s  //    y = %f \n', y_fix_bin,y);
-fprintf(fileID_0, '%s  //    r = %f \n', r_fix_bin,r);
+% % Write the result into file for later verification
+% fprintf(fileID_0, '%s  // GG2 x = %f \n', x_fix_bin,x);
+% fprintf(fileID_0, '%s  //    y = %f \n', y_fix_bin,y);
+% fprintf(fileID_0, '%s  //    r = %f \n', r_fix_bin,r);
 
-for i = 1 : length(d)
-    fprintf(fileID_0, '%d ', d(i));
-end
-fprintf(fileID_0, '// Expected di  \n');
-
-% Rotation mode testing
-x = -21;
-y = 0;
-[x_result, y_result] = cordic_rotation_mode_opt(x, y, d, ITERS_NUM,T);
-
-x = cast(x,'like',T.x_partial);
-y = cast(y,'like',T.y_partial);
-
-x_fix_bin = bin(x);
-y_fix_bin = bin(y);
-
-x_result_fix_bin = bin(x_result);
-y_result_fix_bin = bin(y_result);
-
-% Write the result into file for later verification
-fprintf(fileID_0, '%s  // GR1 x = %f \n', x_fix_bin,x);
-fprintf(fileID_0, '%s  //    y = %f \n', y_fix_bin,y);
-fprintf(fileID_0, '%s  //    x_result = %f \n', x_result_fix_bin ,x_result);
-fprintf(fileID_0, '%s  //    y_result = %f \n', y_result_fix_bin ,y_result);
-
-fclose(fileID_0);
-
+% for i = 1 : length(d)
+%     fprintf(fileID_0, '%d ', d(i));
+% end
+% fprintf(fileID_0, '// Expected di  \n');
 
 % Rotation mode testing
-x = -21;
-y = -14.83203125;
-d = [0,1,0,1,0,1,0,1,0,1,0,1];
-[x_result, y_result] = cordic_rotation_mode_opt(x, y, d, ITERS_NUM,T)
+% x = -58;
+% y = 76.8984375;
+% d = [1,1,1,0,0,1,1,1,0,0,0,0];
+% x = cast(x,'like',T.x_partial);
+% y = cast(y,'like',T.y_partial);
+
+% [x_result, y_result] = cordic_rotation_mode_opt(x, y, d, ITERS_NUM,T);
+
+% x_fix_bin = bin(x);
+% y_fix_bin = bin(y);
+
+% x_result_fix_bin = bin(x_result);
+% y_result_fix_bin = bin(y_result);
+
+% Write the result into file for later verification
+% fprintf(fileID_0, '%s  // GR1 x = %f \n', x_fix_bin,x);
+% fprintf(fileID_0, '%s  //    y = %f \n', y_fix_bin,y);
+% fprintf(fileID_0, '%s  //    x_result = %f \n', x_result_fix_bin ,x_result);
+% fprintf(fileID_0, '%s  //    y_result = %f \n', y_result_fix_bin ,y_result);
+%
+% fclose(fileID_0);
+
+
+% % Rotation mode testing
+% x = -21;
+% y = -14.83203125;
+% d = [0,1,0,1,0,1,0,1,0,1,0,1];
+% [x_result, y_result] = cordic_rotation_mode_opt(x, y, d, ITERS_NUM,T)
 
 % x = 3;
 % y = 4;

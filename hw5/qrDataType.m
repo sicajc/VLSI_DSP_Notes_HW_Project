@@ -12,8 +12,11 @@ function datatype = qrDataType(dt, x_partial, y_partial, x_output, y_output)
             datatype.x_output = single([]);
             datatype.y_output = single([]);
         case 'fixed'
-            % F = fimath('OverflowAction', 'Wrap', 'RoundingMethod', 'Nearest', 'ProductMode', 'KeepMSB');
-            F = fimath('OverflowAction', 'Wrap', 'RoundingMethod', 'Floor', 'ProductMode', 'KeepMSB');
+            F = fimath('RoundingMethod', 'Floor');
+            % F.ProductWordLength
+            % F = fimath('OverflowAction', 'Wrap', 'RoundingMethod', 'Zero', 'ProductMode', 'KeepMSB');
+            % F = fimath('OverflowAction', 'Wrap', 'RoundingMethod', 'Convergent', 'ProductMode', 'KeepMSB');
+
 
             datatype.x_partial = fi([], 1, x_partial.WL, x_partial.FL,F);
             datatype.y_partial = fi([], 1, y_partial.WL, y_partial.FL,F);

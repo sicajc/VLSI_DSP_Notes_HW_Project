@@ -10,7 +10,8 @@ module GR_tb;
   wire [DATA_WIDTH-1:0] rij_ff_o;
   wire [D_WIDTH-1:0] d_i;
 
-  initial clk = 0;
+  initial
+    clk = 0;
   always  #(`CYCLE_TIME/2.0)  clk = ~clk ;
 
 

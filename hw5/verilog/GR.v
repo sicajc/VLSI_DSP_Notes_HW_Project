@@ -28,7 +28,8 @@ module GR #(
   //===============================
   //   PARAMETERS
   //===============================
-  parameter K = 20'b0000000000_1001101101;
+  parameter signed K = 20'b0000000000_1001101101;
+
   // I:10, F:10
   genvar idx;
 
@@ -235,7 +236,5 @@ module GR #(
       end
     end
   endgenerate
-
-
 
 endmodule

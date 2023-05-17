@@ -7,7 +7,6 @@ function [r,d] = cordic_vector_mode_opt(x, y, iters_num,T)
 
     % Beware the boundary condition!!! The first qr cordic starts from the N+1 rows. Thus the first operation
     % Is (x,0) -> (r,0)!!
-
     K = 0.60725334371201;
     % Turning into fixed point
     % The partial result during calculation
@@ -17,13 +16,13 @@ function [r,d] = cordic_vector_mode_opt(x, y, iters_num,T)
     r = cast(r,'like',T.x_partial);
     x_new     = cast(x, 'like', T.x_partial);
     K        = cast(K, 'like' , T.x_partial);
+    % bin(K);
 
     % The result of each stage.
     d        = zeros(1,iters_num);
-
     for i = 1:iters_num
         % Z is the current angle, and also the angle I want to shift toward to.
-        if sign(x * y) > 0
+        if sign(x * y) >= 0
             % Since it is at the first dimension, we shoudl shift in a clockwise manner.
             % Since we are trying to obtain the angle, we must first add when we are rotating.
             x_new(:) = x + bitsra(y, i - 1);
@@ -37,7 +36,13 @@ function [r,d] = cordic_vector_mode_opt(x, y, iters_num,T)
             x(:) = x_new;
             d(i) = 1;
         end
-
+        % if(mod(i,4) == 0)
+        % i
+        % x
+        % bin(x)
+        % y
+        % bin(y)
+        % end
     end
 
    r(:) = x*K;

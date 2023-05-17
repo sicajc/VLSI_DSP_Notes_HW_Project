@@ -16,6 +16,7 @@ function [x_result, y_result] = cordic_rotation_mode_opt(x, y, d, iters_num, T)
     y = cast(y,'like',T.y_partial);
     K        = cast(K, 'like', T.x_partial);
     x_new     = cast(x, 'like', T.x_partial);
+    % bin(K)
 
     % The result of each stage.
     x_result = cast(x, 'like', T.x_partial);
@@ -34,10 +35,21 @@ function [x_result, y_result] = cordic_rotation_mode_opt(x, y, d, iters_num, T)
                 y(:) = y + bitsra(x, i - 1);
                 x(:) = x_new;
             end
-
+            i;
+            x;
+            y;
     end
+    % temp = 0;
+    % temp = fi(temp,1,40,20);
+    % disp("x * K is");
+    % x*K
+    % bin(temp)
+    % bin(x*K)
+
 
     % Output xn, yn
     x_result(:) = x * K;
+    % bin(x_result);
     y_result(:) = y * K;
+    % bin(y_result);
 end

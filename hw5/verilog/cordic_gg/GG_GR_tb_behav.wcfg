@@ -11,20 +11,17 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="56.600 ns"></ZoomStartTime>
-      <ZoomEndTime time="334.801 ns"></ZoomEndTime>
-      <Cursor1Time time="199.400 ns"></Cursor1Time>
+      <ZoomStartTime time="43.903 ns"></ZoomStartTime>
+      <ZoomEndTime time="325.504 ns"></ZoomEndTime>
+      <Cursor1Time time="165.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="320"></NameColumnWidth>
-      <ValueColumnWidth column_width="155"></ValueColumnWidth>
+      <ValueColumnWidth column_width="140"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="51" />
+   <WVObjectSize size="50" />
    <wave_markers>
-      <marker time="135000" label="" />
-      <marker time="175000" label="" />
-      <marker time="215000" label="" />
-      <marker time="245000" label="" />
+      <marker time="145537" label="" />
    </wave_markers>
    <wvobject fp_name="group1049" type="group">
       <obj_property name="label">GG</obj_property>
@@ -89,7 +86,7 @@
    <wvobject fp_name="/GG_GR_tb/u_GG/x_ff" type="array">
       <obj_property name="ElementShortName">x_ff[19:0]</obj_property>
       <obj_property name="ObjectShortName">x_ff[19:0]</obj_property>
-      <obj_property name="Radix">REALRADIX</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
       <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
       <obj_property name="radix_fractionWidth">10</obj_property>
       <obj_property name="radix_otherWidth">0</obj_property>
@@ -97,7 +94,7 @@
    <wvobject fp_name="/GG_GR_tb/u_GG/y_ff" type="array">
       <obj_property name="ElementShortName">y_ff[19:0]</obj_property>
       <obj_property name="ObjectShortName">y_ff[19:0]</obj_property>
-      <obj_property name="Radix">REALRADIX</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
       <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
       <obj_property name="radix_fractionWidth">10</obj_property>
       <obj_property name="radix_otherWidth">0</obj_property>
@@ -113,22 +110,16 @@
    <wvobject fp_name="/GG_GR_tb/u_GG/iters_y_in" type="array">
       <obj_property name="ElementShortName">iters_y_in[19:0]</obj_property>
       <obj_property name="ObjectShortName">iters_y_in[19:0]</obj_property>
-      <obj_property name="Radix">REALRADIX</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
       <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
       <obj_property name="radix_fractionWidth">10</obj_property>
       <obj_property name="radix_otherWidth">0</obj_property>
+      <obj_property name="CustomSignalColor">#800080</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject fp_name="/GG_GR_tb/u_GG/K_product" type="array">
-      <obj_property name="ElementShortName">K_product[40:0]</obj_property>
-      <obj_property name="ObjectShortName">K_product[40:0]</obj_property>
-      <obj_property name="Radix">REALRADIX</obj_property>
-      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-      <obj_property name="radix_fractionWidth">10</obj_property>
-      <obj_property name="radix_otherWidth">0</obj_property>
-   </wvobject>
-   <wvobject fp_name="/GG_GR_tb/u_GG/K_extracted" type="array">
-      <obj_property name="ElementShortName">K_extracted[19:0]</obj_property>
-      <obj_property name="ObjectShortName">K_extracted[19:0]</obj_property>
+      <obj_property name="ElementShortName">K_product[39:0]</obj_property>
+      <obj_property name="ObjectShortName">K_product[39:0]</obj_property>
       <obj_property name="Radix">REALRADIX</obj_property>
       <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
       <obj_property name="radix_fractionWidth">10</obj_property>
@@ -141,6 +132,39 @@
       <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
       <obj_property name="radix_fractionWidth">10</obj_property>
       <obj_property name="radix_otherWidth">0</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/GG_GR_tb/u_GG/iters_x[0]" type="array">
+         <obj_property name="ElementShortName">[0][19:0]</obj_property>
+         <obj_property name="ObjectShortName">[0][19:0]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">10</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GG_GR_tb/u_GG/iters_x[1]" type="array">
+         <obj_property name="ElementShortName">[1][19:0]</obj_property>
+         <obj_property name="ObjectShortName">[1][19:0]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">10</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GG_GR_tb/u_GG/iters_x[2]" type="array">
+         <obj_property name="ElementShortName">[2][19:0]</obj_property>
+         <obj_property name="ObjectShortName">[2][19:0]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">10</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GG_GR_tb/u_GG/iters_x[3]" type="array">
+         <obj_property name="ElementShortName">[3][19:0]</obj_property>
+         <obj_property name="ObjectShortName">[3][19:0]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">10</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
    </wvobject>
    <wvobject fp_name="/GG_GR_tb/u_GG/iters_y" type="array">
       <obj_property name="ElementShortName">iters_y[0:3][19:0]</obj_property>
@@ -149,6 +173,39 @@
       <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
       <obj_property name="radix_fractionWidth">10</obj_property>
       <obj_property name="radix_otherWidth">0</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/GG_GR_tb/u_GG/iters_y[0]" type="array">
+         <obj_property name="ElementShortName">[0][19:0]</obj_property>
+         <obj_property name="ObjectShortName">[0][19:0]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">10</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GG_GR_tb/u_GG/iters_y[1]" type="array">
+         <obj_property name="ElementShortName">[1][19:0]</obj_property>
+         <obj_property name="ObjectShortName">[1][19:0]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">10</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GG_GR_tb/u_GG/iters_y[2]" type="array">
+         <obj_property name="ElementShortName">[2][19:0]</obj_property>
+         <obj_property name="ObjectShortName">[2][19:0]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">10</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject fp_name="/GG_GR_tb/u_GG/iters_y[3]" type="array">
+         <obj_property name="ElementShortName">[3][19:0]</obj_property>
+         <obj_property name="ObjectShortName">[3][19:0]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">10</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
    </wvobject>
    <wvobject fp_name="/GG_GR_tb/u_GG/cnt" type="array">
       <obj_property name="ElementShortName">cnt[1:0]</obj_property>
@@ -293,38 +350,6 @@
       <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
       <obj_property name="radix_fractionWidth">10</obj_property>
       <obj_property name="radix_otherWidth">0</obj_property>
-      <wvobject fp_name="/GG_GR_tb/u_GR/iters_x[0]" type="array">
-         <obj_property name="ElementShortName">[0][19:0]</obj_property>
-         <obj_property name="ObjectShortName">[0][19:0]</obj_property>
-         <obj_property name="Radix">REALRADIX</obj_property>
-         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-         <obj_property name="radix_fractionWidth">10</obj_property>
-         <obj_property name="radix_otherWidth">0</obj_property>
-      </wvobject>
-      <wvobject fp_name="/GG_GR_tb/u_GR/iters_x[1]" type="array">
-         <obj_property name="ElementShortName">[1][19:0]</obj_property>
-         <obj_property name="ObjectShortName">[1][19:0]</obj_property>
-         <obj_property name="Radix">REALRADIX</obj_property>
-         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-         <obj_property name="radix_fractionWidth">10</obj_property>
-         <obj_property name="radix_otherWidth">0</obj_property>
-      </wvobject>
-      <wvobject fp_name="/GG_GR_tb/u_GR/iters_x[2]" type="array">
-         <obj_property name="ElementShortName">[2][19:0]</obj_property>
-         <obj_property name="ObjectShortName">[2][19:0]</obj_property>
-         <obj_property name="Radix">REALRADIX</obj_property>
-         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-         <obj_property name="radix_fractionWidth">10</obj_property>
-         <obj_property name="radix_otherWidth">0</obj_property>
-      </wvobject>
-      <wvobject fp_name="/GG_GR_tb/u_GR/iters_x[3]" type="array">
-         <obj_property name="ElementShortName">[3][19:0]</obj_property>
-         <obj_property name="ObjectShortName">[3][19:0]</obj_property>
-         <obj_property name="Radix">REALRADIX</obj_property>
-         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-         <obj_property name="radix_fractionWidth">10</obj_property>
-         <obj_property name="radix_otherWidth">0</obj_property>
-      </wvobject>
    </wvobject>
    <wvobject fp_name="/GG_GR_tb/u_GR/iters_y" type="array">
       <obj_property name="ElementShortName">iters_y[0:3][19:0]</obj_property>
@@ -333,38 +358,6 @@
       <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
       <obj_property name="radix_fractionWidth">10</obj_property>
       <obj_property name="radix_otherWidth">0</obj_property>
-      <wvobject fp_name="/GG_GR_tb/u_GR/iters_y[0]" type="array">
-         <obj_property name="ElementShortName">[0][19:0]</obj_property>
-         <obj_property name="ObjectShortName">[0][19:0]</obj_property>
-         <obj_property name="Radix">REALRADIX</obj_property>
-         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-         <obj_property name="radix_fractionWidth">10</obj_property>
-         <obj_property name="radix_otherWidth">0</obj_property>
-      </wvobject>
-      <wvobject fp_name="/GG_GR_tb/u_GR/iters_y[1]" type="array">
-         <obj_property name="ElementShortName">[1][19:0]</obj_property>
-         <obj_property name="ObjectShortName">[1][19:0]</obj_property>
-         <obj_property name="Radix">REALRADIX</obj_property>
-         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-         <obj_property name="radix_fractionWidth">10</obj_property>
-         <obj_property name="radix_otherWidth">0</obj_property>
-      </wvobject>
-      <wvobject fp_name="/GG_GR_tb/u_GR/iters_y[2]" type="array">
-         <obj_property name="ElementShortName">[2][19:0]</obj_property>
-         <obj_property name="ObjectShortName">[2][19:0]</obj_property>
-         <obj_property name="Radix">REALRADIX</obj_property>
-         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-         <obj_property name="radix_fractionWidth">10</obj_property>
-         <obj_property name="radix_otherWidth">0</obj_property>
-      </wvobject>
-      <wvobject fp_name="/GG_GR_tb/u_GR/iters_y[3]" type="array">
-         <obj_property name="ElementShortName">[3][19:0]</obj_property>
-         <obj_property name="ObjectShortName">[3][19:0]</obj_property>
-         <obj_property name="Radix">REALRADIX</obj_property>
-         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
-         <obj_property name="radix_fractionWidth">10</obj_property>
-         <obj_property name="radix_otherWidth">0</obj_property>
-      </wvobject>
    </wvobject>
    <wvobject fp_name="/GG_GR_tb/u_GR/cnt" type="array">
       <obj_property name="ElementShortName">cnt[1:0]</obj_property>

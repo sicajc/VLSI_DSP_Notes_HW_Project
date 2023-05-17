@@ -17,18 +17,14 @@ function [Q, R] = qr_cordic(M,T)
 
     iters_num = 12;
     for k = 1:N
-
         for i = N:-1:k + 1
             % This needed to be replaced with cordic, vectoring mode.
             % Use vector mode to calculate of givens rotation
             theta = 0;
-
             % Fixed point
             theta = cast(theta,'like',T.theta_output);
-
             [x_,y_,theta] = cordic_vector_mode(M(i-1, k), M(i, k), theta, iters_num,T);
             % fprintf('Vector Mode:\n theta = %f , i = %d  \n',theta,i);
-
             for j = k:N
                 % For R
                 % This needed to be replaced with cordic, rotation mode
@@ -40,7 +36,6 @@ function [Q, R] = qr_cordic(M,T)
                 M(i - 1, j) = tmp1;
                 M(i, j) = tmp2;
             end
-
             for j = 1:N
                 % For Q, after calculation, take its transpose to get the correct Q, same for this portion.
                 [tmp1, tmp2, angle] = cordic_rotation_mode( Q(i-1,j), Q(i,j), theta, iters_num,T);
@@ -48,9 +43,7 @@ function [Q, R] = qr_cordic(M,T)
                 Q(i-1, j) = tmp1;
                 Q(i, j) = tmp2;
             end
-
         end
-
     end
     R = M;
     Q = Q';
