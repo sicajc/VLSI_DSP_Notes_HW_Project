@@ -78,7 +78,6 @@ module QR_CORDIC #(
   wire signed[R_DATA_WIDTH-1:0] gr_r_out_rij[0:R_GR_NUM-1];
   wire[D_WIDTH-1:0] gr_r_out_d[0:R_GR_NUM-1];
 
-  wire gr_r_out_propogate[0:R_GR_NUM-1];
   wire gr_r_out_valid[0:R_GR_NUM-1];
   wire gr_r_out_rotates[0:R_GR_NUM-1];
 
@@ -111,7 +110,7 @@ module QR_CORDIC #(
   //===============================
   wire rd_data_done_f    = cordic_cnt == 15 && state_RD_DATA;
   wire cordic_cal_done_f = cordic_cnt == 28 && state_CAL;
-  wire output_done_f     = cordic_cnt == 15 && state_OUTPUT;
+  wire output_done_f     = cordic_cnt == 16 && state_OUTPUT;
 
   //===============================
   //   MAIN CTR

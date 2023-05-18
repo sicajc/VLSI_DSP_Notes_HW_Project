@@ -9,7 +9,7 @@
 <p>MEX-function name:</p>
 <pre>qr_cordic_opt_mex</pre>
 <p>Timestamp:</p>
-<pre>Wed May 17 15:29:58 2023</pre>
+<pre>Wed May 17 20:51:44 2023</pre>
 <p>To open this report from the MATLAB command line:</p>
 <pre> web('-browser','C:\Users\User\Desktop\VLSI_DSP_Notes_HW_Project\hw5\instrumentation\qr_cordic_opt_mex\html\printable.html')</pre>
 
@@ -35,6 +35,7 @@ function [Q, R] = qr_cordic_opt(M,T,S)
 
     tmp1 = cast(tmp1,'like',T.x_partial);
     tmp2 = cast(tmp2,'like',T.y_partial);
+    d=0;
 
     iters_num = 12;
     for k = 1:N
@@ -44,14 +45,12 @@ function [Q, R] = qr_cordic_opt(M,T,S)
             % Use vector mode to calculate of givens rotation
 
             % The boundary condition of cordics. While N = 4, the input value is 0.
-            if i == 4
-                [r,d] = cordic_vector_mode_opt(M_(i,k), 0, iters_num,T);
-                % fprintf('Entry: (%d,%d)',i,k);
-                % disp("Vector mode Result r:");
-                % r
-                % bin(r)
-                M_(i,k) = r;
 
+            if i == 4
+                if k ~= N % The boundary condition for r44, do not rotate it anymore!
+                    [r,d] = cordic_vector_mode_opt(M_(i,k), 0, iters_num,T);
+                    M_(i,k) = r;
+                end
             else
                 [r,d] = cordic_vector_mode_opt(M_(i, k), M_(i+1, k), iters_num,T);
                 % fprintf('Entry: (%d,%d)',i,k);
@@ -60,7 +59,7 @@ function [Q, R] = qr_cordic_opt(M,T,S)
             end
 
             % disp("After Vector mode");
-            M_;
+            % M_
 
 
             % fprintf('Vector Mode:\n theta = %f , i = %d  \n',theta,i);
@@ -69,9 +68,11 @@ function [Q, R] = qr_cordic_opt(M,T,S)
                 % For R
                 % This needed to be replaced with cordic, rotation mode
                 % The boundary conditions.
-                if i == 4
-                    [tmp1,tmp2] = cordic_rotation_mode_opt(M_(i,j), 0,d, iters_num,T);
-                    M_(i, j) = tmp1;
+                if i == N
+                    if  k ~= N
+                        [tmp1,tmp2] = cordic_rotation_mode_opt(M_(i,j), 0,d, iters_num,T);
+                        M_(i, j) = tmp1;
+                    end
                 else
                     [tmp1,tmp2] = cordic_rotation_mode_opt(M_(i, j), M_(i+1, j),d, iters_num,T);
                     % fprintf('Entry: (%d,%d)',i,j);
@@ -91,13 +92,19 @@ function [Q, R] = qr_cordic_opt(M,T,S)
                 % fprintf('Rotation Mode:\n x = %f , y = %f , j = %d  \n',tmp1,tmp2,j);
             end
 
-            disp("After Rotations");
-            M_;
+            % disp("After Rotations");
+            % M_;
+
+            if k == N
+                break;
+            end
 
             for j = 1:N
                 if i == 4
-                    % The boundary conditions for i = 4.
+                    d;
                     [tmp1,tmp2] = cordic_rotation_mode_opt(Q(i,j), 0,d, iters_num,S);
+                    % tmp1
+                    % bin(tmp1)
                     Q(i, j) = tmp1;
                 else
                     [tmp1,tmp2] = cordic_rotation_mode_opt(Q(i, j), Q(i+1, j),d, iters_num,S);
@@ -108,6 +115,7 @@ function [Q, R] = qr_cordic_opt(M,T,S)
                 % For Q, after calculation, take its transpose to get the correct Q, same for this portion.
                 % [tmp1, tmp2] = cordic_rotation_mode_opt( Q(i-1,j), Q(i,j), d, iters_num,S);
             end
+            M_;
             Q;
         end
     end
@@ -120,23 +128,23 @@ end
 <caption><b>Logged Variables for qr_cordic_opt</b></caption>
 <tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Proposed<br>Signedness</th><th>Proposed<br>WL</th><th>Proposed<br>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
 <tr><td><code>M</code></td><td><code>Input</code></td><td><code>4&nbsp;x&nbsp;4</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>8</code></td><td><code>0</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code><span style="background-color: yellow"><span style="color: black"><b>100</b></span></span></code></td><td><code><b>Yes</b></code></td><td><code>-128</code></td><td><code>127</code></td></tr>
-<tr><td><code>M_</code></td><td><code>Local</code></td><td><code>4&nbsp;x&nbsp;4</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>44</code></td><td><code>No</code></td><td><code>-220.240234375</code></td><td><code>217.65625</code></td></tr>
+<tr><td><code>M_</code></td><td><code>Local</code></td><td><code>4&nbsp;x&nbsp;4</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>46</code></td><td><code>No</code></td><td><code>-231.736328125</code></td><td><code>223.51953125</code></td></tr>
 <tr><td><code>N</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>4</code></td><td><code>4</code></td></tr>
 <tr><td><code>Q&gt;1</code></td><td><code>Local</code></td><td><code>4&nbsp;x&nbsp;4</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>1</code></td></tr>
 <tr><td><code>Q&gt;2</code></td><td><code>Output</code></td><td><code>4&nbsp;x&nbsp;4</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>51</code></td><td><code>No</code></td><td><code>-1</code></td><td><code>1</code></td></tr>
-<tr><td><code>R</code></td><td><code>Output</code></td><td><code>4&nbsp;x&nbsp;4</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>3</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>87</code></td><td><code>No</code></td><td><code>-220.25</code></td><td><code>217.625</code></td></tr>
-<tr><td><code>d</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;12</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>1</code></td></tr>
+<tr><td><code>R</code></td><td><code>Output</code></td><td><code>4&nbsp;x&nbsp;4</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>3</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>91</code></td><td><code>No</code></td><td><code>-231.75</code></td><td><code>223.5</code></td></tr>
+<tr><td><code>d</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;<b>:</b>12</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>1</code></td></tr>
 <tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>4</code></td></tr>
 <tr><td><code>iters_num</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>12</code></td><td><code>12</code></td></tr>
 <tr><td><code>j</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>4</code></td></tr>
 <tr><td><code>k</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>4</code></td></tr>
-<tr><td><code>r</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>44</code></td><td><code>No</code></td><td><code>-220.240234375</code></td><td><code>217.65625</code></td></tr>
-<tr><td><code>tmp1&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>51</code></td><td><code>No</code></td><td><code>-1</code></td><td><code>1</code></td></tr>
-<tr><td><code>tmp1&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
-<tr><td><code>tmp1&gt;3</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>40</code></td><td><code>No</code></td><td><code>-201.345703125</code></td><td><code>200.9296875</code></td></tr>
-<tr><td><code>tmp2&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>50</code></td><td><code>No</code></td><td><code>-1</code></td><td><code>0.9990234375</code></td></tr>
-<tr><td><code>tmp2&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
-<tr><td><code>tmp2&gt;3</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>40</code></td><td><code>No</code></td><td><code>-200.21484375</code></td><td><code>191.0068359375</code></td></tr>
+<tr><td><code>r</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>46</code></td><td><code>No</code></td><td><code>-231.736328125</code></td><td><code>223.51953125</code></td></tr>
+<tr><td><code>tmp1&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>tmp1&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>44</code></td><td><code>No</code></td><td><code>-217.2392578125</code></td><td><code>220.5283203125</code></td></tr>
+<tr><td><code>tmp1&gt;3</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>51</code></td><td><code>No</code></td><td><code>-1</code></td><td><code>1</code></td></tr>
+<tr><td><code>tmp2&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>tmp2&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>40</code></td><td><code>No</code></td><td><code>-200.21484375</code></td><td><code>203.11328125</code></td></tr>
+<tr><td><code>tmp2&gt;3</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>50</code></td><td><code>No</code></td><td><code>-1</code></td><td><code>0.9990234375</code></td></tr>
 </table>
 
 <h2>Function cordic_vector_mode_opt&gt;1 </h2>
@@ -180,13 +188,6 @@ function [r,d] = cordic_vector_mode_opt(x, y, iters_num,T)
             x(:) = x_new;
             d(i) = 1;
         end
-        % if(mod(i,4) == 0)
-        % i
-        % x
-        % bin(x)
-        % y
-        % bin(y)
-        % end
     end
 
    r(:) = x*K;
@@ -201,11 +202,11 @@ end
 <tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>12</code></td></tr>
 <tr><td><code>iters_num</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>12</code></td><td><code>12</code></td></tr>
 <tr><td><code>r&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
-<tr><td><code>r&gt;2</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>37</code></td><td><code>No</code></td><td><code>-185.96875</code></td><td><code>185.4248046875</code></td></tr>
-<tr><td><code>x</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>60</code></td><td><code>No</code></td><td><code>-306.65234375</code></td><td><code>305.7578125</code></td></tr>
-<tr><td><code>x_new</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>60</code></td><td><code>No</code></td><td><code>-306.65234375</code></td><td><code>305.7578125</code></td></tr>
+<tr><td><code>r&gt;2</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>40</code></td><td><code>No</code></td><td><code>-173.10546875</code></td><td><code>202.84375</code></td></tr>
+<tr><td><code>x</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>66</code></td><td><code>No</code></td><td><code>-285.4423828125</code></td><td><code>334.4814453125</code></td></tr>
+<tr><td><code>x_new</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>66</code></td><td><code>No</code></td><td><code>-285.4423828125</code></td><td><code>334.4814453125</code></td></tr>
 <tr><td><code>y&gt;1</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
-<tr><td><code>y&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>37</code></td><td><code>No</code></td><td><code>-185.6708984375</code></td><td><code>186.216796875</code></td></tr>
+<tr><td><code>y&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>40</code></td><td><code>No</code></td><td><code>-203.11328125</code></td><td><code>173.3369140625</code></td></tr>
 </table>
 
 <h2>Function cordic_vector_mode_opt&gt;2 </h2>
@@ -249,13 +250,6 @@ function [r,d] = cordic_vector_mode_opt(x, y, iters_num,T)
             x(:) = x_new;
             d(i) = 1;
         end
-        % if(mod(i,4) == 0)
-        % i
-        % x
-        % bin(x)
-        % y
-        % bin(y)
-        % end
     end
 
    r(:) = x*K;
@@ -270,10 +264,10 @@ end
 <tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>12</code></td></tr>
 <tr><td><code>iters_num</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>12</code></td><td><code>12</code></td></tr>
 <tr><td><code>r&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
-<tr><td><code>r&gt;2</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>44</code></td><td><code>No</code></td><td><code>-220.240234375</code></td><td><code>217.65625</code></td></tr>
-<tr><td><code>x</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>71</code></td><td><code>No</code></td><td><code>-363.1650390625</code></td><td><code>358.9052734375</code></td></tr>
-<tr><td><code>x_new</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>71</code></td><td><code>No</code></td><td><code>-363.1650390625</code></td><td><code>358.9052734375</code></td></tr>
-<tr><td><code>y</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>41</code></td><td><code>No</code></td><td><code>-205.5107421875</code></td><td><code>189.8828125</code></td></tr>
+<tr><td><code>r&gt;2</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>46</code></td><td><code>No</code></td><td><code>-231.736328125</code></td><td><code>223.51953125</code></td></tr>
+<tr><td><code>x</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>75</code></td><td><code>No</code></td><td><code>-382.12109375</code></td><td><code>368.57421875</code></td></tr>
+<tr><td><code>x_new</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>75</code></td><td><code>No</code></td><td><code>-382.12109375</code></td><td><code>368.57421875</code></td></tr>
+<tr><td><code>y</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>41</code></td><td><code>No</code></td><td><code>-207.95703125</code></td><td><code>209.7978515625</code></td></tr>
 </table>
 
 <h2>Function cordic_rotation_mode_opt&gt;1 </h2>
@@ -340,14 +334,14 @@ end
 <tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Proposed<br>Signedness</th><th>Proposed<br>WL</th><th>Proposed<br>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
 <tr><td><code>K&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>11</code></td><td><code></code></td><td><code>No</code></td><td><code>0.60725334371201</code></td><td><code>0.60725334371201</code></td></tr>
 <tr><td><code>K&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>0.6064453125</code></td><td><code>0.6064453125</code></td></tr>
-<tr><td><code>d</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;12</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>1</code></td></tr>
+<tr><td><code>d</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;<b>:</b>12</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>1</code></td></tr>
 <tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>12</code></td></tr>
 <tr><td><code>iters_num</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>12</code></td><td><code>12</code></td></tr>
-<tr><td><code>x</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>60</code></td><td><code>No</code></td><td><code>-283.5078125</code></td><td><code>305.12109375</code></td></tr>
-<tr><td><code>x_new</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>60</code></td><td><code>No</code></td><td><code>-283.5078125</code></td><td><code>305.12109375</code></td></tr>
-<tr><td><code>x_result</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>37</code></td><td><code>No</code></td><td><code>-172.1630859375</code></td><td><code>185.2841796875</code></td></tr>
+<tr><td><code>x</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>60</code></td><td><code>No</code></td><td><code>-302.2919921875</code></td><td><code>305.12109375</code></td></tr>
+<tr><td><code>x_new</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>60</code></td><td><code>No</code></td><td><code>-302.2919921875</code></td><td><code>305.12109375</code></td></tr>
+<tr><td><code>x_result</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>37</code></td><td><code>No</code></td><td><code>-183.5693359375</code></td><td><code>185.2841796875</code></td></tr>
 <tr><td><code>y&gt;1</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
-<tr><td><code>y&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>37</code></td><td><code>No</code></td><td><code>-185.2841796875</code></td><td><code>172.1630859375</code></td></tr>
+<tr><td><code>y&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>37</code></td><td><code>No</code></td><td><code>-185.2841796875</code></td><td><code>183.5693359375</code></td></tr>
 <tr><td><code>y_result</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>16</code></td><td><code>No</code></td><td><code>-54.115234375</code></td><td><code>81.6689453125</code></td></tr>
 </table>
 
@@ -415,14 +409,14 @@ end
 <tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Proposed<br>Signedness</th><th>Proposed<br>WL</th><th>Proposed<br>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
 <tr><td><code>K&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>11</code></td><td><code></code></td><td><code>No</code></td><td><code>0.60725334371201</code></td><td><code>0.60725334371201</code></td></tr>
 <tr><td><code>K&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>< 1</code></td><td><code>No</code></td><td><code>0.6064453125</code></td><td><code>0.6064453125</code></td></tr>
-<tr><td><code>d</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;12</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>1</code></td></tr>
+<tr><td><code>d</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;<b>:</b>12</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>1</code></td></tr>
 <tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>12</code></td></tr>
 <tr><td><code>iters_num</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>12</code></td><td><code>12</code></td></tr>
-<tr><td><code>x</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>66</code></td><td><code>No</code></td><td><code>-332.0087890625</code></td><td><code>333.306640625</code></td></tr>
-<tr><td><code>x_new</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>66</code></td><td><code>No</code></td><td><code>-332.0087890625</code></td><td><code>333.306640625</code></td></tr>
-<tr><td><code>x_result</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>40</code></td><td><code>No</code></td><td><code>-201.345703125</code></td><td><code>200.9296875</code></td></tr>
-<tr><td><code>y</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>65</code></td><td><code>No</code></td><td><code>-330.26171875</code></td><td><code>316.3271484375</code></td></tr>
-<tr><td><code>y_result</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>40</code></td><td><code>No</code></td><td><code>-200.21484375</code></td><td><code>191.0068359375</code></td></tr>
+<tr><td><code>x</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>72</code></td><td><code>No</code></td><td><code>-358.3369140625</code></td><td><code>364.2802734375</code></td></tr>
+<tr><td><code>x_new</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>72</code></td><td><code>No</code></td><td><code>-358.3369140625</code></td><td><code>364.2802734375</code></td></tr>
+<tr><td><code>x_result</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>44</code></td><td><code>No</code></td><td><code>-217.2392578125</code></td><td><code>220.5283203125</code></td></tr>
+<tr><td><code>y</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>66</code></td><td><code>No</code></td><td><code>-336.736328125</code></td><td><code>334.931640625</code></td></tr>
+<tr><td><code>y_result</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>20</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>41</code></td><td><code>No</code></td><td><code>-201.5673828125</code></td><td><code>205.365234375</code></td></tr>
 </table>
 
 <h2>Function cordic_rotation_mode_opt&gt;3 </h2>
@@ -487,16 +481,16 @@ end
 <table style="border-collapse: collapse; border: solid;" border="1">
 <caption><b>Logged Variables for cordic_rotation_mode_opt&gt;3</b></caption>
 <tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Proposed<br>Signedness</th><th>Proposed<br>WL</th><th>Proposed<br>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
-<tr><td><code>K&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>31</code></td><td><code>No</code></td><td><code>0.6064453125</code></td><td><code>0.6064453125</code></td></tr>
-<tr><td><code>K&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>11</code></td><td><code></code></td><td><code>No</code></td><td><code>0.60725334371201</code></td><td><code>0.60725334371201</code></td></tr>
-<tr><td><code>d</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;12</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>1</code></td></tr>
+<tr><td><code>K&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>11</code></td><td><code></code></td><td><code>No</code></td><td><code>0.60725334371201</code></td><td><code>0.60725334371201</code></td></tr>
+<tr><td><code>K&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>31</code></td><td><code>No</code></td><td><code>0.6064453125</code></td><td><code>0.6064453125</code></td></tr>
+<tr><td><code>d</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;<b>:</b>12</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>1</code></td></tr>
 <tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>12</code></td></tr>
 <tr><td><code>iters_num</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>12</code></td><td><code>12</code></td></tr>
 <tr><td><code>x</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>83</code></td><td><code>No</code></td><td><code>-1.6474609375</code></td><td><code>1.650390625</code></td></tr>
 <tr><td><code>x_new</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>83</code></td><td><code>No</code></td><td><code>-1.6474609375</code></td><td><code>1.650390625</code></td></tr>
 <tr><td><code>x_result</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>51</code></td><td><code>No</code></td><td><code>-1</code></td><td><code>1</code></td></tr>
-<tr><td><code>y&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>83</code></td><td><code>No</code></td><td><code>-1.640625</code></td><td><code>1</code></td></tr>
-<tr><td><code>y&gt;2</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>y&gt;1</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>0</code></td></tr>
+<tr><td><code>y&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>83</code></td><td><code>No</code></td><td><code>-1.640625</code></td><td><code>1</code></td></tr>
 <tr><td><code>y_result</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>50</code></td><td><code>No</code></td><td><code>-0.9814453125</code></td><td><code>0.0419921875</code></td></tr>
 </table>
 
@@ -562,13 +556,13 @@ end
 <table style="border-collapse: collapse; border: solid;" border="1">
 <caption><b>Logged Variables for cordic_rotation_mode_opt&gt;4</b></caption>
 <tr><th>Variable</th><th>Type</th><th>Size</th><th>Class</th><th>Complex</th><th>Signedness</th><th>WL</th><th>FL</th><th>Proposed<br>Signedness</th><th>Proposed<br>WL</th><th>Proposed<br>FL</th><th>Percent of<br>Current Range</th><th>Always<br>Whole Number</th><th>SimMin</th><th>SimMax</th></tr>
-<tr><td><code>K&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>31</code></td><td><code>No</code></td><td><code>0.6064453125</code></td><td><code>0.6064453125</code></td></tr>
-<tr><td><code>K&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>11</code></td><td><code></code></td><td><code>No</code></td><td><code>0.60725334371201</code></td><td><code>0.60725334371201</code></td></tr>
-<tr><td><code>d</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;12</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>1</code></td></tr>
+<tr><td><code>K&gt;1</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>11</code></td><td><code></code></td><td><code>No</code></td><td><code>0.60725334371201</code></td><td><code>0.60725334371201</code></td></tr>
+<tr><td><code>K&gt;2</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>31</code></td><td><code>No</code></td><td><code>0.6064453125</code></td><td><code>0.6064453125</code></td></tr>
+<tr><td><code>d</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;<b>:</b>12</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>0</code></td><td><code>1</code></td></tr>
 <tr><td><code>i</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>1</code></td><td><code>12</code></td></tr>
 <tr><td><code>iters_num</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>double</code></td><td><code>No</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>0</code></td><td><code></code></td><td><code><b>Yes</b></code></td><td><code>12</code></td><td><code>12</code></td></tr>
-<tr><td><code>x</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>83</code></td><td><code>No</code></td><td><code>-1.6474609375</code></td><td><code>1.650390625</code></td></tr>
-<tr><td><code>x_new</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>83</code></td><td><code>No</code></td><td><code>-1.6474609375</code></td><td><code>1.650390625</code></td></tr>
+<tr><td><code>x</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>83</code></td><td><code>No</code></td><td><code>-1.6494140625</code></td><td><code>1.650390625</code></td></tr>
+<tr><td><code>x_new</code></td><td><code>Local</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>83</code></td><td><code>No</code></td><td><code>-1.6494140625</code></td><td><code>1.650390625</code></td></tr>
 <tr><td><code>x_result</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>51</code></td><td><code>No</code></td><td><code>-1</code></td><td><code>1</code></td></tr>
 <tr><td><code>y</code></td><td><code>Input</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>83</code></td><td><code>No</code></td><td><code>-1.6474609375</code></td><td><code>1.6474609375</code></td></tr>
 <tr><td><code>y_result</code></td><td><code>Output</code></td><td><code>1&nbsp;x&nbsp;1</code></td><td><code>embedded.fi</code></td><td><code>No</code></td><td><code>Signed</code></td><td><code>12</code></td><td><code>10</code></td><td><code></code></td><td><code></code></td><td><code></code></td><td><code>51</code></td><td><code>No</code></td><td><code>-1</code></td><td><code>1</code></td></tr>

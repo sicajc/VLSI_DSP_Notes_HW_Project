@@ -1,0 +1,806 @@
+#-----------------------------------------------------------
+# Vivado v2022.1 (64-bit)
+# SW Build 3526262 on Mon Apr 18 15:48:16 MDT 2022
+# IP Build 3524634 on Mon Apr 18 20:55:01 MDT 2022
+# Start of session at: Wed May 17 16:54:10 2023
+# Process ID: 13880
+# Current directory: C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/CORDIC_DEBUG/CORDIC_DEBUG.runs/synth_1
+# Command line: vivado.exe -log QR_CORDIC.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source QR_CORDIC.tcl
+# Log file: C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/CORDIC_DEBUG/CORDIC_DEBUG.runs/synth_1/QR_CORDIC.vds
+# Journal file: C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/CORDIC_DEBUG/CORDIC_DEBUG.runs/synth_1\vivado.jou
+# Running On: DESKTOP-N6LOO8D, OS: Windows, CPU Frequency: 2904 MHz, CPU Physical cores: 8, Host memory: 8370 MB
+#-----------------------------------------------------------
+source QR_CORDIC.tcl -notrace
+create_project: Time (s): cpu = 00:00:03 ; elapsed = 00:00:06 . Memory (MB): peak = 864.137 ; gain = 97.773
+Command: synth_design -top QR_CORDIC -part xc7k70tfbv676-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7k70t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7k70t'
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 14540
+WARNING: [Synth 8-9887] parameter declaration becomes local in 'GG' with formal parameter declaration list [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GG.v:17]
+WARNING: [Synth 8-9887] parameter declaration becomes local in 'GR' with formal parameter declaration list [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v:31]
+WARNING: [Synth 8-9187] begin/end is required for generate-for in this mode of verilog [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:225]
+WARNING: [Synth 8-9887] parameter declaration becomes local in 'QR_CORDIC' with formal parameter declaration list [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:22]
+WARNING: [Synth 8-9887] parameter declaration becomes local in 'QR_CORDIC' with formal parameter declaration list [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:23]
+WARNING: [Synth 8-9887] parameter declaration becomes local in 'QR_CORDIC' with formal parameter declaration list [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:24]
+WARNING: [Synth 8-9887] parameter declaration becomes local in 'QR_CORDIC' with formal parameter declaration list [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:31]
+WARNING: [Synth 8-9887] parameter declaration becomes local in 'QR_CORDIC' with formal parameter declaration list [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:32]
+WARNING: [Synth 8-9887] parameter declaration becomes local in 'QR_CORDIC' with formal parameter declaration list [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:33]
+WARNING: [Synth 8-9887] parameter declaration becomes local in 'QR_CORDIC' with formal parameter declaration list [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:34]
+WARNING: [Synth 8-6901] identifier 'sends_valid_f' is used before its declaration [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:206]
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:04 ; elapsed = 00:00:10 . Memory (MB): peak = 1290.066 ; gain = 401.098
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'QR_CORDIC' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:2]
+INFO: [Synth 8-6157] synthesizing module 'GG' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GG.v:1]
+	Parameter D_WIDTH bound to: 4 - type: integer 
+	Parameter DATA_WIDTH bound to: 20 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'GG' (0#1) [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GG.v:1]
+INFO: [Synth 8-6157] synthesizing module 'GR' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v:1]
+	Parameter D_WIDTH bound to: 4 - type: integer 
+	Parameter DATA_WIDTH bound to: 20 - type: integer 
+	Parameter Q_GR bound to: 0 - type: integer 
+	Parameter R_GR bound to: 1 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'GR' (0#1) [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v:1]
+INFO: [Synth 8-6157] synthesizing module 'GR__parameterized0' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v:1]
+	Parameter D_WIDTH bound to: 4 - type: integer 
+	Parameter DATA_WIDTH bound to: 12 - type: integer 
+	Parameter Q_GR bound to: 1 - type: integer 
+	Parameter R_GR bound to: 0 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'GR__parameterized0' (0#1) [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'QR_CORDIC' (0#1) [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:2]
+WARNING: [Synth 8-5856] 3D RAM aij_shift_bufs_reg  for this pattern/configuration is not supported. This will most likely be implemented in registers
+WARNING: [Synth 8-10225] Potential Runtime issue for 3D-RAM or RAM from Record/Structs for RAM  aij_shift_bufs_reg 
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:06 ; elapsed = 00:00:16 . Memory (MB): peak = 1396.445 ; gain = 507.477
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:07 ; elapsed = 00:00:18 . Memory (MB): peak = 1396.445 ; gain = 507.477
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7k70tfbv676-1
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7k70tfbv676-1
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:07 ; elapsed = 00:00:18 . Memory (MB): peak = 1396.445 ; gain = 507.477
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'current_state_reg' in module 'QR_CORDIC'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+*
+                 RD_DATA |                            00010 |                            00010
+                     CAL |                            00100 |                            00100
+                  OUTPUT |                            01000 |                            01000
+                    IDLE |                            00001 |                            00001
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3898] No Re-encoding of one hot register 'current_state_reg' in module 'QR_CORDIC'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:10 ; elapsed = 00:00:23 . Memory (MB): peak = 1858.312 ; gain = 969.344
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   3 Input   20 Bit       Adders := 72    
+	   2 Input   20 Bit       Adders := 6     
+	   3 Input   12 Bit       Adders := 96    
+	   2 Input   12 Bit       Adders := 12    
+	   2 Input    9 Bit       Adders := 1     
+	   2 Input    2 Bit       Adders := 21    
++---XORs : 
+	   2 Input      1 Bit         XORs := 12    
++---Registers : 
+	               20 Bit    Registers := 33    
+	               12 Bit    Registers := 62    
+	                9 Bit    Registers := 1     
+	                2 Bit    Registers := 21    
+	                1 Bit    Registers := 166   
++---Muxes : 
+	   2 Input   20 Bit        Muxes := 243   
+	   4 Input   20 Bit        Muxes := 32    
+	   2 Input   12 Bit        Muxes := 124   
+	   2 Input    9 Bit        Muxes := 18    
+	   5 Input    4 Bit        Muxes := 1     
+	   2 Input    4 Bit        Muxes := 2     
+	   2 Input    3 Bit        Muxes := 1     
+	   2 Input    2 Bit        Muxes := 21    
+	   2 Input    1 Bit        Muxes := 132   
+	   6 Input    1 Bit        Muxes := 4     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 240 (col length:80)
+BRAMs: 270 (col length: RAMB18 80 RAMB36 40)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+DSP Report: Generating DSP K_product, operation Mode is: A*(B:0x26d).
+DSP Report: operator K_product is absorbed into DSP K_product.
+DSP Report: Generating DSP K_product, operation Mode is: A*(B:0x26d).
+DSP Report: operator K_product is absorbed into DSP K_product.
+DSP Report: Generating DSP K_product, operation Mode is: A*(B:0x26d).
+DSP Report: operator K_product is absorbed into DSP K_product.
+DSP Report: Generating DSP K_product_x, operation Mode is: A2*(B:0x26d).
+DSP Report: register x_ff_reg is absorbed into DSP K_product_x.
+DSP Report: operator K_product_x is absorbed into DSP K_product_x.
+DSP Report: Generating DSP rij_ff_o_reg, operation Mode is: (A2*(B:0x26d))'.
+DSP Report: register y_ff_reg is absorbed into DSP rij_ff_o_reg.
+DSP Report: register rij_ff_o_reg is absorbed into DSP rij_ff_o_reg.
+DSP Report: operator K_product_y is absorbed into DSP rij_ff_o_reg.
+DSP Report: Generating DSP K_product_x, operation Mode is: A2*(B:0x26d).
+DSP Report: register x_ff_reg is absorbed into DSP K_product_x.
+DSP Report: operator K_product_x is absorbed into DSP K_product_x.
+DSP Report: Generating DSP rij_ff_o_reg, operation Mode is: (A2*(B:0x26d))'.
+DSP Report: register y_ff_reg is absorbed into DSP rij_ff_o_reg.
+DSP Report: register rij_ff_o_reg is absorbed into DSP rij_ff_o_reg.
+DSP Report: operator K_product_y is absorbed into DSP rij_ff_o_reg.
+DSP Report: Generating DSP K_product_x, operation Mode is: A2*(B:0x26d).
+DSP Report: register x_ff_reg is absorbed into DSP K_product_x.
+DSP Report: operator K_product_x is absorbed into DSP K_product_x.
+DSP Report: Generating DSP rij_ff_o_reg, operation Mode is: (A2*(B:0x26d))'.
+DSP Report: register y_ff_reg is absorbed into DSP rij_ff_o_reg.
+DSP Report: register rij_ff_o_reg is absorbed into DSP rij_ff_o_reg.
+DSP Report: operator K_product_y is absorbed into DSP rij_ff_o_reg.
+DSP Report: Generating DSP K_product_x, operation Mode is: A2*(B:0x26d).
+DSP Report: register x_ff_reg is absorbed into DSP K_product_x.
+DSP Report: operator K_product_x is absorbed into DSP K_product_x.
+DSP Report: Generating DSP rij_ff_o_reg, operation Mode is: (A2*(B:0x26d))'.
+DSP Report: register y_ff_reg is absorbed into DSP rij_ff_o_reg.
+DSP Report: register rij_ff_o_reg is absorbed into DSP rij_ff_o_reg.
+DSP Report: operator K_product_y is absorbed into DSP rij_ff_o_reg.
+DSP Report: Generating DSP K_product_x, operation Mode is: A2*(B:0x26d).
+DSP Report: register x_ff_reg is absorbed into DSP K_product_x.
+DSP Report: operator K_product_x is absorbed into DSP K_product_x.
+DSP Report: Generating DSP rij_ff_o_reg, operation Mode is: (A2*(B:0x26d))'.
+DSP Report: register y_ff_reg is absorbed into DSP rij_ff_o_reg.
+DSP Report: register rij_ff_o_reg is absorbed into DSP rij_ff_o_reg.
+DSP Report: operator K_product_y is absorbed into DSP rij_ff_o_reg.
+DSP Report: Generating DSP K_product_x, operation Mode is: A2*(B:0x26d).
+DSP Report: register x_ff_reg is absorbed into DSP K_product_x.
+DSP Report: operator K_product_x is absorbed into DSP K_product_x.
+DSP Report: Generating DSP rij_ff_o_reg, operation Mode is: (A2*(B:0x26d))'.
+DSP Report: register y_ff_reg is absorbed into DSP rij_ff_o_reg.
+DSP Report: register rij_ff_o_reg is absorbed into DSP rij_ff_o_reg.
+DSP Report: operator K_product_y is absorbed into DSP rij_ff_o_reg.
+DSP Report: Generating DSP K_product_x, operation Mode is: A2*(B:0x26d).
+DSP Report: register x_ff_reg is absorbed into DSP K_product_x.
+DSP Report: operator K_product_x is absorbed into DSP K_product_x.
+DSP Report: Generating DSP K_product_y, operation Mode is: A2*(B:0x26d).
+DSP Report: register y_ff_reg is absorbed into DSP K_product_y.
+DSP Report: operator K_product_y is absorbed into DSP K_product_y.
+DSP Report: Generating DSP K_product_x, operation Mode is: A2*(B:0x26d).
+DSP Report: register x_ff_reg is absorbed into DSP K_product_x.
+DSP Report: operator K_product_x is absorbed into DSP K_product_x.
+DSP Report: Generating DSP K_product_y, operation Mode is: A2*(B:0x26d).
+DSP Report: register y_ff_reg is absorbed into DSP K_product_y.
+DSP Report: operator K_product_y is absorbed into DSP K_product_y.
+DSP Report: Generating DSP K_product_x, operation Mode is: A2*(B:0x26d).
+DSP Report: register x_ff_reg is absorbed into DSP K_product_x.
+DSP Report: operator K_product_x is absorbed into DSP K_product_x.
+DSP Report: Generating DSP K_product_y, operation Mode is: A2*(B:0x26d).
+DSP Report: register y_ff_reg is absorbed into DSP K_product_y.
+DSP Report: operator K_product_y is absorbed into DSP K_product_y.
+DSP Report: Generating DSP K_product_x, operation Mode is: A2*(B:0x26d).
+DSP Report: register x_ff_reg is absorbed into DSP K_product_x.
+DSP Report: operator K_product_x is absorbed into DSP K_product_x.
+DSP Report: Generating DSP K_product_y, operation Mode is: A2*(B:0x26d).
+DSP Report: register y_ff_reg is absorbed into DSP K_product_y.
+DSP Report: operator K_product_y is absorbed into DSP K_product_y.
+DSP Report: Generating DSP K_product_x, operation Mode is: A2*(B:0x26d).
+DSP Report: register x_ff_reg is absorbed into DSP K_product_x.
+DSP Report: operator K_product_x is absorbed into DSP K_product_x.
+DSP Report: Generating DSP K_product_y, operation Mode is: A2*(B:0x26d).
+DSP Report: register y_ff_reg is absorbed into DSP K_product_y.
+DSP Report: operator K_product_y is absorbed into DSP K_product_y.
+DSP Report: Generating DSP K_product_x, operation Mode is: A2*(B:0x26d).
+DSP Report: register x_ff_reg is absorbed into DSP K_product_x.
+DSP Report: operator K_product_x is absorbed into DSP K_product_x.
+DSP Report: Generating DSP K_product_y, operation Mode is: A2*(B:0x26d).
+DSP Report: register y_ff_reg is absorbed into DSP K_product_y.
+DSP Report: operator K_product_y is absorbed into DSP K_product_y.
+DSP Report: Generating DSP K_product_x, operation Mode is: A2*(B:0x26d).
+DSP Report: register x_ff_reg is absorbed into DSP K_product_x.
+DSP Report: operator K_product_x is absorbed into DSP K_product_x.
+DSP Report: Generating DSP K_product_y, operation Mode is: A2*(B:0x26d).
+DSP Report: register y_ff_reg is absorbed into DSP K_product_y.
+DSP Report: operator K_product_y is absorbed into DSP K_product_y.
+DSP Report: Generating DSP K_product_x, operation Mode is: A2*(B:0x26d).
+DSP Report: register x_ff_reg is absorbed into DSP K_product_x.
+DSP Report: operator K_product_x is absorbed into DSP K_product_x.
+DSP Report: Generating DSP K_product_y, operation Mode is: A2*(B:0x26d).
+DSP Report: register y_ff_reg is absorbed into DSP K_product_y.
+DSP Report: operator K_product_y is absorbed into DSP K_product_y.
+DSP Report: Generating DSP K_product_x, operation Mode is: A2*(B:0x26d).
+DSP Report: register x_ff_reg is absorbed into DSP K_product_x.
+DSP Report: operator K_product_x is absorbed into DSP K_product_x.
+DSP Report: Generating DSP K_product_y, operation Mode is: A2*(B:0x26d).
+DSP Report: register y_ff_reg is absorbed into DSP K_product_y.
+DSP Report: operator K_product_y is absorbed into DSP K_product_y.
+DSP Report: Generating DSP K_product_x, operation Mode is: A2*(B:0x26d).
+DSP Report: register x_ff_reg is absorbed into DSP K_product_x.
+DSP Report: operator K_product_x is absorbed into DSP K_product_x.
+DSP Report: Generating DSP K_product_y, operation Mode is: A2*(B:0x26d).
+DSP Report: register y_ff_reg is absorbed into DSP K_product_y.
+DSP Report: operator K_product_y is absorbed into DSP K_product_y.
+DSP Report: Generating DSP K_product_x, operation Mode is: A2*(B:0x26d).
+DSP Report: register x_ff_reg is absorbed into DSP K_product_x.
+DSP Report: operator K_product_x is absorbed into DSP K_product_x.
+DSP Report: Generating DSP K_product_y, operation Mode is: A2*(B:0x26d).
+DSP Report: register y_ff_reg is absorbed into DSP K_product_y.
+DSP Report: operator K_product_y is absorbed into DSP K_product_y.
+DSP Report: Generating DSP K_product_x, operation Mode is: A2*(B:0x26d).
+DSP Report: register x_ff_reg is absorbed into DSP K_product_x.
+DSP Report: operator K_product_x is absorbed into DSP K_product_x.
+DSP Report: Generating DSP K_product_y, operation Mode is: A2*(B:0x26d).
+DSP Report: register y_ff_reg is absorbed into DSP K_product_y.
+DSP Report: operator K_product_y is absorbed into DSP K_product_y.
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[0].aij_shift_bufs_reg[3][0][9]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[0].aij_shift_bufs_reg[3][0][8]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[0].aij_shift_bufs_reg[3][0][7]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[0].aij_shift_bufs_reg[3][0][6]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[0].aij_shift_bufs_reg[3][0][5]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[0].aij_shift_bufs_reg[3][0][4]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[0].aij_shift_bufs_reg[3][0][3]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[0].aij_shift_bufs_reg[3][0][2]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[0].aij_shift_bufs_reg[3][0][1]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[0].aij_shift_bufs_reg[3][0][0]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[1].aij_shift_bufs_reg[3][1][9]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[1].aij_shift_bufs_reg[3][1][8]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[1].aij_shift_bufs_reg[3][1][7]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[1].aij_shift_bufs_reg[3][1][6]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[1].aij_shift_bufs_reg[3][1][5]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[1].aij_shift_bufs_reg[3][1][4]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[1].aij_shift_bufs_reg[3][1][3]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[1].aij_shift_bufs_reg[3][1][2]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[1].aij_shift_bufs_reg[3][1][1]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[1].aij_shift_bufs_reg[3][1][0]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[2].aij_shift_bufs_reg[3][2][9]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[2].aij_shift_bufs_reg[3][2][8]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[2].aij_shift_bufs_reg[3][2][7]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[2].aij_shift_bufs_reg[3][2][6]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[2].aij_shift_bufs_reg[3][2][5]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[2].aij_shift_bufs_reg[3][2][4]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[2].aij_shift_bufs_reg[3][2][3]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[2].aij_shift_bufs_reg[3][2][2]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[2].aij_shift_bufs_reg[3][2][1]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[2].aij_shift_bufs_reg[3][2][0]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[3].aij_shift_bufs_reg[3][3][9]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[3].aij_shift_bufs_reg[3][3][8]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[3].aij_shift_bufs_reg[3][3][7]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[3].aij_shift_bufs_reg[3][3][6]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[3].aij_shift_bufs_reg[3][3][5]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[3].aij_shift_bufs_reg[3][3][4]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[3].aij_shift_bufs_reg[3][3][3]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[3].aij_shift_bufs_reg[3][3][2]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[3].aij_shift_bufs_reg[3][3][1]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk1[3].genblk1[3].aij_shift_bufs_reg[3][3][0]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk2[3].qij_bufs_reg[0][3]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk2[3].qij_bufs_reg[0][2]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk2[3].qij_bufs_reg[0][1]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk2[3].qij_bufs_reg[0][0]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'VCC' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk2[3].qij_bufs_reg[1][3]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk2[3].qij_bufs_reg[1][2]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk2[3].qij_bufs_reg[1][1]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'VCC' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk2[3].qij_bufs_reg[1][0]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk2[3].qij_bufs_reg[2][3]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'genblk2[3].qij_bufs_reg[2][2]/Q' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'VCC' [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+INFO: [Common 17-14] Message 'Synth 8-6859' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:239]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:162]
+INFO: [Common 17-14] Message 'Synth 8-6858' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:30 ; elapsed = 00:01:04 . Memory (MB): peak = 1858.312 ; gain = 969.344
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+DSP: Preliminary Mapping Report (see note below. The ' indicates corresponding REG is set)
++------------+-----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name | DSP Mapping     | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++------------+-----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|GG          | A*(B:0x26d)     | 20     | 11     | -      | -      | 31     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|GG          | A*(B:0x26d)     | 20     | 11     | -      | -      | 31     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|GG          | A*(B:0x26d)     | 20     | 11     | -      | -      | 31     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 20     | 11     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A2*(B:0x26d))' | 20     | 11     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 1    | 0    | 
+|GR          | A2*(B:0x26d)    | 20     | 11     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A2*(B:0x26d))' | 20     | 11     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 1    | 0    | 
+|GR          | A2*(B:0x26d)    | 20     | 11     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A2*(B:0x26d))' | 20     | 11     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 1    | 0    | 
+|GR          | A2*(B:0x26d)    | 20     | 11     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A2*(B:0x26d))' | 20     | 11     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 1    | 0    | 
+|GR          | A2*(B:0x26d)    | 20     | 11     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A2*(B:0x26d))' | 20     | 11     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 1    | 0    | 
+|GR          | A2*(B:0x26d)    | 20     | 11     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A2*(B:0x26d))' | 20     | 11     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 1    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A2*(B:0x26d)    | 12     | 11     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
++------------+-----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:31 ; elapsed = 00:01:04 . Memory (MB): peak = 1858.312 ; gain = 969.344
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[0].valid_delay_line_ff_reg[0] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[0] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[1].valid_delay_line_ff_reg[0] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[0] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[2].valid_delay_line_ff_reg[0] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[0] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[3].valid_delay_line_ff_reg[0] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[0] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[0].valid_delay_line_ff_reg[0] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[0] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[1].valid_delay_line_ff_reg[0] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[0] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[2].valid_delay_line_ff_reg[0] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[0] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[3].valid_delay_line_ff_reg[0] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[0] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[0].valid_delay_line_ff_reg[0] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[0] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[1].valid_delay_line_ff_reg[0] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[0] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[2].valid_delay_line_ff_reg[0] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[0] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[3].valid_delay_line_ff_reg[0] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[0] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[3].genblk1[0].valid_delay_line_ff_reg[0] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[0] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[3].genblk1[1].valid_delay_line_ff_reg[0] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[0] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[3].genblk1[2].valid_delay_line_ff_reg[0] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[0] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[0].valid_delay_line_ff_reg[7] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[7] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[1].valid_delay_line_ff_reg[7] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[7] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[2].valid_delay_line_ff_reg[7] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[7] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[3].valid_delay_line_ff_reg[7] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[7] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[0].valid_delay_line_ff_reg[7] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[7] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[1].valid_delay_line_ff_reg[7] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[7] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[2].valid_delay_line_ff_reg[7] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[7] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[3].valid_delay_line_ff_reg[7] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[7] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[0].valid_delay_line_ff_reg[7] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[7] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[1].valid_delay_line_ff_reg[7] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[7] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[2].valid_delay_line_ff_reg[7] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[7] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[3].valid_delay_line_ff_reg[7] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[7] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[3].genblk1[0].valid_delay_line_ff_reg[7] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[7] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[3].genblk1[1].valid_delay_line_ff_reg[7] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[7] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[3].genblk1[2].valid_delay_line_ff_reg[7] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[7] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[0].valid_delay_line_ff_reg[6] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[6] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[1].valid_delay_line_ff_reg[6] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[6] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[2].valid_delay_line_ff_reg[6] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[6] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[3].valid_delay_line_ff_reg[6] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[6] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[0].valid_delay_line_ff_reg[6] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[6] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[1].valid_delay_line_ff_reg[6] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[6] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[2].valid_delay_line_ff_reg[6] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[6] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[3].valid_delay_line_ff_reg[6] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[6] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[0].valid_delay_line_ff_reg[6] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[6] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[1].valid_delay_line_ff_reg[6] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[6] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[2].valid_delay_line_ff_reg[6] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[6] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[3].valid_delay_line_ff_reg[6] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[6] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[3].genblk1[0].valid_delay_line_ff_reg[6] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[6] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[3].genblk1[1].valid_delay_line_ff_reg[6] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[6] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[3].genblk1[2].valid_delay_line_ff_reg[6] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[6] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[0].valid_delay_line_ff_reg[5] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[5] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[1].valid_delay_line_ff_reg[5] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[5] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[2].valid_delay_line_ff_reg[5] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[5] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[3].valid_delay_line_ff_reg[5] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[5] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[0].valid_delay_line_ff_reg[5] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[5] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[1].valid_delay_line_ff_reg[5] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[5] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[2].valid_delay_line_ff_reg[5] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[5] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[3].valid_delay_line_ff_reg[5] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[5] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[0].valid_delay_line_ff_reg[5] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[5] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[1].valid_delay_line_ff_reg[5] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[5] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[2].valid_delay_line_ff_reg[5] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[5] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[3].valid_delay_line_ff_reg[5] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[5] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[3].genblk1[0].valid_delay_line_ff_reg[5] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[5] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[3].genblk1[1].valid_delay_line_ff_reg[5] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[5] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[3].genblk1[2].valid_delay_line_ff_reg[5] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[5] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[0].valid_delay_line_ff_reg[4] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[4] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[1].valid_delay_line_ff_reg[4] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[4] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[2].valid_delay_line_ff_reg[4] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[4] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[3].valid_delay_line_ff_reg[4] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[4] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[0].valid_delay_line_ff_reg[4] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[4] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[1].valid_delay_line_ff_reg[4] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[4] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[2].valid_delay_line_ff_reg[4] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[4] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[3].valid_delay_line_ff_reg[4] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[4] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[0].valid_delay_line_ff_reg[4] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[4] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[1].valid_delay_line_ff_reg[4] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[4] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[2].valid_delay_line_ff_reg[4] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[4] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[3].valid_delay_line_ff_reg[4] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[4] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[3].genblk1[0].valid_delay_line_ff_reg[4] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[4] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[3].genblk1[1].valid_delay_line_ff_reg[4] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[4] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[3].genblk1[2].valid_delay_line_ff_reg[4] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[4] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[0].valid_delay_line_ff_reg[3] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[3] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[1].valid_delay_line_ff_reg[3] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[3] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[2].valid_delay_line_ff_reg[3] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[3] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[3].valid_delay_line_ff_reg[3] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[3] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[0].valid_delay_line_ff_reg[3] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[3] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[1].valid_delay_line_ff_reg[3] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[3] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[2].valid_delay_line_ff_reg[3] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[3] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[3].valid_delay_line_ff_reg[3] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[3] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[0].valid_delay_line_ff_reg[3] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[3] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[1].valid_delay_line_ff_reg[3] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[3] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[2].valid_delay_line_ff_reg[3] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[3] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[3].valid_delay_line_ff_reg[3] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[3] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[3].genblk1[0].valid_delay_line_ff_reg[3] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[3] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[3].genblk1[1].valid_delay_line_ff_reg[3] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[3] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[3].genblk1[2].valid_delay_line_ff_reg[3] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[3] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[0].valid_delay_line_ff_reg[2] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[2] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[1].valid_delay_line_ff_reg[2] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[2] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[2].valid_delay_line_ff_reg[2] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[2] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[0].genblk1[3].valid_delay_line_ff_reg[2] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[2] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[0].valid_delay_line_ff_reg[2] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[2] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[1].valid_delay_line_ff_reg[2] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[2] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[2].valid_delay_line_ff_reg[2] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[2] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[1].genblk1[3].valid_delay_line_ff_reg[2] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[2] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[0].valid_delay_line_ff_reg[2] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[2] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Synth 8-4765] Removing register instance (\genblk1[2].genblk1[1].valid_delay_line_ff_reg[2] ) from module (QR_CORDIC) as it is equivalent to (\genblk1[3].genblk1[3].valid_delay_line_ff_reg[2] ) and driving same net [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:161]
+INFO: [Common 17-14] Message 'Synth 8-4765' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:33 ; elapsed = 00:01:06 . Memory (MB): peak = 1858.312 ; gain = 969.344
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:37 ; elapsed = 00:01:11 . Memory (MB): peak = 1858.312 ; gain = 969.344
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:37 ; elapsed = 00:01:11 . Memory (MB): peak = 1858.312 ; gain = 969.344
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|      160|Failed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:38 ; elapsed = 00:01:11 . Memory (MB): peak = 1858.312 ; gain = 969.344
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:38 ; elapsed = 00:01:11 . Memory (MB): peak = 1858.312 ; gain = 969.344
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:38 ; elapsed = 00:01:11 . Memory (MB): peak = 1858.312 ; gain = 969.344
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:38 ; elapsed = 00:01:11 . Memory (MB): peak = 1858.312 ; gain = 969.344
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+DSP Final Report (the ' indicates corresponding REG is set)
++------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name | DSP Mapping | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|GG          | A*B         | 30     | 10     | -      | -      | 31     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|GG          | A*B         | 30     | 10     | -      | -      | 31     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|GG          | A*B         | 30     | 10     | -      | -      | 31     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | A'*B        | 30     | 10     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A'*B)'     | 30     | 10     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 0    | 1    | 
+|GR          | A'*B        | 30     | 10     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A'*B)'     | 30     | 10     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 0    | 1    | 
+|GR          | A'*B        | 30     | 10     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A'*B)'     | 30     | 10     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 0    | 1    | 
+|GR          | A'*B        | 30     | 10     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A'*B)'     | 30     | 10     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 0    | 1    | 
+|GR          | A'*B        | 30     | 10     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A'*B)'     | 30     | 10     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 0    | 1    | 
+|GR          | A'*B        | 30     | 10     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A'*B)'     | 30     | 10     | -      | -      | 31     | 1    | 0    | -    | -    | -     | 0    | 1    | 
+|GR          | A'*B        | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A'*B)'     | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 1    | 
+|GR          | A'*B        | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A'*B)'     | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 1    | 
+|GR          | A'*B        | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A'*B)'     | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 1    | 
+|GR          | A'*B        | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A'*B)'     | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 1    | 
+|GR          | A'*B        | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A'*B)'     | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 1    | 
+|GR          | A'*B        | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A'*B)'     | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 1    | 
+|GR          | A'*B        | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A'*B)'     | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 1    | 
+|GR          | A'*B        | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A'*B)'     | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 1    | 
+|GR          | A'*B        | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A'*B)'     | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 1    | 
+|GR          | A'*B        | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A'*B)'     | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 1    | 
+|GR          | A'*B        | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A'*B)'     | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 1    | 
+|GR          | A'*B        | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 0    | 
+|GR          | (A'*B)'     | 30     | 10     | -      | -      | 23     | 1    | 0    | -    | -    | -     | 0    | 1    | 
++------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+--------+------+
+|      |Cell    |Count |
++------+--------+------+
+|1     |BUFG    |     1|
+|2     |CARRY4  |   714|
+|3     |DSP48E1 |    39|
+|4     |LUT1    |    74|
+|5     |LUT2    |   811|
+|6     |LUT3    |  1004|
+|7     |LUT4    |   703|
+|8     |LUT5    |  1091|
+|9     |LUT6    |  2907|
+|10    |FDCE    |   542|
+|11    |FDPE    |     1|
+|12    |FDRE    |  1488|
+|13    |IBUF    |    11|
+|14    |OBUF    |    25|
++------+--------+------+
+
+Report Instance Areas: 
++------+---------------------+----------------------+------+
+|      |Instance             |Module                |Cells |
++------+---------------------+----------------------+------+
+|1     |top                  |                      |  9411|
+|2     |  \genblk3[0].u_GG   |GG                    |   585|
+|3     |  \genblk3[1].u_GG   |GG_0                  |   590|
+|4     |  \genblk3[2].u_GG   |GG_1                  |   590|
+|5     |  \genblk4[0].u_GR   |GR                    |   454|
+|6     |  \genblk4[1].u_GR   |GR_2                  |   443|
+|7     |  \genblk4[2].u_GR   |GR_3                  |   424|
+|8     |  \genblk4[3].u_GR   |GR_4                  |   519|
+|9     |  \genblk4[4].u_GR   |GR_5                  |   492|
+|10    |  \genblk4[5].u_GR   |GR_6                  |   512|
+|11    |  \genblk5[0].u_GR   |GR__parameterized0    |   254|
+|12    |  \genblk5[10].u_GR  |GR__parameterized0_7  |   267|
+|13    |  \genblk5[11].u_GR  |GR__parameterized0_8  |   239|
+|14    |  \genblk5[1].u_GR   |GR__parameterized0_9  |   266|
+|15    |  \genblk5[2].u_GR   |GR__parameterized0_10 |   253|
+|16    |  \genblk5[3].u_GR   |GR__parameterized0_11 |   227|
+|17    |  \genblk5[4].u_GR   |GR__parameterized0_12 |   273|
+|18    |  \genblk5[5].u_GR   |GR__parameterized0_13 |   285|
+|19    |  \genblk5[6].u_GR   |GR__parameterized0_14 |   272|
+|20    |  \genblk5[7].u_GR   |GR__parameterized0_15 |   244|
+|21    |  \genblk5[8].u_GR   |GR__parameterized0_16 |   268|
+|22    |  \genblk5[9].u_GR   |GR__parameterized0_17 |   316|
++------+---------------------+----------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:38 ; elapsed = 00:01:11 . Memory (MB): peak = 1858.312 ; gain = 969.344
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 1648 critical warnings and 14 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:38 ; elapsed = 00:01:11 . Memory (MB): peak = 1858.312 ; gain = 969.344
+Synthesis Optimization Complete : Time (s): cpu = 00:00:38 ; elapsed = 00:01:11 . Memory (MB): peak = 1858.312 ; gain = 969.344
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.129 . Memory (MB): peak = 1858.312 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 753 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1858.312 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete, checksum: b1758940
+INFO: [Common 17-83] Releasing license: Synthesis
+125 Infos, 14 Warnings, 200 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:43 ; elapsed = 00:01:19 . Memory (MB): peak = 1858.312 ; gain = 994.176
+INFO: [runtcl-6] Synthesis results are not added to the cache due to CRITICAL_WARNING
+INFO: [Common 17-1381] The checkpoint 'C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/CORDIC_DEBUG/CORDIC_DEBUG.runs/synth_1/QR_CORDIC.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file QR_CORDIC_utilization_synth.rpt -pb QR_CORDIC_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Wed May 17 16:55:44 2023...

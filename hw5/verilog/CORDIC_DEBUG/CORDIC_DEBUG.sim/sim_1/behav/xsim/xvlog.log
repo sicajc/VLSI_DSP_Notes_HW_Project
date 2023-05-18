@@ -4,10 +4,10 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/User/Desktop/VLSI_DSP_Note
 INFO: [VRFC 10-311] analyzing module GR
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module QR_CORDIC
-WARNING: [VRFC 10-2096] empty statement in sequential block [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:223]
-WARNING: [VRFC 10-8332] begin/end is required for generate-for in this mode of Verilog [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:156]
-WARNING: [VRFC 10-2096] empty statement in sequential block [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:251]
-WARNING: [VRFC 10-3380] identifier 'sends_valid_f' is used before its declaration [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:207]
+WARNING: [VRFC 10-2096] empty statement in sequential block [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:222]
+WARNING: [VRFC 10-8332] begin/end is required for generate-for in this mode of Verilog [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:155]
+WARNING: [VRFC 10-2096] empty statement in sequential block [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:250]
+WARNING: [VRFC 10-3380] identifier 'sends_valid_f' is used before its declaration [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v:206]
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/pattern.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module PATTERN
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/TESTBED.v" into library xil_defaultlib

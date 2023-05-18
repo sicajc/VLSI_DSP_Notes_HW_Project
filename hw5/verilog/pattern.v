@@ -32,7 +32,7 @@ module PATTERN(
   //  parameters & integer
   //================================================================
   parameter DATA_WIDTH = 12;
-  parameter PATNUM     = 300;
+  parameter PATNUM     = 1000;
   parameter PAT_COUNTS = 16;
   parameter INTEGER    = 8;
   integer a, c, i, gap, pat_file;
@@ -100,30 +100,6 @@ module PATTERN(
       check_ans;
       delay_task;
 
-      case(color_stage)
-        0:
-        begin
-          r = r - 1;
-          g = g + 1;
-          if(r == 0)
-            color_stage = 1;
-        end
-        1:
-        begin
-          g = g - 1;
-          b = b + 1;
-          if(g == 0)
-            color_stage = 2;
-        end
-        2:
-        begin
-          b = b - 1;
-          r = r + 1;
-          if(b == 0)
-            color_stage = 0;
-        end
-      endcase
-      color = 16 + r*36 + g*6 + b;
       if(color < 100)
         $display("/033[38;5;%2dmPASS PATTERN NO.%4d/033[00m", color, patcount+1);
       else
@@ -172,23 +148,30 @@ module PATTERN(
           if (r_ans_out[addr] !== R_GOLDEN[addr])
           begin
             $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
-            $display ("Pat No: %d",patcount);
-            $display ("Pat's iter is %d",pat_iter);
+            $display ("Pat No: %d",patcount+1);
+            $display ("Pat sequence in Raster scan order is %d",pat_iter+1);
             $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
             $display ("Your answer for R is %b ", out_r);
             $display ("The correct value for R is %b ", R_GOLDEN[addr]);
-            // $display("/%d",PATTERN.u_CORDIC.genblk3[0].u_GG.iters_x);
-            // $display ("Your answer for R is %b ", out_r);
-            // $display ("Data writes into address %d ", addr);
             $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
-            // $display ("The correct value for Q is %b ", Q_GOLDEN[addr]);
-            // $display ("The correct value for R is %b ", R_GOLDEN[addr]);
+            errors = errors + 1;
+          end
+
+
+          if(q_ans_out[addr] !== Q_GOLDEN[addr])
+          begin
+            $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
+            $display ("Pat No: %d",patcount+1);
+            $display ("Pat's iter is %d",pat_iter+1);
+            $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
+            $display ("Your answer for Q is %b ", out_q);
+            $display ("The correct value for Q is %b ", Q_GOLDEN[addr]);
             $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
             errors = errors + 1;
           end
 
           // You have 4800 values. Tolerate 80 errors, I dont know how to calculate differences...
-          if(errors > 10)
+          if(errors > 30)
           begin
             fail;
             // Spec. 8
@@ -297,7 +280,7 @@ module PATTERN(
         // All output signals should be reset after the reset signal is asserted.
         $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
         $display ("                                                                SPEC 3 FAIL!                                                                ");
-
+        $display ("-------------------------------------All output signals should be reset after the reset signal is asserted.---------------------------------");
         $display ("--------------------------------------------------------------------------------------------------------------------------------------------");
 
         #(100);

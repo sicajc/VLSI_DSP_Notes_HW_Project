@@ -36,13 +36,6 @@ function [r,d] = cordic_vector_mode_opt(x, y, iters_num,T)
             x(:) = x_new;
             d(i) = 1;
         end
-        % if(mod(i,4) == 0)
-        % i
-        % x
-        % bin(x)
-        % y
-        % bin(y)
-        % end
     end
 
    r(:) = x*K;

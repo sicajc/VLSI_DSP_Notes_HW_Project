@@ -5,7 +5,7 @@
  * File: _coder_qr_cordic_opt_mex.h
  *
  * MATLAB Coder version            : 5.0
- * C/C++ source code generated on  : 17-May-2023 15:30:22
+ * C/C++ source code generated on  : 17-May-2023 20:52:21
  */
 
 #ifndef _CODER_QR_CORDIC_OPT_MEX_H

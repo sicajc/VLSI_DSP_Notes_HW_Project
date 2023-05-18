@@ -51,7 +51,7 @@ qy_partial.FL = 10;
 lower_bound = -128;
 upper_bound = 127;
 MATRIX_SIZE = 4;
-NUM_OF_MATRIX = 300;
+NUM_OF_MATRIX = 1000;
 
 % Broadcasting data types.
 U = qrDataType('double', rx_partial, ry_partial, rx_output, ry_output);
@@ -96,11 +96,11 @@ r_f_opt = double(r_f_opt);
 
 [q, r] = qr(M);
 
-% disp("Matlab QR decomposition");
-% disp("Q")
-% disp(q);
-% disp("R")
-% disp(r);
+disp("Matlab QR decomposition");
+disp("Q")
+disp(q);
+disp("R")
+disp(r);
 
 % disp("qr cordic opt with double");
 % disp("Q")
@@ -108,11 +108,11 @@ r_f_opt = double(r_f_opt);
 % disp("R")
 % disp(r_double);
 
-% disp("qr cordic opt");
-% disp("Q")
-% disp(q_f_opt);
-% disp("R")
-% disp(r_f_opt);
+disp("qr cordic opt");
+disp("Q")
+disp(q_f_opt);
+disp("R")
+disp(r_f_opt);
 
 % disp("delta calculation");
 % disp("Q Compare to Q_fix");
@@ -182,7 +182,6 @@ seedValue = 1234;
 
 % Fix the seed for random number generation
 rng(seedValue);
-
 
 for i = 1:NUM_OF_MATRIX
     fprintf("Pat# %d",i);

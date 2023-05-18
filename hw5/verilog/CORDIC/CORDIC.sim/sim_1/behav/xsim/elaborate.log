@@ -7,4 +7,60 @@ Pass Through NonSizing Optimizer
 WARNING: [VRFC 10-3705] select index 39 into 'K_product_x' is out of bounds [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v:160]
 WARNING: [VRFC 10-3705] select index 39 into 'K_product_y' is out of bounds [C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v:161]
 Completed static elaboration
-INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v" Line 2. Module QR_CORDIC(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GG.v" Line 1. Module GG doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GG.v" Line 1. Module GG doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GG.v" Line 1. Module GG doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/pattern.v" Line 19. Module PATTERN doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/QR_CORDIC.v" Line 2. Module QR_CORDIC(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GG.v" Line 1. Module GG doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GG.v" Line 1. Module GG doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GG.v" Line 1. Module GG doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/GR.v" Line 1. Module GR(DATA_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "C:/Users/User/Desktop/VLSI_DSP_Notes_HW_Project/hw5/verilog/pattern.v" Line 19. Module PATTERN doesn't have a timescale but at least one module in design has a timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.GG
+Compiling module xil_defaultlib.GR
+Compiling module xil_defaultlib.GR(DATA_WIDTH=12)
+Compiling module xil_defaultlib.QR_CORDIC(DATA_WIDTH=12)
+Compiling module xil_defaultlib.PATTERN
+Compiling module xil_defaultlib.TESTBED
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot TESTBED_behav

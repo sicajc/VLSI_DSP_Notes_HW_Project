@@ -16,6 +16,7 @@ function [Q, R] = qr_cordic_opt(M,T,S)
 
     tmp1 = cast(tmp1,'like',T.x_partial);
     tmp2 = cast(tmp2,'like',T.y_partial);
+    d=0;
 
     iters_num = 12;
     for k = 1:N
@@ -25,14 +26,12 @@ function [Q, R] = qr_cordic_opt(M,T,S)
             % Use vector mode to calculate of givens rotation
 
             % The boundary condition of cordics. While N = 4, the input value is 0.
-            if i == 4
-                [r,d] = cordic_vector_mode_opt(M_(i,k), 0, iters_num,T);
-                % fprintf('Entry: (%d,%d)',i,k);
-                % disp("Vector mode Result r:");
-                % r
-                % bin(r)
-                M_(i,k) = r;
 
+            if i == 4
+                if k ~= N % The boundary condition for r44, do not rotate it anymore!
+                    [r,d] = cordic_vector_mode_opt(M_(i,k), 0, iters_num,T);
+                    M_(i,k) = r;
+                end
             else
                 [r,d] = cordic_vector_mode_opt(M_(i, k), M_(i+1, k), iters_num,T);
                 % fprintf('Entry: (%d,%d)',i,k);
@@ -41,7 +40,7 @@ function [Q, R] = qr_cordic_opt(M,T,S)
             end
 
             % disp("After Vector mode");
-            M_;
+            % M_
 
 
             % fprintf('Vector Mode:\n theta = %f , i = %d  \n',theta,i);
@@ -50,9 +49,11 @@ function [Q, R] = qr_cordic_opt(M,T,S)
                 % For R
                 % This needed to be replaced with cordic, rotation mode
                 % The boundary conditions.
-                if i == 4
-                    [tmp1,tmp2] = cordic_rotation_mode_opt(M_(i,j), 0,d, iters_num,T);
-                    M_(i, j) = tmp1;
+                if i == N
+                    if  k ~= N
+                        [tmp1,tmp2] = cordic_rotation_mode_opt(M_(i,j), 0,d, iters_num,T);
+                        M_(i, j) = tmp1;
+                    end
                 else
                     [tmp1,tmp2] = cordic_rotation_mode_opt(M_(i, j), M_(i+1, j),d, iters_num,T);
                     % fprintf('Entry: (%d,%d)',i,j);
@@ -72,13 +73,19 @@ function [Q, R] = qr_cordic_opt(M,T,S)
                 % fprintf('Rotation Mode:\n x = %f , y = %f , j = %d  \n',tmp1,tmp2,j);
             end
 
-            disp("After Rotations");
-            M_;
+            % disp("After Rotations");
+            % M_;
+
+            if k == N
+                break;
+            end
 
             for j = 1:N
                 if i == 4
-                    % The boundary conditions for i = 4.
+                    d;
                     [tmp1,tmp2] = cordic_rotation_mode_opt(Q(i,j), 0,d, iters_num,S);
+                    % tmp1
+                    % bin(tmp1)
                     Q(i, j) = tmp1;
                 else
                     [tmp1,tmp2] = cordic_rotation_mode_opt(Q(i, j), Q(i+1, j),d, iters_num,S);
@@ -89,6 +96,7 @@ function [Q, R] = qr_cordic_opt(M,T,S)
                 % For Q, after calculation, take its transpose to get the correct Q, same for this portion.
                 % [tmp1, tmp2] = cordic_rotation_mode_opt( Q(i-1,j), Q(i,j), d, iters_num,S);
             end
+            M_;
             Q;
         end
     end
