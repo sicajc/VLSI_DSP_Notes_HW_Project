@@ -170,8 +170,7 @@ module PATTERN(
             errors = errors + 1;
           end
 
-          // You have 4800 values. Tolerate 80 errors, I dont know how to calculate differences...
-          if(errors > 30)
+          if(errors > 10)
           begin
             fail;
             // Spec. 8
@@ -304,26 +303,71 @@ module PATTERN(
   //================================================================
   task YOU_PASS_task;
     begin
-      // image_.success;
-      $display ("----------------------------------------------------------------------------------------------------------------------");
-      $display ("                                                  Congratulations!                                                    ");
-      $display ("                                           You have passed all patterns!                                              ");
-      $display ("                                                                                                                      ");
-      $display ("                                        Your execution cycles   = %5d cycles                                          ", total_cycles);
-      $display ("                                        Your clock period       = %.1f ns                                             ", `CYCLE_TIME);
-      $display ("                                      Average Cycle Per pattern = %.1f ns                                             ", total_cycles/PATNUM);
-      $display ("                                        Total latency           = %.1f ns                                             ", (total_cycles + total_pat)*`CYCLE_TIME);
-      $display ("----------------------------------------------------------------------------------------------------------------------");
-
-      $finish;
+        $display("                                                             \033[33m`-                                                                            ");
+        $display("                                                             /NN.                                                                           ");
+        $display("                                                            sMMM+                                                                           ");
+        $display(" .``                                                       sMMMMy                                                                           ");
+        $display(" oNNmhs+:-`                                               oMMMMMh                                                                           ");
+        $display("  /mMMMMMNNd/:-`                                         :+smMMMh                                                                           ");
+        $display("   .sNMMMMMN::://:-`                                    .o--:sNMy                                                                           ");
+        $display("     -yNMMMM:----::/:-.                                 o:----/mo                                                                           ");
+        $display("       -yNMMo--------://:.                             -+------+/                                                                           ");
+        $display("         .omd/::--------://:`                          o-------o.                                                                           ");
+        $display("           `/+o+//::-------:+:`                       .+-------y                                                                            ");
+        $display("              .:+++//::------:+/.---------.`          +:------/+                                                                            ");
+        $display("                 `-/+++/::----:/:::::::::::://:-.     o------:s.          \033[37m:::::----.           -::::.          `-:////:-`     `.:////:-.    \033[33m");
+        $display("                    `.:///+/------------------:::/:- `o-----:/o          \033[37m.NNNNNNNNNNds-       -NNNNNd`       -smNMMMMMMNy   .smNNMMMMMNh    \033[33m");
+        $display("                         :+:----------------------::/:s-----/s.          \033[37m.MMMMo++sdMMMN-     `mMMmMMMs      -NMMMh+///oys  `mMMMdo///oyy    \033[33m");
+        $display("                        :/---------------------------:++:--/++           \033[37m.MMMM.   `mMMMy     yMMM:dMMM/     +MMMM:      `  :MMMM+`     `    \033[33m");
+        $display("                       :/---///:-----------------------::-/+o`           \033[37m.MMMM.   -NMMMo    +MMMs -NMMm.    .mMMMNdo:.     `dMMMNds/-`      \033[33m");
+        $display("                      -+--/dNs-o/------------------------:+o`            \033[37m.MMMMyyyhNMMNy`   -NMMm`  sMMMh     .odNMMMMNd+`   `+dNMMMMNdo.    \033[33m");
+        $display("                     .o---yMMdsdo------------------------:s`             \033[37m.MMMMNmmmdho-    `dMMMdooosMMMM+      `./sdNMMMd.    `.:ohNMMMm-   \033[33m");
+        $display("                    -yo:--/hmmds:----------------//:------o              \033[37m.MMMM:...`       sMMMMMMMMMMMMMN-  ``     `:MMMM+ ``      -NMMMs   \033[33m");
+        $display("                   /yssy----:::-------o+-------/h/-hy:---:+              \033[37m.MMMM.          /MMMN:------hMMMd` +dy+:::/yMMMN- :my+:::/sMMMM/   \033[33m");
+        $display("                  :ysssh:------//////++/-------sMdyNMo---o.              \033[37m.MMMM.         .mMMMs       .NMMMs /NMMMMMMMMmh:  -NMMMMMMMMNh/    \033[33m");
+        $display("                  ossssh:-------ddddmmmds/:----:hmNNh:---o               \033[37m`::::`         .::::`        -:::: `-:/++++/-.     .:/++++/-.      \033[33m");
+        $display("                  /yssyo--------dhhyyhhdmmhy+:---://----+-                                                                                  ");
+        $display("                  `yss+---------hoo++oosydms----------::s    `.....-.                                                                       ");
+        $display("                   :+-----------y+++++++oho--------:+sssy.://:::://+o.                                                                      ");
+        $display("                    //----------y++++++os/--------+yssssy/:--------:/s-                                                                     ");
+        $display("             `..:::::s+//:::----+s+++ooo:--------+yssssy:-----------++                                                                      ");
+        $display("           `://::------::///+/:--+soo+:----------ssssys/---------:o+s.``                                                                    ");
+        $display("          .+:----------------/++/:---------------:sys+----------:o/////////::::-...`                                                        ");
+        $display("          o---------------------oo::----------::/+//---------::o+--------------:/ohdhyo/-.``                                                ");
+        $display("          o---------------------/s+////:----:://:---------::/+h/------------------:oNMMMMNmhs+:.`                                           ");
+        $display("          -+:::::--------------:s+-:::-----------------:://++:s--::------------::://sMMMMMMMMMMNds/`                                        ");
+        $display("           .+++/////////////+++s/:------------------:://+++- :+--////::------/ydmNNMMMMMMMMMMMMMMmo`                                        ");
+        $display("             ./+oo+++oooo++/:---------------------:///++/-   o--:///////::----sNMMMMMMMMMMMMMMMmo.                                          ");
+        $display("                o::::::--------------------------:/+++:`    .o--////////////:--+mMMMMMMMMMMMMmo`                                            ");
+        $display("               :+--------------------------------/so.       +:-:////+++++///++//+mMMMMMMMMMmo`                                              ");
+        $display("              .s----------------------------------+: ````` `s--////o:.-:/+syddmNMMMMMMMMMmo`                                                ");
+        $display("              o:----------------------------------s. :s+/////--//+o-       `-:+shmNNMMMNs.                                                  ");
+        $display("             //-----------------------------------s` .s///:---:/+o.               `-/+o.                                                    ");
+        $display("            .o------------------------------------o.  y///+//:/+o`                                                                          ");
+        $display("            o-------------------------------------:/  o+//s//+++`                                                                           ");
+        $display("           //--------------------------------------s+/o+//s`                                                                                ");
+        $display("          -+---------------------------------------:y++///s                                                                                 ");
+        $display("          o-----------------------------------------oo/+++o                                                                                 ");
+        $display("         `s-----------------------------------------:s   ``                                                                                 ");
+        $display("          o-:::::------------------:::::-------------o.                                                                                     ");
+        $display("          .+//////////::::::://///////////////:::----o`                                                                                     ");
+        $display("          `:soo+///////////+++oooooo+/////////////:-//                                                                                      ");
+        $display("       -/os/--:++/+ooo:::---..:://+ooooo++///////++so-`                                                                                     ");
+        $display("      syyooo+o++//::-                 ``-::/yoooo+/:::+s/.                                                                                  ");
+        $display("       `..``                                `-::::///:++sys:                                                                                ");
+        $display("                                                    `.:::/o+  \033[37m                                                                              ");
+        $display("                                                Your execution cycles   = %5d cycles                                          ", total_cycles);
+        $display("                                                Your clock period       = %.1f ns                                             ", `CYCLE_TIME);
+        $display("                                              Average Cycle Per pattern = %.1f ns                                             ", total_cycles/PATNUM);
+        $display("                                                Total latency           = %.1f ns                                             ", (total_cycles + total_pat)*`CYCLE_TIME);
+        $display("----------------------------------------------------------------------------------------------------------------------");
+        #(100);
+        $finish;
     end
   endtask
 
   task fail;
     begin
-      $display(":( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( FAIL :( ");
-
-
       $display("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
       $display("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@8Oo::::ooOOO8@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
       $display("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@o:   ..::..       .:o88@@@@@@@@@@@8OOoo:::..::oooOO8@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");

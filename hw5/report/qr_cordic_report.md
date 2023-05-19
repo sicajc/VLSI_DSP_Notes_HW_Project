@@ -279,31 +279,36 @@
   <img src="./../img/DG_Output_result.jpg" width="500" heigh ="150">
 </p>
 
-- The red r11 means that the resultant r11 would get produced at (1,1,1) node in the cycle 17 since its computation time is 13~16 cycles.
+- The red r11 means that the result r11 would get produced at (1,1,1) node in the cycle 17 since its computation time is 13~16 cycles.
 - The yellow number marked within the DG node specified when this node get executed. And after projection you can know exactly when and where this particular computation would take place within your systolic array.
 - To mark the scheduling onto the DG, one must first obtained a systolic array design using the scheduling vector s=(-1 1 1).
 - Then perform folding to extends the execution cycles of every node. Also at the same time, beware of the dependency when you try to perform folding.
 - Specially noted that, each GR would execute for 2 cycles for the first time before they send their first value to the next layer. After sending their first value, they send their value once every clock cycle. This can be spotted within the dependence graph. This is important for the later design of our PE units.
 
-
+# Design of GG & GR
+## GG
 <p align="center">
-  <img src="./img/hn_LPF.png" width="400" heigh ="300">
+  <img src="./../img/GG_PE.jpg" width="500" heigh ="300">
 </p>
 
-
-<div style="page-break-after: always;"></div>
-
-
-### p(n) High pass filter and q(n) low pass filter
-<p align="center">
-  <img src="./img/pn_HPF.png" width="500" heigh ="300">
-</p>
+- This is the block diagram of Givens Generation Unit. valid_i signal is used to indicate when the GG starts its calculation. At the same time, one should send data through port aij. While calculating, GG generates the one cycle delayed rotation vector di alongside with the one cycle delayed rotates signal. Both of these signals get sent to GR units.
 
 <p align="center">
-  <img src="./img/qn_LPF.png" width="500" heigh ="300">
+  <img src="./../img/GG_DETAILS.jpg" width="700" heigh ="600">
 </p>
 
-<div style="page-break-after: always;"></div>
+- Details of GG contains a sub-control counter indicating whether GG is rotating, working or multiplying K. When rotating, GG generates di from the cordic iters block. The final (r,0) value after rotation would replace the old (x,y), the result would be (0,r) = (x,y).
+
+<p align="center">
+  <img src="./../img/GG_CORDIC_ITERS.jpg" width="700" heigh ="600">
+</p>
+
+- Each of this sub-block represents an iteration in cordic. The boundary condition of determining whether the input value is 0 must be hanndled. Each iter sub-block generates a correspondent di signal during rotation. And the shift amount for both shifter is determined by the number of block also the value of counter.
+
+<p align="center">
+  <img src="./../img/gg0_r.jpg" width="700" heigh ="600">
+</p>
+
 
 
 ### Down Sampler
