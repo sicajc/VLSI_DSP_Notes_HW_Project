@@ -51,7 +51,7 @@ qy_partial.FL = 10;
 lower_bound = -128;
 upper_bound = 127;
 MATRIX_SIZE = 4;
-NUM_OF_MATRIX = 1000;
+NUM_OF_MATRIX = 300;
 
 % Broadcasting data types.
 U = qrDataType('double', rx_partial, ry_partial, rx_output, ry_output);
@@ -66,10 +66,10 @@ S = qrDataType('fixed', qx_partial, qy_partial, qx_output, qy_output);
 %  matrix for testing
 %================================================================
 % Pattern 8 wrong!
-M = [-79   71   117   46;
-     31   -59  96 54;
-     -16   -58  -37 -34;
-     73  77   0 15];
+M = [4  8  12 16;
+     3  7  11 15;
+     2  6  10 14;
+     1  5   9 13];
 
 C = fi([], 1, 8, 0); % Since M is 8 bits.
 C;
@@ -77,7 +77,7 @@ matrix_i = cast(M, 'like', C);
 
 K = 0.60725334371201;
 K = cast(K, 'like',T.x_partial);
-bin(K);
+% bin(K);
 
 %================================================================
 %  Testing of QR Cordic
@@ -89,7 +89,7 @@ buildInstrumentedMex qr_cordic_opt -o qr_cordic_opt_mex ...
 % [q_f, r_f] = qr_cordic_mex(M, T);
 
 % [q_double, r_double] = qr_cordic_opt(M, U, U);
-[q_f_opt, r_f_opt] = qr_cordic_opt_mex(matrix_i, T, S);
+[q_f_opt, r_f_opt] = qr_cordic_opt(matrix_i, T, S);
 
 q_f_opt = double(q_f_opt);
 r_f_opt = double(r_f_opt);
@@ -121,131 +121,133 @@ disp(r_f_opt);
 %================================================================
 %  QR Cordic checking for a random number of matrices
 %================================================================
-% count = 0;
-% for i = 1:NUM_OF_MATRIX
-%     % Generating matrix
-%     matrix_i = randi([lower_bound,upper_bound],MATRIX_SIZE,MATRIX_SIZE);
+count = 0;
+for i = 1:NUM_OF_MATRIX
+    % Generating matrix
+    matrix_i = randi([lower_bound,upper_bound],MATRIX_SIZE,MATRIX_SIZE);
 
-%     % Double calculation
-%     [q_double, r_double] = qr_cordic_opt(matrix_i, U,U);
+    % Double calculation
+    [q_double, r_double] = qr_cordic_opt(matrix_i, U,U);
 
-%     % Fixed point calculation
-%     matrix_i = cast(matrix_i, 'like', C);
-%     [q_f_opt, r_f_opt] = qr_cordic_opt_mex(matrix_i, T,S);
+    % Fixed point calculation
+    matrix_i = cast(matrix_i, 'like', C);
+    [q_f_opt, r_f_opt] = qr_cordic_opt_mex(matrix_i, T,S);
 
-%     % Convert back to double for verification
-%     q_double = double(q_double);
-%     r_double = double(r_double);
+    % Convert back to double for verification
+    q_double = double(q_double);
+    r_double = double(r_double);
 
-%     q_f_opt = double(q_f_opt);
-%     r_f_opt = double(r_f_opt);
+    q_f_opt = double(q_f_opt);
+    r_f_opt = double(r_f_opt);
 
-%     % Should replace the lower triangle with 0, since it is not needed for metrics.
-%     r_double = r_double .* (1 - tril(ones(size(r_double))));
-%     r_f_opt = r_f_opt .* (1 - tril(ones(size(r_f_opt))));
+    % Should replace the lower triangle with 0, since it is not needed for metrics.
+    r_double = r_double .* (1 - tril(ones(size(r_double))));
+    r_f_opt = r_f_opt .* (1 - tril(ones(size(r_f_opt))));
 
-%     % Generate a bit string to check if met or not?
-%     [met_or_not(i), deltar_] = delta_calculation(r_double, r_f_opt, 0.01);
-%     [met_or_not(i), deltaq_] = delta_calculation(q_double, q_f_opt, 0.01);
+    % Generate a bit string to check if met or not?
+    [met_or_not(i), deltar_] = delta_calculation(r_double, r_f_opt, 0.01);
+    [met_or_not(i), deltaq_] = delta_calculation(q_double, q_f_opt, 0.01);
 
-%     deltar(i) = deltar_;
-%     deltaq(i) = deltaq_;
+    deltar(i) = deltar_;
+    deltaq(i) = deltaq_;
 
-% end
+end
 
-% disp("The largest delta of R within is:");
-% disp(max(deltar));
-% disp("Average delta for R:");
-% disp(mean(deltar,'all'));
+disp("The largest delta of R within is:");
+disp(max(deltar));
+disp("Average delta for R:");
+disp(mean(deltar,'all'));
 
-% disp("The largest delta of Q within is:");
-% disp(max(deltaq));
-% disp("Average delta Q:");
-% disp(mean(deltaq,'all'));
+disp("The largest delta of Q within is:");
+disp(max(deltaq));
+disp("Average delta Q:");
+disp(mean(deltaq,'all'));
 
 
 %================================================================
 %  Write out golden pattern
 %================================================================
-matrix_golden = 'C:\Users\User\Desktop\VLSI_DSP_Notes_HW_Project\hw5\pattern\matrix_dat.txt';
-q_golden = 'C:\Users\User\Desktop\VLSI_DSP_Notes_HW_Project\hw5\pattern\q_dat.txt';
-r_golden = 'C:\Users\User\Desktop\VLSI_DSP_Notes_HW_Project\hw5\pattern\r_dat.txt';
+% matrix_golden = 'C:\Users\User\Desktop\VLSI_DSP_Notes_HW_Project\hw5\pattern\matrix_dat.txt';
+% q_golden = 'C:\Users\User\Desktop\VLSI_DSP_Notes_HW_Project\hw5\pattern\q_dat.txt';
+% r_golden = 'C:\Users\User\Desktop\VLSI_DSP_Notes_HW_Project\hw5\pattern\r_dat.txt';
 
-% Writing  pattern
-fileID_0 = fopen(matrix_golden, 'wt');
-fileID_1 = fopen(q_golden, 'wt');
-fileID_2 = fopen(r_golden, 'wt');
+% % Writing  pattern
+% fileID_0 = fopen(matrix_golden, 'wt');
+% fileID_1 = fopen(q_golden, 'wt');
+% fileID_2 = fopen(r_golden, 'wt');
 
-% fprintf(fileID_0, '%d \n\n', NUM_OF_MATRIX);
-% Set the seed value
-seedValue = 1234;
+% % fprintf(fileID_0, '%d \n\n', NUM_OF_MATRIX);
+% % Set the seed value
+% seedValue = 1234;
 
-% Fix the seed for random number generation
-rng(seedValue);
+% % Fix the seed for random number generation
+% rng(seedValue);
 
-for i = 1:NUM_OF_MATRIX
-    fprintf("Pat# %d",i);
-    % Generating matrix
-    matrix_i = randi([lower_bound, upper_bound], MATRIX_SIZE, MATRIX_SIZE);
+% for i = 1:NUM_OF_MATRIX
+%     fprintf("Pat# %d",i);
+%     % Generating matrix
+%     matrix_i = randi([lower_bound, upper_bound], MATRIX_SIZE, MATRIX_SIZE);
 
-    % Fixed point calculation
-    matrix_i = cast(matrix_i, 'like', C);
-    [q_f_opt, r_f_opt] = qr_cordic_opt_mex(matrix_i, T, S);
+%     % Fixed point calculation
+%     matrix_i = cast(matrix_i, 'like', C);
+%     [q_f_opt, r_f_opt] = qr_cordic_opt_mex(matrix_i, T, S);
 
-    for k = 1:MATRIX_SIZE
-        for j = MATRIX_SIZE:-1:1
-            matrix_fix_val = matrix_i(j, k);
-            matrix_fix_bin = bin(matrix_i(j, k));
-            % Append the pattern number at the start of every pattern.
-            if j == 4 && k == 1
-                fprintf(fileID_0, '%s  //  %f pat# %d (%d,%d) \n', matrix_fix_bin, matrix_fix_val, i, j, k);
-            else
-                fprintf(fileID_0, '%s  //  %f (%d,%d)\n', matrix_fix_bin, matrix_fix_val, j, k);
-            end
-        end
-    end
-    for j = 1:MATRIX_SIZE
-        for k = 1:MATRIX_SIZE
-            q_fix_val = q_f_opt(j, k);
-            q_fix_bin = bin(q_f_opt(j, k));
+%     for k = 1:MATRIX_SIZE
+%         for j = MATRIX_SIZE:-1:1
+%             matrix_fix_val = matrix_i(j, k);
+%             matrix_fix_bin = bin(matrix_i(j, k));
+%             % Append the pattern number at the start of every pattern.
+%             if j == 4 && k == 1
+%                 fprintf(fileID_0, '%s  //  %f pat# %d (%d,%d) \n', matrix_fix_bin, matrix_fix_val, i, j, k);
+%             else
+%                 fprintf(fileID_0, '%s  //  %f (%d,%d)\n', matrix_fix_bin, matrix_fix_val, j, k);
+%             end
+%         end
+%     end
+%     for j = 1:MATRIX_SIZE
+%         for k = 1:MATRIX_SIZE
+%             q_fix_val = q_f_opt(j, k);
+%             q_fix_bin = bin(q_f_opt(j, k));
 
-            r_fix_val = r_f_opt(j, k)
-            r_fix_bin = bin(r_f_opt(j, k));
+%             r_fix_val = r_f_opt(j, k)
+%             r_fix_bin = bin(r_f_opt(j, k));
 
-            % the lower half of R should be regarded as zeroes, so instantiate a fixed point zero for them.
-            zero_d = 0;
-            zero = cast(zero_d, 'like', T.x_output);
-            zero = bin(zero);
+%             % the lower half of R should be regarded as zeroes, so instantiate a fixed point zero for them.
+%             zero_d = 0;
+%             zero = cast(zero_d, 'like', T.x_output);
+%             zero = bin(zero);
 
-            % Append the pattern number at the start of every pattern.
-            if j == 1 && k == 1
-                fprintf(fileID_1, '%s  //  %f pat# %d (%d,%d)\n', q_fix_bin, q_fix_val, i, j, k);
-            else
-                fprintf(fileID_1, '%s  //  %f (%d,%d)\n', q_fix_bin, q_fix_val, j, k);
-            end
+%             % Append the pattern number at the start of every pattern.
+%             if j == 1 && k == 1
+%                 fprintf(fileID_1, '%s  //  %f pat# %d (%d,%d)\n', q_fix_bin, q_fix_val, i, j, k);
+%             else
+%                 fprintf(fileID_1, '%s  //  %f (%d,%d)\n', q_fix_bin, q_fix_val, j, k);
+%             end
 
-            % R matrices, the lower part should all be zeroes.
-            if j == 1 && k == 1
-                fprintf(fileID_2, '%s  //  %f pat# %d (%d,%d)\n', r_fix_bin, r_fix_val, i, j, k);
-            elseif j > k
-                fprintf(fileID_2, '%s  //  %f (%d,%d)\n', zero, zero_d, j, k);
-            else
-                fprintf(fileID_2, '%s  //  %f (%d,%d)\n', r_fix_bin, r_fix_val, j, k);
-            end
-        end
-    end
-end
+%             % R matrices, the lower part should all be zeroes.
+%             if j == 1 && k == 1
+%                 fprintf(fileID_2, '%s  //  %f pat# %d (%d,%d)\n', r_fix_bin, r_fix_val, i, j, k);
+%             elseif j > k
+%                 fprintf(fileID_2, '%s  //  %f (%d,%d)\n', zero, zero_d, j, k);
+%             else
+%                 fprintf(fileID_2, '%s  //  %f (%d,%d)\n', r_fix_bin, r_fix_val, j, k);
+%             end
+%         end
+%     end
+% end
 
-fclose(fileID_0);
-fclose(fileID_1);
-fclose(fileID_2);
+% fclose(fileID_0);
+% fclose(fileID_1);
+% fclose(fileID_2);
 
 %================================================================
 %  Fixed point verification
 %================================================================
 % Verify results
 % Show instrumentatinResults can suggest you the optimal width you should use for the best result
-showInstrumentationResults qr_cordic_opt_mex -proposeFL -defaultDT numerictype(1, 12, 6)
+showInstrumentationResults qr_cordic_opt_mex -proposeWL -defaultDT numerictype(1, 12, 6)
+
+
 
 % Code generation
 codegen qr_cordic_opt ...

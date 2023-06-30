@@ -17,7 +17,6 @@ function datatype = qrDataType(dt, x_partial, y_partial, x_output, y_output)
             % F = fimath('OverflowAction', 'Wrap', 'RoundingMethod', 'Zero', 'ProductMode', 'KeepMSB');
             % F = fimath('OverflowAction', 'Wrap', 'RoundingMethod', 'Convergent', 'ProductMode', 'KeepMSB');
 
-
             datatype.x_partial = fi([], 1, x_partial.WL, x_partial.FL,F);
             datatype.y_partial = fi([], 1, y_partial.WL, y_partial.FL,F);
             datatype.x_output = fi([], 1, x_output.WL, x_output.FL,F);
